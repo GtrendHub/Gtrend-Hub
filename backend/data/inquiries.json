@@ -1,5 +1,17 @@
 [
   {
+    "id": "INQ-MUE8TGPI",
+    "name": "Test Client",
+    "email": "client@example.com",
+    "phone": "08012345678",
+    "service": "Starlink Enterprise",
+    "message": "Testing inquiry submission",
+    "details": "Testing inquiry submission",
+    "time": "23/09/2026, 16:13:38",
+    "status": "Unread",
+    "createdAt": "2026-09-23T15:13:38.328Z"
+  },
+  {
     "id": "INQ-MUE8B3Z1",
     "name": "Test Client",
     "email": "client@example.com",

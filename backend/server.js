@@ -1,27 +1,36 @@
 /**
- * Gtrend Tech Hub - Main Express Server
+ * Gtrend Tech Hub - Standalone REST API Server
  */
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const config = require('./config');
 const { connectDB, isConnected } = require('./models/db');
 
 // Initialize database connection
-connectDB();
+connectDB().catch(() => {});
 
 const app = express();
-const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
 
 // Middlewares
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files from frontend directory
-app.use(express.static(FRONTEND_DIR));
+// Serverless DB connection middleware (ensures Mongo is connected on cold starts)
+app.use(async (req, res, next) => {
+    if (!isConnected()) {
+        try {
+            await connectDB();
+        } catch (e) {}
+    }
+    next();
+});
 
-// Import routes
+// Import API routes
 const authRoutes = require('./routes/authRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const galleryRoutes = require('./routes/galleryRoutes');
@@ -39,37 +48,66 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/payments', paymentsRoutes);
 app.use('/api/admin', adminRoutes);
 
-// System health check
+// Root API Discovery Endpoint
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        service: 'Gtrend Tech Hub REST API',
+        version: '2.0.0',
+        status: 'Online',
+        database: isConnected() ? 'MongoDB (Connected)' : 'JSON Document Engine (Active)',
+        endpoints: {
+            health: '/api/health',
+            auth: '/api/auth',
+            news: '/api/news',
+            gallery: '/api/gallery',
+            inquiries: '/api/inquiries',
+            chat: '/api/chat',
+            payments: '/api/payments',
+            admin: '/api/admin'
+        },
+        timestamp: new Date().toISOString()
+    });
+});
+
+// System Health Check
 app.get('/api/health', (req, res) => {
     res.json({
         success: true,
         service: 'Gtrend Tech Hub API',
         version: '2.0.0',
         database: isConnected() ? 'MongoDB (Connected)' : 'JSON Document Engine (Active)',
+        platform: process.env.VERCEL ? 'Vercel Serverless' : 'Node.js Express',
         timestamp: new Date().toISOString()
     });
 });
 
-// Explicit Page Routing Fallback
-app.get('/', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'index.html')));
-app.get('/about', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'about.html')));
-app.get('/services', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'services.html')));
-app.get('/courses', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'courses.html')));
-app.get('/news', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'news.html')));
-app.get('/gallery', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'gallery.html')));
-app.get('/contact', (req, res) => res.sendFile(path.join(FRONTEND_DIR, 'contact.html')));
+// 404 Handler for undefined API routes
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.method} ${req.originalUrl} not found on this API server.`
+    });
+});
 
 const PORT = config.PORT;
-app.listen(PORT, () => {
-    console.log(`====================================================`);
-    console.log(`🚀 Gtrend Tech Hub Platform Server running on:`);
-    console.log(`   🌐 Home:             http://localhost:${PORT}`);
-    console.log(`   💡 Services:         http://localhost:${PORT}/services.html`);
-    console.log(`   🎓 Courses:          http://localhost:${PORT}/courses.html`);
-    console.log(`   📰 News & Updates:   http://localhost:${PORT}/news.html`);
-    console.log(`   🖼️ Gallery:         http://localhost:${PORT}/gallery.html`);
-    console.log(`   ℹ️ About:           http://localhost:${PORT}/about.html`);
-    console.log(`   📞 Contact:          http://localhost:${PORT}/contact.html`);
-    console.log(`   📱 Admin Dashboard:  http://localhost:${PORT}/admin/index.html`);
-    console.log(`====================================================`);
-});
+
+// Start listener for traditional server / container environments
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`====================================================`);
+        console.log(`🚀 Gtrend Tech Hub REST API Server running on PORT: ${PORT}`);
+        console.log(`   🌐 API Root:         http://localhost:${PORT}/`);
+        console.log(`   ❤️ Health:           http://localhost:${PORT}/api/health`);
+        console.log(`   🔐 Auth:             http://localhost:${PORT}/api/auth`);
+        console.log(`   📰 News:             http://localhost:${PORT}/api/news`);
+        console.log(`   🖼️ Gallery:          http://localhost:${PORT}/api/gallery`);
+        console.log(`   💬 Inquiries:        http://localhost:${PORT}/api/inquiries`);
+        console.log(`   🤖 Live Chat:        http://localhost:${PORT}/api/chat`);
+        console.log(`   💳 Payments:         http://localhost:${PORT}/api/payments`);
+        console.log(`   👑 Admin:            http://localhost:${PORT}/api/admin`);
+        console.log(`====================================================`);
+    });
+}
+
+module.exports = app;
