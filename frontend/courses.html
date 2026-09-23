@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark-gold">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses &amp; Tech Academy | Gtrend Tech Hub</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="./assets/js/tailwind.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <!-- Clean Light Mode Custom Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/theme-light.css">
+    <style>
+        /* Modern Themes Variables */
+        :root,
+        :root[data-theme="dark-gold"] {
+            --bg-main: #080c14;
+            --bg-card: rgba(19, 27, 46, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(8, 12, 20, 0.9);
+        }
+
+        :root[data-theme="cyber-neon"] {
+            --bg-main: #050515;
+            --bg-card: rgba(15, 20, 45, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --brand-accent: #3664c7;
+            --border-color: rgba(17, 28, 185, 0.342);
+            --header-bg: rgba(5, 5, 21, 0.9);
+        }
+
+        :root[data-theme="clean-light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-accent: #d97706;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        :root[data-theme="emerald-matrix"] {
+            --bg-main: #02120b;
+            --bg-card: rgba(6, 32, 20, 0.85);
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --brand-accent: #10b981;
+            --border-color: rgba(16, 185, 129, 0.2);
+            --header-bg: rgba(2, 18, 11, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text {
+            color: var(--brand-accent);
+        }
+
+        .accent-bg {
+            background-color: var(--brand-accent);
+        }
+
+        .glow-hover:hover {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 25px rgba(230, 144, 10, 0.2);
+        }
+    </style>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Global Header Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800/80 transition-all duration-300"
+        style="background: var(--header-bg); backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Left: Brand Logo & Title -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div
+                        class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-md sm:text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                class="accent-text"> Tech Hub</span></span>
+                        <span class="text-[8px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The Future
+                            of Tech Solutions</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center: Navigation Links -->
+            <nav id="publicNav"
+                class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <a href="index.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Home</a>
+                <a href="about.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">About</a>
+                <a href="services.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Services</a>
+                <a href="courses.html"
+                    class="px-2.5 py-2 rounded-lg text-amber-400 bg-amber-500/10 border border-amber-500/30 font-bold transition">Courses</a>
+                <a href="news.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">News &amp;
+                    Events</a>
+                <a href="gallery.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Gallery</a>
+                <a href="contact.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Contact</a>
+            </nav>
+
+            <!-- Right: Login, Theme & Mobile -->
+            <div class="flex items-center gap-2">
+                <a href="login.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+
+                <!-- Theme Switcher Pill -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeMenu()"
+                        class="h-10 px-3 rounded-xl glass-panel text-xs font-bold flex items-center gap-1.5 hover:border-amber-500 transition text-slate-200 border border-slate-700/80">
+                        <i class="fa-solid fa-palette accent-text text-sm"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                    </button>
+                    <div id="themeDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel shadow-2xl py-2 z-50 border border-slate-700">
+                        <button onclick="setTheme('dark-gold')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm"></span> Dark Gold
+                            (Default)
+                        </button>
+                        <button onclick="setTheme('cyber-neon')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-sm"></span> Cyber Neon
+                        </button>
+                        <button onclick="setTheme('clean-light')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-600 inline-block shadow-sm"></span> Clean Light
+                        </button>
+                        <button onclick="setTheme('emerald-matrix')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-sm"></span> Emerald
+                            Matrix
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileNav()"
+                    class="lg:hidden h-10 w-10 rounded-xl glass-panel border border-slate-700/80 text-slate-200 hover:text-white flex items-center justify-center transition">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Responsive Dropdown Menu -->
+        <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slate-800 px-4 py-4 space-y-2 glass-panel"
+            style="background: var(--header-bg);">
+            <a href="index.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Home</a>
+            <a href="about.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">About</a>
+            <a href="services.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Services</a>
+            <a href="courses.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 font-bold transition">Courses
+                Catalog</a>
+            <a href="news.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">News
+                &amp; Events</a>
+            <a href="gallery.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Gallery</a>
+            <a href="contact.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Contact</a>
+            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800">
+                <a href="login.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 text-white border border-slate-700">Login</a>
+                <a href="register.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider accent-bg text-white">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+
+        <!-- Header Banner -->
+        <div class="text-center max-w-3xl mx-auto mb-16">
+            <span
+                class="accent-text font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-1.5 mb-2">
+                <i class="fa-solid fa-graduation-cap"></i> Gtrend Digital Academy
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight mb-4">
+                Accelerate Your Tech Career with <span class="accent-text">Industry-Led</span> Tracks
+            </h1>
+            <p class="text-slate-300 text-base leading-relaxed">
+                Join our intensive hands-on bootcamps featuring physical studio practicals, 24/7 high-speed Starlink
+                internet, real-world client projects, and career placement mentorship.
+            </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-12">
+            <button onclick="filterCourses('all')"
+                class="course-filter-btn active px-4 py-2 rounded-xl text-xs font-bold transition bg-amber-500 text-white shadow-md"
+                data-filter="all">
+                All Tracks
+            </button>
+            <button onclick="filterCourses('web')"
+                class="course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                data-filter="web">
+                Web &amp; Software Dev
+            </button>
+            <button onclick="filterCourses('ai')"
+                class="course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                data-filter="ai">
+                AI &amp; Data Science
+            </button>
+            <button onclick="filterCourses('design')"
+                class="course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                data-filter="design">
+                UI/UX &amp; Product Design
+            </button>
+            <button onclick="filterCourses('cyber')"
+                class="course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                data-filter="cyber">
+                Cybersecurity &amp; Starlink
+            </button>
+            <button onclick="filterCourses('kids')"
+                class="course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+                data-filter="kids">
+                Kids Coding &amp; STEM
+            </button>
+        </div>
+
+        <!-- Course Cards Grid with High-Res Image Banners -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="courseGrid">
+
+            <!-- Course 1: Web Development -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="web">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/course-web-dev.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                            alt="Full-Stack Web Development"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-blue-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Web Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 16 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Full-Stack Web Development</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Master modern HTML5, CSS3, Tailwind,
+                            JavaScript ES6+, React, Node.js, Express, and REST APIs with live deployment.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Front-end &amp; Back-end
+                                Architecture</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Relational &amp; NoSQL
+                                Databases</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Capstone Portfolio Project
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Full-Stack+Web+Development"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Full-Stack%20Web%20Development%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 2: AI & Automation -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="ai">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/ai-automation.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/course-datascience.jpg';"
+                            alt="AI Automation Engineering"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-purple-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            AI Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 12 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">AI &amp; Automation Engineering</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Build intelligent AI agents, prompt
+                            pipelines, Python automation scripts, and integrate LLM APIs into business workflows.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Python &amp; AI Libraries
+                            </div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Custom Autonomous Agents
+                            </div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Enterprise Workflow RPA
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=AI+and+Automation+Engineering"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20AI%20and%20Automation%20Engineering%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 3: UI/UX & Product Design -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="design">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/course-uiux.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/hero.jpg';" alt="UI UX Product Design"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-pink-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Design Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 10 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">UI/UX &amp; Product Design</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Craft pixel-perfect user interfaces,
+                            conduct UX user research, build Figma prototypes, design systems, and mobile wireframes.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Advanced Figma &amp; FigJam
+                            </div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> User Journeys &amp;
+                                Wireframing</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Interactive Micro-Animations
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=UI-UX+and+Product+Design"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20UI-UX%20and%20Product%20Design%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 4: Cybersecurity -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="cyber">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/cybersecurity.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/service-software.jpg';"
+                            alt="Cybersecurity and Ethical Hacking"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-red-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Cyber Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 14 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Cybersecurity &amp; Ethical Hacking</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Hands-on penetration testing, network
+                            sniffing, vulnerability assessments, firewall configuration, and defense strategies.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Kali Linux &amp; Wireshark
+                                Lab</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Web Application Pen-testing
+                            </div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> SOC Analysis &amp; Incident
+                                Response</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Cybersecurity+and+Ethical+Hacking"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Cybersecurity%20and%20Ethical%20Hacking%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 5: Starlink & Networking -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="cyber">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/starlink-network.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/cybersecurity.jpg';"
+                            alt="Networking and Starlink Solutions"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            ICT Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 10 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Networking &amp; Starlink Solutions</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Learn enterprise LAN/WAN setups, Cisco
+                            routing &amp; switching, mesh Wi-Fi optimization, and professional Starlink satellite
+                            installations.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Starlink Satellite Dish
+                                Mounting</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Server Rack &amp; Patch
+                                Panel Cabling</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> IP Subnetting &amp; Gateway
+                                Routing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Networking+and+Starlink+Solutions"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Networking%20and%20Starlink%20Solutions%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 6: Kids Coding -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="kids">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/course-kids.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                            alt="Kids Coding Robotics and STEM"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-amber-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Kids Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 8 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Kids Coding, Robotics &amp; STEM</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Fun, gamified coding for young champions
+                            aged 6-16 using Scratch visual logic, HTML game creation, and introductory electronics.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Scratch Animation &amp; Game
+                                Logic</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Basic Web Page Building
+                            </div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Problem Solving &amp; STEM
+                                Projects</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Kids+Coding+Robotics+STEM"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Kids%20Coding%20Robotics%20STEM%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 7: Data Science & Analytics -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="ai">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/course-datascience.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/ai-automation.jpg';"
+                            alt="Data Science Analytics"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-cyan-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Data Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 12 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Data Science &amp; Business Intelligence</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Extract actionable business insights,
+                            design interactive PowerBI dashboards, and build predictive machine learning models in
+                            Python.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Pandas, NumPy &amp; SQL
+                                Querying</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> PowerBI &amp; Tableau
+                                Dashboards</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Predictive Machine Learning
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Data+Science+and+Analytics"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Data%20Science%20and%20Analytics%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course 8: Mobile App Development -->
+            <div class="course-card glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden flex flex-col justify-between transition-all duration-300 group shadow-xl"
+                data-category="web">
+                <div>
+                    <div class="h-44 overflow-hidden relative">
+                        <img src="./assets/images/course-mobile.jpg"
+                            onerror="this.onerror=null; this.src='./assets/images/course-web-dev.jpg';"
+                            alt="Mobile App Development"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div
+                            class="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-emerald-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                            Mobile Track
+                        </div>
+                        <div
+                            class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-black/70 text-slate-200 text-[10px] font-mono backdrop-blur-md">
+                            <i class="fa-regular fa-clock mr-1"></i> 14 Weeks
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-black text-white mb-2">Cross-Platform Mobile App Dev</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Build and publish production-ready iOS
+                            and Android mobile apps from a single codebase using Flutter/Dart and React Native.</p>
+
+                        <div class="space-y-1.5 border-t border-slate-800/80 pt-3">
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Flutter &amp; Dart
+                                Architecture</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Firebase &amp; REST API
+                                Integration</div>
+                            <div class="text-[11px] text-slate-300 flex items-center gap-2"><i
+                                    class="fa-solid fa-check text-emerald-400 text-xs"></i> Google Play &amp; App Store
+                                Publishing</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 pt-0 space-y-2">
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="register.html?course=Mobile+App+Development"
+                            class="py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-solid fa-user-pen"></i> Enroll
+                        </a>
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20the%20Mobile%20App%20Development%20course."
+                            target="_blank" rel="noopener noreferrer"
+                            class="py-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-1.5 shadow-md">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Learning Modes Callout -->
+        <div
+            class="mt-20 glass-panel p-8 sm:p-12 rounded-3xl border border-amber-500/30 text-center relative overflow-hidden shadow-2xl">
+            <h2 class="text-2xl sm:text-3xl font-black text-white mb-3">Choose Your Learning Mode</h2>
+            <p class="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto mb-8">Whether you prefer physical hands-on
+                studio training in our high-speed Starlink hub or flexible live virtual interactive classes, we've got
+                you covered.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto text-left">
+                <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <h3 class="font-bold text-base text-white mb-1">Physical Onsite Studio</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">Dedicated desk space, dual monitors, 24/7
+                        solar backup electricity, high-speed Starlink satellite Wi-Fi, and in-person instructor
+                        guidance.</p>
+                    <a href="register.html?mode=Physical+Onsite"
+                        class="text-xs font-bold accent-text hover:underline flex items-center gap-1">Apply for Studio
+                        Access &rarr;</a>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-slate-900/80 border border-slate-800">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-laptop"></i>
+                    </div>
+                    <h3 class="font-bold text-base text-white mb-1">Interactive Virtual Portal</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-4">Live video masterclasses, real-time screen
+                        sharing, interactive coding labs, recorded session archives, and 1-on-1 breakout mentoring.</p>
+                    <a href="register.html?mode=Virtual+Online"
+                        class="text-xs font-bold text-blue-400 hover:underline flex items-center gap-1">Apply for
+                        Virtual Track &rarr;</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Global Universal Footer -->
+    <!-- Global Universal Footer -->
+    <!-- GLOBAL UNIFIED FOOTER -->
+    <footer class="pt-16 pb-12 border-t border-slate-800/80 mt-auto"
+        style="background: var(--bg-card); backdrop-filter: blur(14px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+
+                <!-- Col 1: Brand & Bio -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20">
+                            <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                    fill="white" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                    class="accent-text"> Tech Hub</span></span>
+                            <span class="text-[9px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                                Future of Tech Solutions</span>
+                        </div>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Premier digital technology academy &amp; software engineering enterprise. Empowering
+                        next-generation engineers, founders, and businesses with world-class tech skills and custom
+                        digital solutions.
+                    </p>
+                    <div class="flex items-center gap-3 text-slate-400 text-sm pt-2">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/50 transition"
+                            title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="Twitter/X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/50 transition"
+                            title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                        <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Courses Catalog</a></li>
+                        <li><a href="news.html" class="hover:text-white transition">News &amp; Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-white transition">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Academy Tracks -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academy Tracks</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="courses.html" class="hover:text-white transition">Full-Stack Web Dev</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">AI &amp; Automation</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">UI/UX Product Design</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Cybersecurity Defense</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Starlink &amp; Networking</a>
+                        </li>
+                        <li><a href="courses.html" class="hover:text-white transition">Kids Coding &amp; STEM</a></li>
+                        <li><a href="register.html" class="accent-text font-bold hover:underline">Apply for Admission
+                                &rarr;</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus & Support -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Studio Campus</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot accent-text mt-0.5 text-[11px]"></i>
+                            <span>Port Harcourt Tech District, Rivers State, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-[11px]"></i>
+                            <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">+234
+                                706 697 6885</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-blue-400 text-[11px]"></i>
+                            <a href="mailto:admissions@gtrendhub.com"
+                                class="hover:text-white transition">admissions@gtrendhub.com</a>
+                        </li>
+                        <li class="pt-2">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 24/7
+                                Starlink Hub Online
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Row: Copyright & Links -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 Gtrend Tech Hub. All rights reserved. Driving Africa's Digital Revolution.</p>
+                <div class="flex items-center gap-6">
+                    <a href="about.html#team" class="hover:text-slate-300 transition">Our Team</a>
+                    <a href="services.html" class="hover:text-slate-300 transition">Our Services</a>
+                    <a href="login.html" class="hover:text-slate-300 transition">Portal Login</a>
+                    <a href="admin/login.html" class="accent-text font-bold hover:underline">Admin Gateway</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Filter JS Script -->
+    <script>
+        function filterCourses(category) {
+            const buttons = document.querySelectorAll('.course-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.className = 'course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-amber-500 text-white shadow-md';
+                } else {
+                    btn.className = 'course-filter-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-900 border border-slate-800 text-slate-300 hover:text-white';
+                }
+            });
+
+            const cards = document.querySelectorAll('.course-card');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (category === 'all' || cardCat === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/chat-widget.js"></script>
+    <script>
+        // Universal Theme & Navbar Controller
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('gtrend_active_theme', theme);
+            localStorage.setItem('gtrend_theme', theme);
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+        function toggleThemeMenu() {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function (e) {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.parentElement.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        function toggleMobileNav() {
+            var menu = document.getElementById('mobileNavMenu');
+            var icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-base' : 'fa-solid fa-xmark text-base';
+                }
+            }
+        }
+        // Apply saved theme on page load
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</body>
+
+</html>

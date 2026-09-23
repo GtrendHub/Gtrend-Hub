@@ -1,0 +1,3072 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gtrend Tech Hub | Official Portal & Tech Academy</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="./assets/js/tailwind.js"></script>
+    <!-- Gtrend Universal Backend API Client -->
+    <script src="./assets/js/api.js"></script>
+    <!-- Offline Font Awesome Icons & Webfonts -->
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <!-- Clean Light Mode Custom Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/theme-light.css">
+    <style>
+        /* Modern Themes Variables */
+        :root,
+        :root[data-theme="dark-gold"] {
+            --bg-main: #080c14;
+            --bg-card: rgba(19, 27, 46, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(8, 12, 20, 0.9);
+        }
+
+        :root[data-theme="cyber-neon"] {
+            --bg-main: #050515;
+            --bg-card: rgba(15, 20, 45, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --brand-accent: #3664c7;
+            --border-color: rgba(17, 28, 185, 0.342);
+            --header-bg: rgba(5, 5, 21, 0.9);
+        }
+
+        :root[data-theme="clean-light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-accent: #d97706;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        :root[data-theme="emerald-matrix"] {
+            --bg-main: #02120b;
+            --bg-card: rgba(6, 32, 20, 0.85);
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --brand-accent: #10b981;
+            --border-color: rgba(16, 185, 129, 0.2);
+            --header-bg: rgba(2, 18, 11, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text {
+            color: var(--brand-accent);
+        }
+
+        .accent-bg {
+            background-color: var(--brand-accent);
+        }
+
+        .glow-hover:hover {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 20px rgba(230, 144, 10, 0.2);
+        }
+
+        /* Classroom UI Styling */
+        .gmeet-container {
+            background-color: #18191c;
+        }
+
+        .gmeet-btn {
+            background-color: #32353b;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        .gmeet-btn:hover {
+            background-color: #40444b;
+        }
+
+        .gmeet-btn-danger {
+            background-color: #ea4335 !important;
+            color: white !important;
+        }
+
+        .gmeet-btn-danger:hover {
+            background-color: #dc2626 !important;
+        }
+
+        .gmeet-btn-active {
+            background-color: var(--brand-accent) !important;
+            color: white !important;
+        }
+
+        /* Audio Wave Animation */
+        @keyframes soundWave {
+
+            0%,
+            100% {
+                height: 6px;
+            }
+
+            50% {
+                height: 20px;
+            }
+        }
+
+        .wave-bar {
+            width: 3px;
+            background-color: #10b981;
+            border-radius: 2px;
+            display: inline-block;
+            animation: soundWave 1.2s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .wave-bar:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .wave-bar:nth-child(4) {
+            animation-delay: 0.1s;
+        }
+
+        /* Toast notifications */
+        .toast-notification {
+            animation: slideInToast 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideInToast {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- REGISTRATION MODAL POPUP (Triggered upon Register / Signup actions) -->
+    <div id="registrationModal"
+        class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden transition-all duration-300"
+        onclick="handleModalBackdropClick(event)">
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/40 shadow-2xl max-w-4xl w-full max-h-[92vh] overflow-y-auto relative animate-in fade-in"
+            onclick="event.stopPropagation()">
+
+            <!-- Modal Header -->
+            <div class="flex items-start justify-between pb-4 border-b border-slate-800 mb-6 gap-4">
+                <div>
+                    <span class="accent-text font-bold uppercase tracking-widest text-[11px] flex items-center gap-1.5">
+                        <i class="fa-solid fa-graduation-cap"></i> Student Enrollment Application
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black mt-1 text-white">Course Student Registration</h2>
+                    <p class="text-slate-400 text-xs mt-1">Complete your registration for Gtrend Tech Hub academy
+                        courses.</p>
+                </div>
+
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <!-- Separate Page Link -->
+                    <a href="register.html" target="_blank" title="Open registration form in a separate page"
+                        class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5 border border-slate-700">
+                        <i class="fa-solid fa-up-right-from-square text-[10px]"></i>
+                        <span class="hidden sm:inline">Separate Page</span>
+                    </a>
+                    <!-- Close Button -->
+                    <button onclick="closeRegistrationModal()" title="Close form"
+                        class="w-9 h-9 rounded-full bg-slate-800 hover:bg-red-600/30 text-slate-400 hover:text-red-400 flex items-center justify-center text-sm transition border border-slate-700">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal Registration Form -->
+            <form onsubmit="handleCourseRegistration(event)" class="space-y-6 text-xs">
+
+                <!-- Block 1: Contact & Personal Details -->
+                <div>
+                    <h3
+                        class="text-xs font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i> 1. Personal & Contact Information
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Full Name *</label>
+                            <input type="text" id="regFullName" required placeholder="e.g. Samuel Alex"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Email Address *</label>
+                            <input type="email" id="regEmail" required placeholder="e.g. samuel@gmail.com"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Phone Number (WhatsApp Preferred) *</label>
+                            <input type="tel" id="regPhone" required placeholder="+234 706 697 6885"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Age Bracket / Status *</label>
+                            <select id="regAgeBracket" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="">Select Option</option>
+                                <option value="Under 18 (Kids / Teen Track)">Under 18 (Kids / Teen Track)</option>
+                                <option value="18 - 25 Years (University / Graduate)">18 - 25 Years (University /
+                                    Graduate)</option>
+                                <option value="26 - 35 Years (Working Professional)">26 - 35 Years (Working
+                                    Professional)</option>
+                                <option value="36+ Years (Career Transition)">36+ Years (Career Transition)</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block font-bold uppercase mb-1">Residential Address / City & Country *</label>
+                            <input type="text" id="regAddress" required
+                                placeholder="e.g. Port Harcourt, Rivers State, Nigeria"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 2: Course & Learning Mode -->
+                <div>
+                    <h3
+                        class="text-xs font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> 2. Course Selection & Preferred Mode
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Select Desired Course / Track *</label>
+                            <select id="regCourseSelect" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="">-- Choose Course --</option>
+                                <option value="Kids Coding & STEM">Kids Coding & STEM Program</option>
+                                <option value="Full-Stack Web Development">Full-Stack Web Development</option>
+                                <option value="IT Project Management">IT Project Management</option>
+                                <option value="Oil & Gas Software Tools">Oil & Gas Software Engineering Tools</option>
+                                <option value="Graphic Design & UI/UX">Graphic Design & UI/UX Prototyping</option>
+                                <option value="Technical Maintenance">Computer Technical Maintenance</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Learning Mode *</label>
+                            <select id="regLearningMode" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Online / Virtual Google Meet Classroom">Online / Virtual Google Meet
+                                    Classroom</option>
+                                <option value="Physical On-Site Classes (Hub)">Physical On-Site Classes (Hub)</option>
+                                <option value="Hybrid (Both Online & On-site)">Hybrid (Both Online & On-site)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Prior Experience Level *</label>
+                            <select id="regExperience" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Complete Beginner">Complete Beginner (No background)</option>
+                                <option value="Intermediate">Intermediate (Basic knowledge)</option>
+                                <option value="Advanced">Advanced (Looking for mastery/cert)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Preferred Class Schedule *</label>
+                            <select id="regSchedule" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Weekday Morning Cohort">Weekday Morning Cohort</option>
+                                <option value="Weekday Evening Cohort">Weekday Evening Cohort</option>
+                                <option value="Weekend Intensive Cohort">Weekend Intensive Cohort</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 3: Laptop & Equipment Check -->
+                <div>
+                    <h3
+                        class="text-xs font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-laptop"></i> 3. Laptop & Equipment Verification
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-2">Do you have a personal working laptop for
+                                practicals? *</label>
+                            <div class="flex flex-wrap gap-6 text-sm">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="laptopChoice" value="Yes, I have a functional laptop"
+                                        required class="accent-amber-500">
+                                    <span>Yes, I have a functional laptop</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="laptopChoice" value="No, I don't have one yet"
+                                        class="accent-amber-500">
+                                    <span>No, I don't have one yet</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="laptopChoice" value="Planning to buy before class starts"
+                                        class="accent-amber-500">
+                                    <span>Planning to buy before class starts</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                            <div>
+                                <label class="block font-bold uppercase mb-1">Laptop Operating System</label>
+                                <select id="regLaptopOS"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Windows OS">Windows OS (Win 10 / 11)</option>
+                                    <option value="macOS (Apple)">macOS (MacBook)</option>
+                                    <option value="Linux / Ubuntu">Linux / Ubuntu</option>
+                                    <option value="None Currently">None Currently</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase mb-1">Stable Internet Access? *</label>
+                                <select id="regInternet" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Yes, high-speed connection available">Yes, high-speed connection
+                                        available</option>
+                                    <option value="Moderate access">Moderate access</option>
+                                    <option value="Relying on Hub Wi-Fi">Will rely on Hub Wi-Fi</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 4: Motivation & Reason -->
+                <div>
+                    <h3
+                        class="text-xs font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb"></i> 4. Motivation & Objectives
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1">Why did you choose this course & what are your
+                                goals? *</label>
+                            <textarea id="regReason" required rows="3"
+                                placeholder="Tell us briefly why you are interested in this course..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase mb-1">How did you hear about Gtrend Tech Hub?
+                                *</label>
+                            <select id="regReferral" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Social Media (Facebook / Instagram / LinkedIn)">Social Media (Facebook /
+                                    Instagram / LinkedIn)</option>
+                                <option value="Friend or Alumni Recommendation">Friend or Alumni Recommendation</option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Flyer / Billboard">Flyer / Billboard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                    <button type="submit"
+                        class="w-full sm:flex-1 py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition shadow-xl flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Application & Enroll
+                    </button>
+                    <button type="button" onclick="closeRegistrationModal()"
+                        class="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-sm transition">
+                        Cancel
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- Top Global Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800/80 transition-all duration-300"
+        style="background: var(--header-bg); backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Left: Brand Logo & Title -->
+            <div class="flex items-center gap-3">
+                <a href="#" onclick="showSection('public-site')" class="flex items-center gap-3 group">
+                    <div
+                        class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-md sm:text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                class="accent-text"> Tech Hub</span></span>
+                        <span class="text-[8px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                            Future of Tech Solutions</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center: Clean, Balanced Navigation Links -->
+            <nav id="publicNav"
+                class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <a href="index.html"
+                    class="px-2.5 py-2 rounded-lg text-amber-400 bg-amber-500/10 border border-amber-500/30 font-bold transition">Home</a>
+                <a href="about.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">About</a>
+                <a href="services.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Services</a>
+                <a href="courses.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Courses</a>
+                <a href="news.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">News &amp;
+                    Events</a>
+                <a href="gallery.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Gallery</a>
+                <a href="contact.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Contact</a>
+            </nav>
+
+            <!-- Right: Tools, Theme & Virtual Portal -->
+            <div class="flex items-center gap-2">
+                <!-- Login Button -->
+                <a href="login.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+
+
+
+                <!-- Theme Switcher Pill -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeMenu()"
+                        class="h-10 px-3 rounded-xl glass-panel text-xs font-bold flex items-center gap-1.5 hover:border-amber-500 transition text-slate-200 border border-slate-700/80">
+                        <i class="fa-solid fa-palette accent-text text-sm"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                    </button>
+                    <!-- Theme Dropdown Menu -->
+                    <div id="themeDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel shadow-2xl py-2 z-50 border border-slate-700">
+                        <button onclick="setTheme('dark-gold')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm"></span> Dark Gold
+                            (Default)
+                        </button>
+                        <button onclick="setTheme('cyber-neon')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-sm"></span> Cyber Neon
+                        </button>
+                        <button onclick="setTheme('clean-light')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-600 inline-block shadow-sm"></span> Clean Light
+                        </button>
+                        <button onclick="setTheme('emerald-matrix')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-sm"></span> Emerald
+                            Matrix
+                        </button>
+                    </div>
+                </div>
+
+
+
+                <!-- Portal Nav Back Button (active in portal area) -->
+                <button id="portalBackBtn" onclick="showSection('public-site')"
+                    class="hidden h-10 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-2 border border-slate-700">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Main Site</span>
+                </button>
+
+                <!-- Mobile Menu Button (< 1024px) -->
+                <button id="mobileMenuBtn" onclick="toggleMobileNav()"
+                    class="lg:hidden h-10 w-10 rounded-xl glass-panel border border-slate-700/80 text-slate-200 hover:text-white flex items-center justify-center transition">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Responsive Dropdown Menu -->
+        <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slate-800 px-4 py-4 space-y-2 glass-panel"
+            style="background: var(--header-bg);">
+            <a href="index.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 font-bold transition">Home</a>
+            <a href="about.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Aboutces.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200
+                hover:bg-slate-800/80 transition">Services</a>
+            <a href="courses.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Courses
+                Catalog</a>
+            <a href="news.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">News
+                &amp; Events</a>
+            <a href="gallery.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Gallery</a>
+            <a href="contact.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Contact</a>
+            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800">
+                <a href="login.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 text-white border border-slate-700">Login</a>
+                <a href="register.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider accent-bg text-white">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: PUBLIC MAIN WEBSITE -->
+    <main id="public-site" class="pt-20">
+
+        <!-- 1. HERO SECTION -->
+        <section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7">
+                    <div
+                        class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-bold uppercase tracking-wider mb-6">
+                        <i class="fa-solid fa-shield-halved"></i> Excellence in Digital Solutions
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight leading-tight mb-6">
+                        Transforming Digital Dreams into <span class="accent-text">Reality</span>
+                    </h1>
+                    <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                        From Full-Stack Development to AI Engineering, Creative Engineering, Graphic Desiging, Project
+                        Management, Kids Coding and
+                        System Maintenance.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#services"
+                            class="px-8 py-4 rounded-xl accent-bg text-white font-bold hover:opacity-90 transition shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-briefcase"></i> Explore Our Services
+                        </a>
+                        <a href="#courses"
+                            class="px-8 py-4 rounded-xl glass-panel font-bold hover:bg-slate-800 transition flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap accent-text"></i> View Courses
+                        </a>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-5">
+                    <div
+                        class="glass-panel p-6 rounded-3xl border border-slate-700 text-center relative overflow-hidden">
+                        <img src="./assets/images/hero.jpg"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'600\' height=\'400\' viewBox=\'0 0 600 400\'><rect fill=\'%23131b2e\' width=\'600\' height=\'400\'/><text fill=\'%23e6900a\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>Gtrend Tech Hub</text></svg>';"
+                            alt="Gtrend Hub" class="rounded-2xl w-full h-72 object-cover mb-6">
+                        <h3 class="text-xl font-bold mb-2">Student & Instructor Portal</h3>
+                        <p class="text-xs text-slate-400 mb-4">Clock in, host or join live interactive classes, and
+                            access resources completely offline.</p>
+                        <div class="flex items-center gap-3">
+                            <button onclick="showSection('portal-area')"
+                                class="flex-1 py-3 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition">
+                                Open Virtual Portal &rarr;
+                            </button>
+                            <button onclick="openRegistrationModal()"
+                                class="px-4 py-3 rounded-xl border border-amber-500/40 text-amber-400 hover:bg-amber-500 hover:text-white font-bold text-sm transition">
+                                Register
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ABOUT US SECTION -->
+        <section id="about" class="py-16 bg-slate-900/60 border-y border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12" style="margin-top: 70px;">
+                    <span class="accent-text font-bold uppercase tracking-widest text-xs">About Us</span>
+                    <h2 class="text-3xl font-black mt-2">Pioneering Next Generation Tech <br> Solutions & Services,
+                    </h2>
+                    <p>Through Creative, Innovative & Educational Training system </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="glass-panel p-8 rounded-2xl">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Interactive Virtual Classes</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Integrated offline studio, local screen
+                            sharing, teacher moderation, and real-time attendance tracking.</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Custom website, Software & Graphic Design</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">High-performance responsive websites, identity
+                            branding, UI/UX prototyping, and software engineering.</p>
+                    </div>
+                    <div class="glass-panel p-8 rounded-2xl">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Technical Maintenance</h3>
+                        <p class="text-xs text-slate-400 leading-relaxed">Enterprise server health monitoring, website
+                            bug updates, hardware consultation, and security audits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SERVICES SECTION (12 DISTINCT OFFERINGS) -->
+        <section id="services" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span
+                    class="accent-text font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-1.5 mb-2">
+                    <i class="fa-solid fa-layer-group"></i> Enterprise & Client Solutions
+                </span>
+                <h2 class="text-3xl sm:text-5xl font-black text-white leading-tight">Our Core Services & Digital
+                    Solutions</h2>
+                <p class="text-slate-300 text-xs sm:text-sm mt-3">Explore our world-class enterprise services engineered
+                    to scale your operations, secure your digital assets, and drive business growth.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- 1. Web & App Development -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-[11px] font-bold">Engineering</span>
+                            <i class="fa-solid fa-laptop-code text-blue-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Web & App Development</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            High-performance responsive websites, progressive web applications (PWAs), SaaS platforms,
+                            and native iOS/Android mobile apps built with React, Node.js, and Flutter.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Lightning-fast load speeds (<1s),
+                                    modern responsive design, SEO optimization, and 99.9% uptime architecture.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Web%20%26%20App%20Development%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 2. AI & Automation -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-[11px] font-bold">Intelligence</span>
+                            <i class="fa-solid fa-brain text-purple-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">AI & Automation</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Custom generative AI pipelines, intelligent customer service chatbots, RPA robotic process
+                            automation, and LLM-powered business tools.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Reduces manual business costs by up to
+                                70% and enables automated 24/7 intelligent operations.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20AI%20%26%20Automation%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 3. UI/UX & Graphic Design -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-pink-500/10 text-pink-400 text-[11px] font-bold">Creative</span>
+                            <i class="fa-solid fa-pen-nib text-pink-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">UI/UX & Graphic Design</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            High-converting interactive Figma prototypes, mobile design systems, brand identities,
+                            logos, and high-impact marketing visuals.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Boosts user conversion rates and
+                                builds a memorable, premium brand image that stands out.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20UI%2FUX%20%26%20Graphic%20Design%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 4. Networking & ICT Solutions -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[11px] font-bold">Infrastructure</span>
+                            <i class="fa-solid fa-network-wired text-emerald-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Networking & ICT Solutions</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Enterprise LAN/WAN architecture, Cisco routing & switching, structured CAT6A/Fiber cabling,
+                            and server rack installations for offices and facilities.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Zero-lag, highly resilient network
+                                backbone with redundant failover to eliminate workplace downtime.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Networking%20%26%20ICT%20Solutions%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 5. Starlink & Internet Solutions -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-[11px] font-bold">Satellite</span>
+                            <i class="fa-solid fa-satellite-dish text-cyan-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Starlink & Internet Solutions</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Certified Starlink terminal mounting, lightning-protected cabling, multi-AP Wi-Fi 6 mesh
+                            distribution, and business failover internet setups.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">200+ Mbps ultra-fast broadband
+                                anywhere in Nigeria with guaranteed seamless estate and office coverage.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Starlink%20%26%20Internet%20Solutions%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 6. Database & Digital Systems -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-[11px] font-bold">Data
+                                Systems</span>
+                            <i class="fa-solid fa-database text-amber-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Database & Digital Systems</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Custom SQL/NoSQL databases, cloud warehousing, ERP business software, automated inventory,
+                            and real-time synchronizing portal solutions.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">End-to-end data integrity, automated
+                                backups, and real-time business intelligence reports.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Database%20%26%20Digital%20Systems%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 7. GPS & Tracking Solutions -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[11px] font-bold">Telematics</span>
+                            <i class="fa-solid fa-location-crosshairs text-emerald-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">GPS & Tracking Solutions</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Real-time vehicle and vessel fleet tracking, asset telematics, geo-fencing speed alerts,
+                            remote engine shutdown, and automated route analytics.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Complete security against asset theft,
+                                fuel monitoring, and actionable driver analytics.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20GPS%20%26%20Tracking%20Solutions%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 8. Cybersecurity -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-[11px] font-bold">Defense</span>
+                            <i class="fa-solid fa-shield-virus text-red-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Cybersecurity</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Vulnerability assessments, penetration testing, endpoint firewall defense, SOC monitoring,
+                            and enterprise security compliance audits.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Guards corporate assets from
+                                ransomware, breaches, and unauthorized data intrusions.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Cybersecurity%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 9. Digital Transformation -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-[11px] font-bold">Modernization</span>
+                            <i class="fa-solid fa-rocket text-indigo-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Digital Transformation</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Transitioning legacy paper processes to secure cloud software, automated workflows, and
+                            modernized enterprise digital ecosystems.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Transforms administrative bottlenecks
+                                into streamlined, transparent profit engines.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Digital%20Transformation%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 10. IT Consulting & Support -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-teal-500/10 text-teal-400 text-[11px] font-bold">Advisory</span>
+                            <i class="fa-solid fa-headset text-teal-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">IT Consulting & Support</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            24/7 dedicated helpdesk, hardware lifecycle maintenance, strategic IT roadmaps, and virtual
+                            Chief Technology Officer (vCTO) advisory.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Rapid SLA incident response times and
+                                expert guidance to optimize corporate IT spending.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20IT%20Consulting%20%26%20Support%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 11. Multimedia Production -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-[11px] font-bold">Production</span>
+                            <i class="fa-solid fa-video text-rose-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Multimedia Production</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            4K corporate video documentaries, promotional commercials, 3D motion animations, product
+                            demo visualizers, and sound design.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Cinema-grade visual storytelling that
+                                captures customer emotion and elevates marketing ROI.</p>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub%2C%20I%20want%20to%20inquire%20about%20your%20Multimedia%20Production%20services."
+                        target="_blank" rel="noopener noreferrer"
+                        class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-brands fa-whatsapp text-base text-emerald-300"></i> Inquire via WhatsApp
+                    </a>
+                </div>
+
+                <!-- 12. Tech Training -->
+                <div
+                    class="glass-panel p-8 rounded-3xl border border-slate-800 glow-hover flex flex-col justify-between transition-all duration-300">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span
+                                class="px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-[11px] font-bold">Academy</span>
+                            <i class="fa-solid fa-graduation-cap text-amber-400 text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-white mb-2">Tech Training</h3>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Comprehensive bootcamps for individuals and customized corporate upskilling in Software
+                            Engineering, AI, Design, Cybersecurity, and Kids STEM.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-2xl border border-slate-800/80 mb-6">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block mb-1">Why Clients Choose
+                                This:</span>
+                            <p class="text-[11px] text-slate-400 leading-relaxed">Hands-on practical studio cohorts,
+                                guaranteed job-ready portfolios, and accredited certifications.</p>
+                        </div>
+                    </div>
+                    <a href="courses.html"
+                        class="w-full py-3.5 rounded-xl border border-amber-500/40 text-amber-400 hover:bg-amber-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-graduation-cap"></i> Browse Academy Courses &rarr;
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 4. ACADEMY & COURSES SPOTLIGHT SECTION -->
+        <section class="py-16 bg-slate-900/50 border-y border-slate-800 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+                <div class="max-w-2xl">
+                    <span class="accent-text font-bold uppercase tracking-widest text-xs flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-graduation-cap"></i> Gtrend Tech Academy
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white leading-tight">Upskill with Intensive Hands-On
+                        Tech Courses</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-3 leading-relaxed">From Kids Coding to Full-Stack Web
+                        Development, AI Automation, and Ethical Hacking. Learn onsite in our high-speed Starlink studio
+                        or via our interactive virtual portal.</p>
+                </div>
+                <div class="flex items-center gap-4 flex-shrink-0">
+                    <a href="courses.html"
+                        class="px-8 py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition shadow-xl flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Explore All Courses &rarr;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. LATEST NEWS & EVENTS PREVIEW SECTION -->
+        <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-12">
+                <div>
+                    <span class="accent-text font-bold uppercase tracking-widest text-xs flex items-center gap-1.5">
+                        <i class="fa-solid fa-bullhorn"></i> News & Announcements
+                    </span>
+                    <h2 class="text-3xl font-black text-white mt-1">Latest Hub Updates & Projects</h2>
+                </div>
+                <a href="news.html" class="text-xs font-bold accent-text hover:underline flex items-center gap-1">
+                    View All News &rarr;
+                </a>
+            </div>
+
+            <div id="homeNewsPreviewGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dynamically loaded via api.js -->
+                <div
+                    class="glass-panel p-6 rounded-3xl border border-slate-800 text-center text-slate-400 text-xs col-span-3">
+                    <i class="fa-solid fa-spinner fa-spin accent-text text-xl mb-2"></i>
+                    <p>Loading latest updates...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. MULTIMEDIA GALLERY HIGHLIGHTS SECTION -->
+        <section class="py-16 bg-slate-900/40 border-y border-slate-800 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
+                    <div>
+                        <span class="accent-text font-bold uppercase tracking-widest text-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-images"></i> Media Showcase
+                        </span>
+                        <h2 class="text-3xl font-black text-white mt-1">Moments at Gtrend Hub</h2>
+                    </div>
+                    <a href="gallery.html"
+                        class="text-xs font-bold accent-text hover:underline flex items-center gap-1">
+                        Explore Full Gallery &rarr;
+                    </a>
+                </div>
+
+                <div id="homeGalleryPreviewGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Dynamically loaded via api.js -->
+                    <div
+                        class="glass-panel p-6 rounded-3xl border border-slate-800 text-center text-slate-400 text-xs col-span-3">
+                        <i class="fa-solid fa-spinner fa-spin accent-text text-xl mb-2"></i>
+                        <p>Loading media showcase...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT DETAILS & MESSAGE FORM SECTION -->
+        <section id="contact" class="py-20 bg-slate-900/60 border-y border-slate-800 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="accent-text font-bold uppercase tracking-widest text-xs">Get In Touch</span>
+                    <h2 class="text-3xl font-black mt-2">Contact Us & Direct Inquiry</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <!-- Direct Contact Information -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div>
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="text-2xl font-black">Gtrend<span class="accent-text"> Tech
+                                        Hub</span></span>
+                            </div>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Your premier hub for software engineering, tech skills training, oil & gas technical
+                                software solutions, and digital creative designs.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4 text-xs">
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-lg accent-bg text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 font-bold uppercase">Official Gmail</span>
+                                    <a href="mailto:gtrendhubx@gmail.com"
+                                        class="text-white font-semibold hover:underline">gtrendhubx@gmail.com</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-lg accent-bg text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 font-bold uppercase">Phone & WhatsApp</span>
+                                    <a href="tel:+2347066976885" class="text-white font-semibold hover:underline">+234
+                                        (0) 706 697 6885 / +234 (0) 706 877 8268</a>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-3">
+                                <div
+                                    class="w-8 h-8 rounded-lg accent-bg text-white flex items-center justify-center flex-shrink-0">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-slate-400 font-bold uppercase">Main Hub Address</span>
+                                    <p class="text-white font-semibold">Gtrend Tech Complex, Port Harcourt, Nigeria.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Contact Form -->
+                    <div class="lg:col-span-7 glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">
+                        <h3 class="text-xl font-bold mb-2">Send Us a Direct Message</h3>
+                        <p class="text-xs text-slate-400 mb-6">Fill out the form below and our team will get back to you
+                            immediately.</p>
+
+                        <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block font-bold uppercase mb-1">Your Name *</label>
+                                    <input type="text" id="contactName" required placeholder="John Doe"
+                                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                </div>
+                                <div>
+                                    <label class="block font-bold uppercase mb-1">Your Email *</label>
+                                    <input type="email" id="contactEmail" required placeholder="john@example.com"
+                                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase mb-1">Select Service or Track *</label>
+                                <select id="contactService" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Web Development">Full-Stack Web Development</option>
+                                    <option value="Kids Coding">Kids Tech & Coding</option>
+                                    <option value="Oil & Gas Software">Oil & Gas Software Training</option>
+                                    <option value="Graphic Design">Graphic Design & UI/UX</option>
+                                    <option value="Technical Maintenance">Technical Maintenance Services</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase mb-1">Message *</label>
+                                <textarea id="contactMessage" required rows="3"
+                                    placeholder="How can Gtrend Tech Hub assist you today?"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition">
+                                Submit Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FOUNDER SPOTLIGHT SECTION -->
+        <section id="founder" class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-slate-700 relative overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-5 text-center">
+                        <div class="relative inline-block">
+                            <img src="C:\Users\HP\Desktop\GTREND HUB\Personal Files\My Photos\1775824533496.jpg"
+                                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'400\' viewBox=\'0 0 400 400\'><circle cx=\'200\' cy=\'200\' r=\'200\' fill=\'%23131b2e\'/><text fill=\'%23e6900a\' font-family=\'sans-serif\' font-size=\'24\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>Dr. Trend</text></svg>';"
+                                alt="Founder"
+                                class="w-64 h-64 rounded-full object-cover mx-auto border-4 border-amber-500 shadow-2xl">
+                            <div
+                                class="absolute bottom-2 right-4 accent-bg text-white w-10 h-10 rounded-full flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-quote-right"></i>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-black mt-6">Engr. Pius Neebari A.</h3>
+                        <p class="text-xs accent-text font-bold uppercase tracking-widest mt-1">Founder & CEO, Gtrend
+                            Tech Hub</p>
+                    </div>
+                    <div class="lg:col-span-7">
+                        <span class="accent-text font-bold uppercase tracking-widest text-xs">Founder's Vision</span>
+                        <h2 class="text-3xl font-black mt-2 mb-6">Building Africa's Next Generation Tech Powerhouse</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            "At Gtrend Tech Hub, our vision is grounded in bridging the gap between clients, talent and
+                            global
+                            digital opportunity. We created this system so our clients and students can not only enjoy
+                            or learn
+                            cutting-edge technology, but also experience next generation creative and innovative
+                            solutions."
+                        </p>
+                        <p class="text-slate-400 text-xs leading-relaxed mb-6">
+                            Under Engr. Pius's leadership, Gtrend Tech Hub has trained over 1,500+ professionals and
+                            youth, delivering enterprise tech solutions for corporate organizations worldwide.
+                        </p>
+                        <div class="flex items-center gap-4 text-slate-400 text-lg">
+                            <a href="#contact" class="hover:text-amber-500 transition"><i
+                                    class="fa-brands fa-linkedin"></i></a>
+                            <a href="#contact" class="hover:text-amber-500 transition"><i
+                                    class="fa-brands fa-twitter"></i></a>
+                            <a href="mailto:gtrendhubx@gmail.com" class="hover:text-amber-500 transition"><i
+                                    class="fa-solid fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. OUR TEAM SECTION -->
+        <section id="team" class="py-16 bg-slate-900/40 border-y border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="accent-text font-bold uppercase tracking-widest text-xs">Meet Our Team</span>
+                    <h2 class="text-3xl font-black mt-2">Creative Engineers, Expert Instructors <br> & Team Leaders</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Team 1 -->
+                    <div class="glass-panel p-6 rounded-2xl text-center border border-slate-800">
+                        <img src="./assets/images/team-sarah.jpg"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\' viewBox=\'0 0 300 300\'><circle cx=\'150\' cy=\'150\' r=\'150\' fill=\'%23131b2e\'/><text fill=\'%23e6900a\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>Sarah Jenkins</text></svg>';"
+                            alt="Team"
+                            class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-amber-500">
+                        <h4 class="font-bold text-base">Engr. Victor Clifford</h4>
+                        <p class="text-xs accent-text font-semibold mb-2">Head of Full-Stack Development
+                        <p class="text-slate-400 text-xs">Senior Developer with 8+ years experience in React
+                            & Cloud systems</p>
+                    </div>
+                    <!-- Team 2 -->
+                    <div class="glass-panel p-6 rounded-2xl text-center border border-slate-800">
+                        <img src="./assets/images/team-david.jpg"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\' viewBox=\'0 0 300 300\'><circle cx=\'150\' cy=\'150\' r=\'150\' fill=\'%23131b2e\'/><text fill=\'%2300f0ff\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>David Okon</text></svg>';"
+                            alt="Team"
+                            class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-blue-500">
+                        <h4 class="font-bold text-base">Engr. Benedict Anthony</h4>
+                        <p class="text-xs text-blue-400 font-semibold mb-2">Lead Oil & Gas Instructor</p>
+                        <p class="text-slate-400 text-xs">Petroleum software specialist focusing on reservoir data
+                            modeling tools.</p>
+                    </div>
+                    <!-- Team 3 -->
+                    <div class="glass-panel p-6 rounded-2xl text-center border border-slate-800">
+                        <img src="./assets/images/team-grace.jpg"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\' viewBox=\'0 0 300 300\'><circle cx=\'150\' cy=\'150\' r=\'150\' fill=\'%23131b2e\'/><text fill=\'%23c084fc\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>Grace Adams</text></svg>';"
+                            alt="Team"
+                            class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-purple-500">
+                        <h4 class="font-bold text-base">Engr. Emeka Jeffery</h4>
+                        <p class="text-xs text-purple-400 font-semibold mb-2">Kids Coding Director</p>
+                        <p class="text-slate-400 text-xs">Passionate STEM educator specializing in youth logic & visual
+                            block programming.</p>
+                    </div>
+                    <!-- Team 4 -->
+                    <div class="glass-panel p-6 rounded-2xl text-center border border-slate-800">
+                        <img src="C:\Users\HP\Desktop\GTREND HUB\Personal Files\My Photos\WhatsApp Image 2026-07-24 at 4.05.18 PM.jpeg"
+                            onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\' viewBox=\'0 0 300 300\'><circle cx=\'150\' cy=\'150\' r=\'150\' fill=\'%23131b2e\'/><text fill=\'%2310b981\' font-family=\'sans-serif\' font-size=\'18\' font-weight=\'bold\' x=\'50%\' y=\'50%\' text-anchor=\'middle\'>Marcus Vance</text></svg>';"
+                            alt="Team"
+                            class="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-2 border-emerald-500">
+                        <h4 class="font-bold text-base">Charles Clifford</h4>
+                        <p class="text-xs text-emerald-400 font-semibold mb-2">Creative Engineer, Brand Lead <br> and
+                            Project
+                            Manager</p>
+                        <p class="text-slate-400 text-xs">UI/UX, Graphic Design and Project Management consultant with
+                            expertise in
+                            corporate identity visual design.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. SPONSORS & PARTNERS SECTION -->
+        <section id="sponsors" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="accent-text font-bold uppercase tracking-widest text-xs">Trust & Excellence</span>
+            <h2 class="text-3xl font-black mt-2 mb-10">Our Official Partners & Sponsors</h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-brands fa-microsoft text-2xl mr-2 accent-text"></i> TechCorp
+                </div>
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-brands fa-google text-2xl mr-2 text-blue-400"></i> CloudEdu
+                </div>
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-solid fa-oil-well text-2xl mr-2 text-emerald-400"></i> EnergyTech
+                </div>
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-brands fa-aws text-2xl mr-2 text-amber-500"></i> CloudHost
+                </div>
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-solid fa-graduation-cap text-2xl mr-2 text-purple-400"></i> STEM Africa
+                </div>
+                <div
+                    class="glass-panel p-4 rounded-xl border border-slate-800 flex items-center justify-center font-bold text-slate-400 text-sm hover:text-white transition">
+                    <i class="fa-solid fa-microchip text-2xl mr-2 text-pink-400"></i> Innovate Hub
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Universal Footer -->
+        <!-- GLOBAL UNIFIED FOOTER -->
+        <footer class="pt-16 pb-12 border-t border-slate-800/80 mt-auto"
+            style="background: var(--bg-card); backdrop-filter: blur(14px);">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+
+                    <!-- Col 1: Brand & Bio -->
+                    <div class="lg:col-span-2 space-y-4">
+                        <a href="index.html" class="flex items-center gap-3">
+                            <div
+                                class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20">
+                                <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                        fill="white" />
+                                </svg>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                        class="accent-text"> Tech Hub</span></span>
+                                <span
+                                    class="text-[9px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                                    Future of Tech Solutions</span>
+                            </div>
+                        </a>
+                        <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                            Premier digital technology academy &amp; software engineering enterprise. Empowering
+                            next-generation engineers, founders, and businesses with world-class tech skills and custom
+                            digital solutions.
+                        </p>
+                        <div class="flex items-center gap-3 text-slate-400 text-sm pt-2">
+                            <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                target="_blank" rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/50 transition"
+                                title="WhatsApp">
+                                <i class="fa-brands fa-whatsapp"></i>
+                            </a>
+                            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                                title="Twitter/X">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/50 transition"
+                                title="LinkedIn">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                                class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                                title="GitHub">
+                                <i class="fa-brands fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Col 2: Navigation -->
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Navigation</h4>
+                        <ul class="space-y-2.5 text-xs text-slate-400">
+                            <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                            <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                            <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                            <li><a href="courses.html" class="hover:text-white transition">Courses Catalog</a></li>
+                            <li><a href="news.html" class="hover:text-white transition">News &amp; Events</a></li>
+                            <li><a href="gallery.html" class="hover:text-white transition">Gallery</a></li>
+                            <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 3: Academy Tracks -->
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academy Tracks</h4>
+                        <ul class="space-y-2.5 text-xs text-slate-400">
+                            <li><a href="courses.html" class="hover:text-white transition">Full-Stack Web Dev</a></li>
+                            <li><a href="courses.html" class="hover:text-white transition">AI &amp; Automation</a></li>
+                            <li><a href="courses.html" class="hover:text-white transition">UI/UX Product Design</a></li>
+                            <li><a href="courses.html" class="hover:text-white transition">Cybersecurity Defense</a>
+                            </li>
+                            <li><a href="courses.html" class="hover:text-white transition">Starlink &amp; Networking</a>
+                            </li>
+                            <li><a href="courses.html" class="hover:text-white transition">Kids Coding &amp; STEM</a>
+                            </li>
+                            <li><a href="register.html" class="accent-text font-bold hover:underline">Apply for
+                                    Admission &rarr;</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Col 4: Campus & Support -->
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Studio Campus</h4>
+                        <ul class="space-y-2.5 text-xs text-slate-400">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-location-dot accent-text mt-0.5 text-[11px]"></i>
+                                <span>Port Harcourt Tech District, Rivers State, Nigeria</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-brands fa-whatsapp text-emerald-400 text-[11px]"></i>
+                                <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="hover:text-emerald-400 transition">+234 706 697 6885</a>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-envelope text-blue-400 text-[11px]"></i>
+                                <a href="mailto:admissions@gtrendhub.com"
+                                    class="hover:text-white transition">admissions@gtrendhub.com</a>
+                            </li>
+                            <li class="pt-2">
+                                <span
+                                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 24/7
+                                    Starlink Hub Online
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Row: Copyright & Links -->
+                <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                    <p>&copy; 2026 Gtrend Tech Hub. All rights reserved. Driving Africa's Digital Revolution.</p>
+                    <div class="flex items-center gap-6">
+                        <a href="about.html#team" class="hover:text-slate-300 transition">Our Team</a>
+                        <a href="services.html" class="hover:text-slate-300 transition">Our Services</a>
+                        <a href="login.html" class="hover:text-slate-300 transition">Portal Login</a>
+                        <a href="admin/login.html" class="accent-text font-bold hover:underline">Admin Gateway</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- SECTION 2: PORTAL & LIVE CLASSROOM AREA -->
+    <main id="portal-area" class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto hidden">
+
+        <!-- Portal Header & Role Switcher Toolbar -->
+        <div
+            class="glass-panel p-6 rounded-3xl mb-8 flex flex-col md:flex-row items-center justify-between gap-4 border border-slate-700">
+            <div>
+                <span class="text-xs font-bold uppercase accent-text"><i class="fa-solid fa-lock mr-1"></i> Secure
+                    Gtrend Portal</span>
+                <h2 class="text-2xl font-black mt-1">Virtual Classroom Console</h2>
+            </div>
+
+            <!-- Role Selector: Student vs Instructor/Admin -->
+            <div class="flex items-center gap-2 bg-slate-900 p-1.5 rounded-2xl border border-slate-700">
+                <button id="roleStudentBtn" onclick="switchPortalRole('student')"
+                    class="px-5 py-2 rounded-xl text-xs font-bold accent-bg text-white transition">
+                    <i class="fa-solid fa-user-graduate mr-1"></i> Student Portal
+                </button>
+                <button id="roleTeacherBtn" onclick="switchPortalRole('teacher')"
+                    class="px-5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition">
+                    <i class="fa-solid fa-user-shield mr-1"></i> Instructor / Admin
+                </button>
+            </div>
+        </div>
+
+        <!-- AUTHENTICATION / LOGIN OVERLAY -->
+        <div id="authContainer" class="glass-panel p-8 rounded-3xl max-w-md mx-auto my-12 border border-slate-700">
+            <div class="text-center mb-6">
+                <div
+                    class="w-14 h-14 rounded-full bg-amber-500/20 text-amber-500 flex items-center justify-center text-2xl mx-auto mb-3">
+                    <i class="fa-solid fa-user-check"></i>
+                </div>
+                <h3 class="text-xl font-bold" id="authTitle">Sign In to Gtrend Portal</h3>
+                <p class="text-xs text-slate-400 mt-1" id="authSubtitle">Clock in, join classes, or host meeting rooms
+                </p>
+            </div>
+
+            <form onsubmit="handlePortalLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider mb-2">Username / Email *</label>
+                    <input type="text" id="loginUser" required placeholder="e.g. trainee@gtrend.com" value="Alex Samuel"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider mb-2">Password *</label>
+                    <input type="password" required value="******"
+                        class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <button type="submit"
+                    class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition">
+                    Authenticate & Access Console
+                </button>
+            </form>
+        </div>
+
+        <!-- LOGGED IN PORTAL CONTENT CONTAINER -->
+        <div id="authenticatedPortalContent" class="hidden space-y-8">
+
+            <!-- Active User Welcome Ribbon -->
+            <div class="glass-panel p-4 rounded-2xl flex items-center justify-between text-xs border border-slate-800">
+                <div class="flex items-center gap-3">
+                    <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                    <span>Active User: <strong id="activeUserName" class="text-white">User</strong> (<span
+                            id="activeRoleName" class="accent-text font-bold">Student</span>)</span>
+                    <span class="hidden md:inline text-slate-500">|</span>
+                    <span class="hidden md:inline text-emerald-400 font-semibold"><i
+                            class="fa-solid fa-circle-check mr-1"></i> Live Hub Sync Active</span>
+                </div>
+                <button onclick="logoutPortal()" class="text-slate-400 hover:text-red-400 font-bold transition">
+                    <i class="fa-solid fa-right-from-bracket mr-1"></i> Sign Out
+                </button>
+            </div>
+
+            <!-- STUDENT VIEW CONTENT -->
+            <div id="studentView" class="space-y-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Clock In Console -->
+                    <div class="lg:col-span-5 glass-panel p-6 rounded-3xl border border-slate-700">
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-clock accent-text mr-2"></i> Attendance
+                                Clock-In</h3>
+                            <span id="digitalClock" class="text-xs font-mono text-slate-400">12:00:00 PM</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-6">Clock in before joining your live interactive class to
+                            record attendance offline.</p>
+
+                        <form onsubmit="return false;" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider mb-2">Track / Class
+                                    *</label>
+                                <select id="studentTrackSelect"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white">
+                                    <option value="Kids Tech & Coding">Kids Tech & Coding Explorers</option>
+                                    <option value="Full-Stack Web Dev" selected>Full-Stack Web Engineering</option>
+                                    <option value="IT Project Management">IT Project Management</option>
+                                    <option value="Oil & Gas Software">Oil & Gas Software</option>
+                                </select>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <button type="button" onclick="recordAttendance('Clock In')"
+                                    class="py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition">
+                                    <i class="fa-solid fa-sign-in-alt"></i> Clock In
+                                </button>
+                                <button type="button" onclick="recordAttendance('Clock Out')"
+                                    class="py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition">
+                                    <i class="fa-solid fa-sign-out-alt"></i> Clock Out
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Available Classes List -->
+                    <div class="lg:col-span-7 glass-panel p-6 rounded-3xl border border-slate-700">
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-video text-red-500 mr-2"></i> Available
+                                Virtual Classrooms</h3>
+                            <span class="text-xs text-emerald-400 font-bold"><i
+                                    class="fa-solid fa-satellite-dish mr-1"></i> Live Studio</span>
+                        </div>
+
+                        <div class="space-y-3" id="availableClassList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- INSTRUCTOR / TEACHER VIEW CONTENT -->
+            <div id="teacherView" class="hidden space-y-8">
+                <!-- Instructor Sub-Navigation Tabs -->
+                <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3 text-xs font-bold">
+                    <button id="tabBtnHost" onclick="switchTeacherTab('host')"
+                        class="px-4 py-2 rounded-xl accent-bg text-white transition">
+                        <i class="fa-solid fa-headset mr-1.5"></i> Host Console & Live Sessions
+                    </button>
+                    <button id="tabBtnAttendance" onclick="switchTeacherTab('attendance')"
+                        class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition">
+                        <i class="fa-solid fa-list-check mr-1.5"></i> Attendance Audit
+                    </button>
+                    <button id="tabBtnRegistrations" onclick="switchTeacherTab('registrations')"
+                        class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-graduate mr-1.5"></i> Course Applications
+                        <span id="regCountBadge"
+                            class="px-1.5 py-0.5 rounded-full bg-amber-500 text-black text-[10px] font-black">0</span>
+                    </button>
+                    <button id="tabBtnInquiries" onclick="switchTeacherTab('inquiries')"
+                        class="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-envelope mr-1.5"></i> Inquiries
+                        <span id="inquiryCountBadge"
+                            class="px-1.5 py-0.5 rounded-full bg-cyan-500 text-black text-[10px] font-black">0</span>
+                    </button>
+                </div>
+
+                <!-- 1. Host Console Tab Pane -->
+                <div id="teacherTabHost" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <!-- Instructor Launch Console -->
+                    <div class="lg:col-span-5 glass-panel p-6 rounded-3xl border border-slate-700">
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-headset accent-text mr-2"></i>
+                                Instructor Host Console</h3>
+                            <span
+                                class="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold">Host
+                                Privileges</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mb-4">Host and launch live interactive classroom sessions
+                            completely offline for your cohort.</p>
+
+                        <form onsubmit="handleCreateClassroom(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider mb-2">Class Session Title
+                                    *</label>
+                                <input type="text" id="newClassTitle" required
+                                    placeholder="e.g. Web Dev Cohort - React Hooks Masterclass"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider mb-2">Assign Track
+                                    *</label>
+                                <select id="newClassTrack"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white">
+                                    <option value="Kids Coding">Kids Tech Track</option>
+                                    <option value="Web Engineering" selected>Full-Stack Web Development</option>
+                                    <option value="Project Management">IT Project Management</option>
+                                    <option value="Oil & Gas Software">Oil & Gas Engineering Software</option>
+                                </select>
+                            </div>
+                            <button type="submit"
+                                class="w-full py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-2 shadow-lg">
+                                <i class="fa-solid fa-plus-circle"></i> Create & Launch Session
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Host Active Sessions Manager -->
+                    <div class="lg:col-span-7 glass-panel p-6 rounded-3xl border border-slate-700">
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-chalkboard text-amber-500 mr-2"></i>
+                                Managed Classroom Sessions</h3>
+                            <span class="text-xs text-slate-400 font-mono">Offline Sync Active</span>
+                        </div>
+                        <div class="space-y-3" id="teacherClassList">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Attendance Audit Tab Pane -->
+                <div id="teacherTabAttendance" class="hidden glass-panel p-6 rounded-3xl border border-slate-700">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-800">
+                        <div>
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-list-check accent-text mr-2"></i> Live
+                                Attendance Audit</h3>
+                            <p class="text-xs text-slate-400">Records of student clock-ins and clock-outs recorded
+                                offline.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="exportAttendanceCSV()"
+                                class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-file-csv text-emerald-400"></i> Export CSV
+                            </button>
+                            <button onclick="clearAttendanceLogs()"
+                                class="px-3 py-1.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-xs font-bold text-red-400 hover:text-white transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-trash"></i> Clear Logs
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-900/80 text-slate-400 uppercase border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">Student Name</th>
+                                    <th class="p-3">Track</th>
+                                    <th class="p-3">Action</th>
+                                    <th class="p-3">Timestamp</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teacherAttendanceLog" class="divide-y divide-slate-800 text-slate-300">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. Course Applications Tab Pane -->
+                <div id="teacherTabRegistrations" class="hidden glass-panel p-6 rounded-3xl border border-slate-700">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-800">
+                        <div>
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-user-graduate text-amber-500 mr-2"></i>
+                                Received Student Applications</h3>
+                            <p class="text-xs text-slate-400">Applications submitted via the website's offline
+                                registration form.</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="clearRegistrationApplications()"
+                                class="px-3 py-1.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-xs font-bold text-red-400 hover:text-white transition">
+                                <i class="fa-solid fa-trash mr-1"></i> Clear Applications
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="bg-slate-900/80 text-slate-400 uppercase border-b border-slate-800">
+                                <tr>
+                                    <th class="p-3">App ID</th>
+                                    <th class="p-3">Applicant Name</th>
+                                    <th class="p-3">Course / Track</th>
+                                    <th class="p-3">Schedule / Mode</th>
+                                    <th class="p-3">Laptop Status</th>
+                                    <th class="p-3">Contact</th>
+                                    <th class="p-3">Submitted</th>
+                                </tr>
+                            </thead>
+                            <tbody id="registrationsTableBody" class="divide-y divide-slate-800 text-slate-300">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. Contact Inquiries Tab Pane -->
+                <div id="teacherTabInquiries" class="hidden glass-panel p-6 rounded-3xl border border-slate-700">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4 pb-3 border-b border-slate-800">
+                        <div>
+                            <h3 class="font-bold text-lg"><i class="fa-solid fa-envelope text-cyan-400 mr-2"></i>
+                                Received Messages & Inquiries</h3>
+                            <p class="text-xs text-slate-400">Direct inquiries sent via the Contact Us form.</p>
+                        </div>
+                        <button onclick="clearContactInquiries()"
+                            class="px-3 py-1.5 rounded-xl bg-red-600/20 hover:bg-red-600 text-xs font-bold text-red-400 hover:text-white transition">
+                            <i class="fa-solid fa-trash mr-1"></i> Clear Inquiries
+                        </button>
+                    </div>
+
+                    <div class="space-y-3" id="inquiriesContainer">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- OFFLINE VIRTUAL CLASSROOM STUDIO CONTAINER -->
+            <div id="gmeetStage"
+                class="hidden gmeet-container rounded-3xl overflow-hidden border border-slate-700 shadow-2xl">
+                <!-- Meet Header Bar -->
+                <div
+                    class="px-6 py-4 bg-[#1e1f22] border-b border-zinc-800 flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-3.5 h-3.5 bg-red-500 rounded-full animate-ping"></div>
+                        <div>
+                            <span id="meetStageTitle" class="font-bold text-white text-base block leading-tight">Gtrend
+                                Virtual Session</span>
+                            <span class="text-[11px] text-zinc-400 font-mono">Room: <span id="meetStageRoomCode"
+                                    class="accent-text">gtrend-room</span> | Local Mesh Studio</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-3 text-xs text-zinc-400">
+                        <span id="sessionTimer"
+                            class="font-mono bg-zinc-900 px-3 py-1 rounded-full border border-zinc-700 text-zinc-300">00:00</span>
+                        <span id="meetRoleBadge"
+                            class="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-full font-bold">Role:
+                            Participant</span>
+                        <button onclick="leaveClassroom()"
+                            class="px-3 py-1 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white rounded-lg transition font-bold">
+                            <i class="fa-solid fa-phone-slash mr-1"></i> Exit Call
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Classroom Main Viewport (Stage + Side Drawer) -->
+                <div class="relative w-full h-[540px] bg-[#111214] flex overflow-hidden">
+
+                    <!-- Main Presentation Stage -->
+                    <div id="classroomStageMain"
+                        class="flex-1 relative flex flex-col justify-between p-4 overflow-hidden">
+
+                        <!-- Main Video Viewport (Webcam or Screen Share or Simulated Presentation) -->
+                        <div
+                            class="relative w-full flex-1 rounded-2xl overflow-hidden bg-black/40 border border-zinc-800 flex items-center justify-center">
+
+                            <!-- Real Screen Share Video Element -->
+                            <video id="screenShareVideo" autoplay playsinline
+                                class="hidden w-full h-full object-contain"></video>
+
+                            <!-- Real Local Camera Video Element -->
+                            <video id="localCamVideo" autoplay playsinline muted
+                                class="hidden w-full h-full object-cover"></video>
+
+                            <!-- Simulated / Offline Presentation Stage Backdrop -->
+                            <div id="simulatedStageBackdrop"
+                                class="w-full h-full flex flex-col items-center justify-center p-6 text-center bg-gradient-to-b from-slate-900/90 to-slate-950">
+                                <div class="relative mb-4">
+                                    <div
+                                        class="w-24 h-24 rounded-full bg-amber-500/20 border-2 border-amber-500 flex items-center justify-center text-3xl accent-text shadow-xl">
+                                        <i class="fa-solid fa-chalkboard-user"></i>
+                                    </div>
+                                    <div id="stageSpeakingWave"
+                                        class="absolute -bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-1 bg-black/80 px-2 py-0.5 rounded-full border border-emerald-500/50">
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                        <span class="wave-bar"></span>
+                                    </div>
+                                </div>
+                                <h3 id="stagePresenterName" class="text-lg font-bold text-white mb-1">Gtrend Studio
+                                    Instructor</h3>
+                                <p id="stagePresenterTrack" class="text-xs text-amber-400 font-semibold mb-3">Live
+                                    Interactive Lecture & Practicals</p>
+                                <div
+                                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[11px] font-bold border border-emerald-500/20">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>High-Definition Offline Audio/Video Channel</span>
+                                </div>
+                            </div>
+
+                            <!-- Screen Sharing Status Badge (Top-Left overlay) -->
+                            <div id="screenShareBadge"
+                                class="hidden absolute top-4 left-4 px-3 py-1.5 rounded-xl bg-blue-600/90 text-white text-xs font-bold flex items-center gap-2 shadow-lg backdrop-blur-sm">
+                                <i class="fa-solid fa-desktop animate-pulse"></i> Presenting Screen
+                            </div>
+
+                            <!-- Hand Raised Floating Alert -->
+                            <div id="handRaisedAlert"
+                                class="hidden absolute top-4 right-4 px-3 py-1.5 rounded-xl bg-amber-500 text-black text-xs font-black flex items-center gap-2 shadow-lg animate-bounce">
+                                <i class="fa-solid fa-hand"></i> <span id="handRaisedText">Hand Raised</span>
+                            </div>
+                        </div>
+
+                        <!-- Attendees Grid / Filmstrip -->
+                        <div class="mt-3 flex items-center gap-3 overflow-x-auto pb-1" id="attendeesFilmstrip">
+                            <!-- Local user tile -->
+                            <div id="tileUser"
+                                class="relative flex-shrink-0 w-36 h-24 rounded-xl bg-zinc-900 border-2 border-amber-500/60 overflow-hidden flex flex-col justify-between p-2 shadow-md">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="font-bold text-amber-400 truncate">You (Host)</span>
+                                    <span id="userTileMicIcon" class="text-emerald-400"><i
+                                            class="fa-solid fa-microphone"></i></span>
+                                </div>
+                                <div class="flex items-center justify-center flex-1">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-xs text-amber-400 font-bold">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between text-[9px] text-zinc-400">
+                                    <span id="userTileHand" class="hidden text-amber-400 font-bold"><i
+                                            class="fa-solid fa-hand mr-0.5"></i>Raised</span>
+                                    <span class="text-emerald-400 ml-auto">● Active</span>
+                                </div>
+                            </div>
+
+                            <!-- Simulated Attendee 1 -->
+                            <div
+                                class="relative flex-shrink-0 w-36 h-24 rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden flex flex-col justify-between p-2">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="font-bold text-white truncate">Sarah (Lead)</span>
+                                    <span class="text-emerald-400"><i class="fa-solid fa-microphone"></i></span>
+                                </div>
+                                <div class="flex items-center justify-center flex-1">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-xs text-blue-400 font-bold">
+                                        SJ
+                                    </div>
+                                </div>
+                                <div class="text-[9px] text-zinc-500 text-right">Instructor</div>
+                            </div>
+
+                            <!-- Simulated Attendee 2 -->
+                            <div
+                                class="relative flex-shrink-0 w-36 h-24 rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden flex flex-col justify-between p-2">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="font-bold text-white truncate">David Okon</span>
+                                    <span class="text-zinc-500"><i class="fa-solid fa-microphone-slash"></i></span>
+                                </div>
+                                <div class="flex items-center justify-center flex-1">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs text-emerald-400 font-bold">
+                                        DO
+                                    </div>
+                                </div>
+                                <div class="text-[9px] text-zinc-500 text-right">Engineer</div>
+                            </div>
+
+                            <!-- Simulated Attendee 3 -->
+                            <div
+                                class="relative flex-shrink-0 w-36 h-24 rounded-xl bg-zinc-900 border border-zinc-800 overflow-hidden flex flex-col justify-between p-2">
+                                <div class="flex items-center justify-between text-[10px]">
+                                    <span class="font-bold text-white truncate">Grace A.</span>
+                                    <span class="text-zinc-500"><i class="fa-solid fa-microphone-slash"></i></span>
+                                </div>
+                                <div class="flex items-center justify-center flex-1">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-xs text-purple-400 font-bold">
+                                        GA
+                                    </div>
+                                </div>
+                                <div class="text-[9px] text-zinc-500 text-right">Trainee</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- In-Call Side Drawer (Chat / Attendees / Notes) -->
+                    <div id="classroomSideDrawer"
+                        class="hidden w-80 bg-[#1e1f22] border-l border-zinc-800 flex flex-col">
+                        <!-- Drawer Tabs Header -->
+                        <div class="flex border-b border-zinc-800 text-xs font-bold text-zinc-400">
+                            <button onclick="setDrawerTab('chat')" id="drawerTabChat"
+                                class="flex-1 py-3 text-center border-b-2 border-amber-500 text-white flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-message"></i> Chat
+                            </button>
+                            <button onclick="setDrawerTab('roster')" id="drawerTabRoster"
+                                class="flex-1 py-3 text-center border-b-2 border-transparent hover:text-white flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-users"></i> People
+                            </button>
+                            <button onclick="setDrawerTab('notes')" id="drawerTabNotes"
+                                class="flex-1 py-3 text-center border-b-2 border-transparent hover:text-white flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-book"></i> Notes
+                            </button>
+                        </div>
+
+                        <!-- Tab 1: Chat Feed -->
+                        <div id="drawerPaneChat" class="flex-1 flex flex-col p-3 overflow-hidden">
+                            <div class="flex-1 overflow-y-auto space-y-3 pr-1 text-xs" id="classroomChatMessages">
+                                <div class="bg-zinc-800/80 p-2.5 rounded-xl border border-zinc-700">
+                                    <div
+                                        class="flex items-center justify-between font-bold text-[10px] text-amber-400 mb-1">
+                                        <span>Gtrend Hub System</span>
+                                        <span class="text-zinc-500">Live</span>
+                                    </div>
+                                    <p class="text-zinc-300 leading-relaxed">Welcome to the Offline Virtual Classroom!
+                                        In-call chat synchronizes in real-time between tabs.</p>
+                                </div>
+                            </div>
+                            <!-- Chat Input Box -->
+                            <form onsubmit="handleSendClassroomMessage(event)" class="mt-2 flex gap-2">
+                                <input type="text" id="chatInputText" placeholder="Send message to room..."
+                                    class="flex-1 bg-zinc-900 border border-zinc-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+                                <button type="submit"
+                                    class="px-3 py-2 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Tab 2: Roster / People Pane -->
+                        <div id="drawerPaneRoster" class="hidden flex-1 p-3 overflow-y-auto space-y-2 text-xs">
+                            <div class="text-[11px] font-bold text-zinc-400 uppercase tracking-wider mb-2">In Call
+                                (<span id="rosterCount">4</span>)</div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-zinc-900 border border-zinc-800">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-[10px]">
+                                        You</div>
+                                    <span class="font-semibold text-white truncate" id="rosterUserName">Alex
+                                        Samuel</span>
+                                </div>
+                                <span class="text-emerald-400"><i class="fa-solid fa-microphone"></i></span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-zinc-900 border border-zinc-800">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-[10px]">
+                                        SJ</div>
+                                    <span class="font-semibold text-white">Sarah Jenkins</span>
+                                </div>
+                                <span class="text-emerald-400"><i class="fa-solid fa-microphone"></i></span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-zinc-900 border border-zinc-800">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[10px]">
+                                        DO</div>
+                                    <span class="font-semibold text-white">David Okon</span>
+                                </div>
+                                <span class="text-zinc-500"><i class="fa-solid fa-microphone-slash"></i></span>
+                            </div>
+                            <div
+                                class="flex items-center justify-between p-2 rounded-xl bg-zinc-900 border border-zinc-800">
+                                <div class="flex items-center gap-2">
+                                    <div
+                                        class="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-[10px]">
+                                        GA</div>
+                                    <span class="font-semibold text-white">Grace Adams</span>
+                                </div>
+                                <span class="text-zinc-500"><i class="fa-solid fa-microphone-slash"></i></span>
+                            </div>
+                        </div>
+
+                        <!-- Tab 3: Whiteboard Notes Pane -->
+                        <div id="drawerPaneNotes" class="hidden flex-1 p-3 flex flex-col text-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-zinc-300">Shared Class Notes</span>
+                                <button onclick="copyClassroomNotes()"
+                                    class="text-[10px] accent-text font-bold hover:underline">Copy Notes</button>
+                            </div>
+                            <textarea id="classroomNotesArea" oninput="handleNotesInput()"
+                                placeholder="Type shared whiteboard notes, code snippets, or lecture reminders..."
+                                class="flex-1 w-full bg-zinc-900 border border-zinc-700 rounded-xl p-3 text-xs text-white font-mono focus:outline-none focus:border-amber-500 resize-none leading-relaxed"></textarea>
+                            <span class="text-[10px] text-zinc-500 mt-1.5">Changes sync live across all local
+                                tabs.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Meet Custom Controls Dock -->
+                <div
+                    class="px-6 py-4 bg-[#1e1f22] border-t border-zinc-800 flex items-center justify-between flex-wrap gap-4">
+                    <div class="text-xs text-zinc-400 font-mono flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>Hub Studio Audio/Video</span>
+                    </div>
+
+                    <!-- Toolbar Buttons -->
+                    <div class="flex items-center gap-3 mx-auto">
+                        <button onclick="toggleOfflineAudio()" id="btnAudio" title="Toggle Mic"
+                            class="w-12 h-12 rounded-full gmeet-btn flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-microphone"></i>
+                        </button>
+                        <button onclick="toggleOfflineVideo()" id="btnVideo" title="Toggle Camera"
+                            class="w-12 h-12 rounded-full gmeet-btn flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-video"></i>
+                        </button>
+                        <button onclick="toggleOfflineScreenShare()" id="btnScreenShare" title="Share Screen"
+                            class="w-12 h-12 rounded-full gmeet-btn flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-desktop"></i>
+                        </button>
+                        <button onclick="raiseOfflineHand()" id="btnRaiseHand" title="Raise Hand"
+                            class="w-12 h-12 rounded-full gmeet-btn flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-hand"></i>
+                        </button>
+                        <button onclick="toggleClassroomDrawer('chat')" id="btnChatToggle" title="Toggle In-Call Chat"
+                            class="w-12 h-12 rounded-full gmeet-btn flex items-center justify-center text-lg relative">
+                            <i class="fa-solid fa-message"></i>
+                            <span id="unreadChatDot"
+                                class="hidden absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+                        </button>
+
+                        <!-- Teacher Command: Mute All -->
+                        <button id="instructorMuteAllBtn" onclick="instructorMuteAll()" title="Host: Mute Everyone"
+                            class="hidden w-12 h-12 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-volume-xmark"></i>
+                        </button>
+
+                        <button onclick="leaveClassroom()" title="Leave Call"
+                            class="w-14 h-12 rounded-full gmeet-btn-danger flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-phone-slash"></i>
+                        </button>
+                    </div>
+
+                    <div class="text-xs text-emerald-400 font-bold flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Offline P2P Connected
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JavaScript Application Engine -->
+    <script>
+        // Global Portal State
+        let currentRole = 'student';
+        let currentUser = 'Alex Samuel';
+        let isAudioMuted = false;
+        let isVideoMuted = false;
+        let isScreenSharing = false;
+        let isHandRaised = false;
+        let currentRoomId = null;
+        let currentRoomTitle = '';
+        let localMediaStream = null;
+        let screenShareStream = null;
+        let sessionTimerInterval = null;
+        let sessionSeconds = 0;
+
+        // Cross-tab Synchronization Channel (Works 100% offline)
+        let hubBroadcastChannel = null;
+        try {
+            hubBroadcastChannel = new BroadcastChannel('gtrend_offline_hub_sync');
+            hubBroadcastChannel.onmessage = handleBroadcastMessage;
+        } catch (e) {
+            console.warn('BroadcastChannel not available, falling back to storage listener', e);
+        }
+        window.addEventListener('storage', handleStorageSync);
+
+        // Load & Initialize Stored Theme
+        const savedTheme = localStorage.getItem('gtrend_active_theme') || 'dark-gold';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        function toggleThemeMenu() {
+            const menu = document.getElementById('themeDropdown');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('gtrend_active_theme', themeName);
+            localStorage.setItem('gtrend_theme', themeName);
+            const menu = document.getElementById('themeDropdown');
+            if (menu) menu.classList.add('hidden');
+            showToast('Theme updated: ' + themeName);
+        }
+
+        // Registration Modal Controller (Pop-up upon signup / registration action)
+        function openRegistrationModal(courseName) {
+            const modal = document.getElementById('registrationModal');
+            if (!modal) return;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            if (courseName) {
+                const selectEl = document.getElementById('regCourseSelect');
+                if (selectEl) {
+                    for (let i = 0; i < selectEl.options.length; i++) {
+                        if (selectEl.options[i].value.toLowerCase().includes(courseName.toLowerCase())) {
+                            selectEl.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+                localStorage.setItem('gtrend_selected_course', courseName);
+            }
+        }
+
+        function closeRegistrationModal() {
+            const modal = document.getElementById('registrationModal');
+            if (!modal) return;
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        function handleModalBackdropClick(e) {
+            if (e.target.id === 'registrationModal') {
+                closeRegistrationModal();
+            }
+        }
+
+        // Close on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeRegistrationModal();
+        });
+
+        // Handle Detailed Course Registration Form (Stores to Backend API & LocalStorage Fallback)
+        async function handleCourseRegistration(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('regFullName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const phone = document.getElementById('regPhone').value.trim();
+            const ageBracket = document.getElementById('regAgeBracket').value;
+            const address = document.getElementById('regAddress').value.trim();
+            const course = document.getElementById('regCourseSelect').value;
+            const learningMode = document.getElementById('regLearningMode').value;
+            const experience = document.getElementById('regExperience').value;
+            const schedule = document.getElementById('regSchedule').value;
+            const laptopChoice = document.querySelector('input[name="laptopChoice"]:checked')?.value || 'Not specified';
+            const laptopOS = document.getElementById('regLaptopOS').value;
+            const internet = document.getElementById('regInternet').value;
+            const reason = document.getElementById('regReason').value.trim();
+            const referral = document.getElementById('regReferral').value;
+
+            const appId = 'GTR-' + Math.floor(10000 + Math.random() * 90000);
+            const submissionDate = new Date().toLocaleString();
+
+            const newRegistration = {
+                appId, fullName, email, phone, ageBracket, address,
+                course, learningMode, experience, schedule,
+                laptopChoice, laptopOS, internet, reason, referral,
+                submissionDate, status: 'Pending Review'
+            };
+
+            // Call Backend API
+            if (window.GtrendAPI && typeof window.GtrendAPI.register === 'function') {
+                try {
+                    await window.GtrendAPI.register(newRegistration);
+                } catch (err) {
+                    console.warn('API error, saving to local fallback:', err);
+                }
+            }
+
+            const existingRegistrations = JSON.parse(localStorage.getItem('gtrendCourseRegistrations') || '[]');
+            existingRegistrations.unshift(newRegistration);
+            localStorage.setItem('gtrendCourseRegistrations', JSON.stringify(existingRegistrations));
+
+            // Notify cross-tab
+            broadcastEvent('NEW_REGISTRATION', newRegistration);
+
+            closeRegistrationModal();
+            showToast('Application ' + appId + ' submitted successfully!');
+            alert(`🎉 Application Submitted Successfully!\n\nRegistration Reference: ${appId}\nApplicant: ${fullName}\nCourse: ${course}\nMode: ${learningMode}\nLaptop Status: ${laptopChoice}\n\nYour application has been securely logged into the Gtrend database.`);
+
+            e.target.reset();
+            renderRegistrationsTable();
+        }
+
+        // Handle Contact Form Submission (Stores to Backend API & LocalStorage)
+        async function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const service = document.getElementById('contactService').value;
+            const message = document.getElementById('contactMessage').value.trim();
+            const time = new Date().toLocaleString();
+
+            const inquiry = { id: 'INQ-' + Date.now().toString(36).toUpperCase(), name, email, service, message, time };
+
+            // Call Backend API
+            if (window.GtrendAPI && typeof window.GtrendAPI.sendInquiry === 'function') {
+                try {
+                    await window.GtrendAPI.sendInquiry(inquiry);
+                } catch (err) {
+                    console.warn('API error, saving to local fallback:', err);
+                }
+            }
+
+            const inquiries = JSON.parse(localStorage.getItem('gtrendContactInquiries') || '[]');
+            inquiries.unshift(inquiry);
+            localStorage.setItem('gtrendContactInquiries', JSON.stringify(inquiries));
+
+            broadcastEvent('NEW_INQUIRY', inquiry);
+
+            showToast('Message sent! Saved to inquiries database.');
+            alert('Thank you, ' + name + '! Your message has been sent to our consulting desk. Our team will contact you shortly.');
+            e.target.reset();
+            renderInquiriesList();
+        }
+
+        // Home Preview Loaders for News and Gallery
+        async function loadHomePreviews() {
+            // Load News Preview
+            const newsContainer = document.getElementById('homeNewsPreviewGrid');
+            if (newsContainer && window.GtrendAPI) {
+                try {
+                    const articles = await window.GtrendAPI.getNews();
+                    if (articles && articles.length > 0) {
+                        const topArticles = articles.slice(0, 3);
+                        newsContainer.innerHTML = topArticles.map(item => `
+                            <article class="glass-panel rounded-2xl overflow-hidden border border-slate-800 flex flex-col group hover:border-amber-500/50 transition">
+                                <div class="h-44 overflow-hidden relative">
+                                    <img src="${item.image || './assets/images/news-1.jpg'}" alt="${escapeHTML(item.title)}"
+                                        onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'600\\' height=\\'400\\' viewBox=\\'0 0 600 400\\'><rect fill=\\'%23131b2e\\' width=\\'600\\' height=\\'400\\'/><text fill=\\'%23e6900a\\' font-family=\\'sans-serif\\' font-size=\\'24\\' font-weight=\\'bold\\' x=\\'50%\\' y=\\'50%\\' text-anchor=\\'middle\\'>Gtrend News</text></svg>';"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                    <span class="absolute top-3 left-3 px-2.5 py-1 rounded-full text-[10px] font-bold accent-bg text-white uppercase">${escapeHTML(item.category || 'News')}</span>
+                                </div>
+                                <div class="p-6 flex-1 flex flex-col justify-between">
+                                    <div>
+                                        <span class="text-[11px] text-slate-400 font-mono">${escapeHTML(item.date || '')}</span>
+                                        <h3 class="font-bold text-base text-white mt-1 line-clamp-2">${escapeHTML(item.title)}</h3>
+                                        <p class="text-xs text-slate-400 mt-2 line-clamp-3">${escapeHTML(item.summary || item.content || '')}</p>
+                                    </div>
+                                    <a href="news.html?id=${item.id}" class="mt-4 inline-flex items-center gap-1.5 text-xs font-bold accent-text hover:underline">
+                                        Read Story <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        `).join('');
+                    }
+                } catch (e) { console.error('Error loading news preview:', e); }
+            }
+
+            // Load Gallery Preview
+            const galleryContainer = document.getElementById('homeGalleryPreviewGrid');
+            if (galleryContainer && window.GtrendAPI) {
+                try {
+                    const media = await window.GtrendAPI.getGallery();
+                    if (media && media.length > 0) {
+                        const topMedia = media.slice(0, 4);
+                        galleryContainer.innerHTML = topMedia.map(item => `
+                            <div class="group relative rounded-2xl overflow-hidden glass-panel border border-slate-800 aspect-video">
+                                <img src="${item.url}" alt="${escapeHTML(item.title)}"
+                                    onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'600\\' height=\\'400\\' viewBox=\\'0 0 600 400\\'><rect fill=\\'%23131b2e\\' width=\\'600\\' height=\\'400\\'/><text fill=\\'%23e6900a\\' font-family=\\'sans-serif\\' font-size=\\'24\\' font-weight=\\'bold\\' x=\\'50%\\' y=\\'50%\\' text-anchor=\\'middle\\'>Gtrend Media</text></svg>';"
+                                    class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent opacity-0 group-hover:opacity-100 transition p-4 flex flex-col justify-end">
+                                    <span class="text-[10px] font-bold accent-text uppercase">${escapeHTML(item.category || 'Facility')}</span>
+                                    <h4 class="text-xs font-bold text-white">${escapeHTML(item.title)}</h4>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+                } catch (e) { console.error('Error loading gallery preview:', e); }
+            }
+        }
+
+        // Initial Available Classes List (Preserved & Extensible)
+        let defaultClasses = [
+            { id: 'Kids-Coding-Explorers', title: 'Kids Scratch & Visual Coding Class', track: 'Kids Tech & Coding' },
+            { id: 'Web-Engineering-Live', title: 'Full-Stack JS & React Workshop', track: 'Full-Stack Web Dev' },
+            { id: 'Agile-Project-Mgmt', title: 'IT Scrum Sprint Planning', track: 'IT Project Management' },
+            { id: 'Energy-Software-Lab', title: 'Oil & Gas Technical Tools Session', track: 'Oil & Gas Software' }
+        ];
+
+        let classSessions = JSON.parse(localStorage.getItem('gtrendClassSessions')) || defaultClasses;
+
+        function saveClassSessions() {
+            localStorage.setItem('gtrendClassSessions', JSON.stringify(classSessions));
+        }
+
+        // Navigation Controller
+        function showSection(sectionId) {
+            const publicSite = document.getElementById('public-site');
+            const portalArea = document.getElementById('portal-area');
+            const publicNav = document.getElementById('publicNav');
+            const portalBackBtn = document.getElementById('portalBackBtn');
+            const portalNavBtn = document.getElementById('portalNavBtn');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+            if (sectionId === 'portal-area') {
+                publicSite.classList.add('hidden');
+                portalArea.classList.remove('hidden');
+                if (publicNav) publicNav.classList.add('hidden');
+                if (portalNavBtn) portalNavBtn.classList.add('hidden');
+                if (mobileMenuBtn) mobileMenuBtn.classList.add('hidden');
+                if (portalBackBtn) portalBackBtn.classList.remove('hidden');
+                window.scrollTo(0, 0);
+            } else {
+                portalArea.classList.add('hidden');
+                publicSite.classList.remove('hidden');
+                if (portalBackBtn) portalBackBtn.classList.add('hidden');
+                if (publicNav) publicNav.classList.remove('hidden');
+                if (portalNavBtn) portalNavBtn.classList.remove('hidden');
+                if (mobileMenuBtn) mobileMenuBtn.classList.remove('hidden');
+            }
+        }
+
+        function toggleMobileNav() {
+            const menu = document.getElementById('mobileNavMenu');
+            const icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                const isHidden = menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = isHidden ? 'fa-solid fa-bars text-base' : 'fa-solid fa-xmark text-base';
+                }
+            }
+        }
+
+        // Role Switcher
+        function switchPortalRole(role) {
+            currentRole = role;
+            const studentBtn = document.getElementById('roleStudentBtn');
+            const teacherBtn = document.getElementById('roleTeacherBtn');
+            const authTitle = document.getElementById('authTitle');
+
+            if (role === 'student') {
+                studentBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold accent-bg text-white transition';
+                teacherBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition';
+                authTitle.textContent = 'Student Sign In';
+            } else {
+                teacherBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold bg-amber-600 text-white transition';
+                studentBtn.className = 'px-5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition';
+                authTitle.textContent = 'Instructor / Admin Sign In';
+            }
+        }
+
+        // Instructor Sub-Tabs Switcher
+        function switchTeacherTab(tabName) {
+            const tabs = ['host', 'attendance', 'registrations', 'inquiries'];
+            tabs.forEach(t => {
+                const pane = document.getElementById('teacherTab' + capitalize(t));
+                const btn = document.getElementById('tabBtn' + capitalize(t));
+                if (pane) pane.classList.add('hidden');
+                if (btn) btn.className = 'px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:text-white transition';
+            });
+
+            const activePane = document.getElementById('teacherTab' + capitalize(tabName));
+            const activeBtn = document.getElementById('tabBtn' + capitalize(tabName));
+            if (activePane) activePane.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = 'px-4 py-2 rounded-xl accent-bg text-white transition';
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+
+        // Authentication Engine
+        function handlePortalLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('loginUser').value.trim() || 'Alex Samuel';
+            currentUser = username;
+
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('authenticatedPortalContent').classList.remove('hidden');
+            document.getElementById('activeUserName').textContent = currentUser;
+            document.getElementById('activeRoleName').textContent = currentRole === 'teacher' ? 'Instructor Host' : 'Student Trainee';
+
+            if (currentRole === 'teacher') {
+                document.getElementById('studentView').classList.add('hidden');
+                document.getElementById('teacherView').classList.remove('hidden');
+                document.getElementById('instructorMuteAllBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('teacherView').classList.add('hidden');
+                document.getElementById('studentView').classList.remove('hidden');
+                document.getElementById('instructorMuteAllBtn').classList.add('hidden');
+            }
+
+            renderClasses();
+            renderAttendanceLogs();
+            renderRegistrationsTable();
+            renderInquiriesList();
+            showToast('Welcome to Gtrend Portal, ' + currentUser + '!');
+        }
+
+        function logoutPortal() {
+            currentUser = null;
+            leaveClassroom();
+            document.getElementById('authenticatedPortalContent').classList.add('hidden');
+            document.getElementById('authContainer').classList.remove('hidden');
+        }
+
+        // Attendance Digital Clock & Logger
+        function updateDigitalClock() {
+            const now = new Date();
+            const clockEl = document.getElementById('digitalClock');
+            if (clockEl) clockEl.textContent = now.toLocaleTimeString();
+        }
+        setInterval(updateDigitalClock, 1000);
+
+        function recordAttendance(actionType) {
+            if (!currentUser) return;
+            const track = document.getElementById('studentTrackSelect').value;
+            const timeStamp = new Date().toLocaleTimeString() + ' (' + new Date().toLocaleDateString() + ')';
+
+            const record = { name: currentUser, track: track, action: actionType, timeStamp: timeStamp };
+            let logs = JSON.parse(localStorage.getItem('gtrendPortalLogs')) || [];
+            logs.unshift(record);
+            localStorage.setItem('gtrendPortalLogs', JSON.stringify(logs));
+
+            broadcastEvent('ATTENDANCE_RECORDED', record);
+
+            showToast(`${actionType} recorded successfully for ${currentUser}!`);
+            renderAttendanceLogs();
+        }
+
+        function renderAttendanceLogs() {
+            const logs = JSON.parse(localStorage.getItem('gtrendPortalLogs')) || [];
+            const tbody = document.getElementById('teacherAttendanceLog');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="p-4 text-center text-slate-500 font-semibold">No attendance records found. Clock in from student console to record attendance.</td></tr>';
+                return;
+            }
+
+            logs.forEach(log => {
+                const tr = document.createElement('tr');
+                const badge = log.action === 'Clock In'
+                    ? '<span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold">Clock In</span>'
+                    : '<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-bold">Clock Out</span>';
+
+                tr.innerHTML = `
+                    <td class="p-3 font-semibold text-white">${escapeHTML(log.name)}</td>
+                    <td class="p-3">${escapeHTML(log.track)}</td>
+                    <td class="p-3">${badge}</td>
+                    <td class="p-3 text-slate-400 font-mono">${escapeHTML(log.timeStamp)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearAttendanceLogs() {
+            if (confirm('Clear all attendance logs?')) {
+                localStorage.removeItem('gtrendPortalLogs');
+                renderAttendanceLogs();
+                showToast('Attendance logs cleared.');
+            }
+        }
+
+        function exportAttendanceCSV() {
+            const logs = JSON.parse(localStorage.getItem('gtrendPortalLogs')) || [];
+            if (logs.length === 0) {
+                alert('No logs to export.');
+                return;
+            }
+            let csv = 'Student Name,Track,Action,Timestamp\n';
+            logs.forEach(l => {
+                csv += `"${l.name}","${l.track}","${l.action}","${l.timeStamp}"\n`;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'gtrend_attendance_' + new Date().toISOString().slice(0, 10) + '.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Attendance exported to CSV');
+        }
+
+        // Render Received Course Registrations
+        function renderRegistrationsTable() {
+            const list = JSON.parse(localStorage.getItem('gtrendCourseRegistrations') || '[]');
+            const badge = document.getElementById('regCountBadge');
+            if (badge) badge.textContent = list.length;
+
+            const tbody = document.getElementById('registrationsTableBody');
+            if (!tbody) return;
+
+            tbody.innerHTML = '';
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-500 font-semibold">No course applications received yet. Submit an application via the Course Registration form.</td></tr>';
+                return;
+            }
+
+            list.forEach((reg, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-mono font-bold accent-text">${reg.appId || 'GTR-' + idx}</td>
+                    <td class="p-3 font-semibold text-white">${escapeHTML(reg.fullName)}<div class="text-[10px] text-slate-400">${escapeHTML(reg.email)}</div></td>
+                    <td class="p-3 font-bold text-amber-400">${escapeHTML(reg.course)}</td>
+                    <td class="p-3">${escapeHTML(reg.schedule || 'Regular')}<div class="text-[10px] text-slate-400">${escapeHTML(reg.learningMode || 'Virtual')}</div></td>
+                    <td class="p-3">${escapeHTML(reg.laptopChoice)}</td>
+                    <td class="p-3 font-mono">${escapeHTML(reg.phone)}</td>
+                    <td class="p-3 text-slate-400 font-mono text-[11px]">${escapeHTML(reg.submissionDate || '')}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearRegistrationApplications() {
+            if (confirm('Clear all received course applications?')) {
+                localStorage.removeItem('gtrendCourseRegistrations');
+                renderRegistrationsTable();
+                showToast('Registration applications cleared.');
+            }
+        }
+
+        // Render Received Contact Inquiries
+        function renderInquiriesList() {
+            const list = JSON.parse(localStorage.getItem('gtrendContactInquiries') || '[]');
+            const badge = document.getElementById('inquiryCountBadge');
+            if (badge) badge.textContent = list.length;
+
+            const container = document.getElementById('inquiriesContainer');
+            if (!container) return;
+
+            container.innerHTML = '';
+            if (list.length === 0) {
+                container.innerHTML = '<div class="p-4 text-center text-slate-500 font-semibold">No messages or inquiries received yet.</div>';
+                return;
+            }
+
+            list.forEach(inq => {
+                const div = document.createElement('div');
+                div.className = 'glass-panel p-4 rounded-2xl border border-slate-800 space-y-1.5';
+                div.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-sm text-white">${escapeHTML(inq.name)} <span class="text-xs text-slate-400 font-normal">(${escapeHTML(inq.email)})</span></span>
+                        <span class="text-[10px] text-cyan-400 font-mono">${escapeHTML(inq.time || '')}</span>
+                    </div>
+                    <div class="text-[11px] font-bold accent-text uppercase tracking-wider">Service: ${escapeHTML(inq.service)}</div>
+                    <p class="text-xs text-slate-300 bg-slate-900/60 p-3 rounded-xl border border-slate-800">${escapeHTML(inq.message)}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function clearContactInquiries() {
+            if (confirm('Clear all inquiries?')) {
+                localStorage.removeItem('gtrendContactInquiries');
+                renderInquiriesList();
+                showToast('Inquiries cleared.');
+            }
+        }
+
+        // Classrooms Engine
+        function renderClasses() {
+            const studentContainer = document.getElementById('availableClassList');
+            const teacherContainer = document.getElementById('teacherClassList');
+
+            if (studentContainer) {
+                studentContainer.innerHTML = '';
+                classSessions.forEach(c => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel p-4 rounded-2xl flex items-center justify-between border border-slate-800';
+                    card.innerHTML = `
+                        <div>
+                            <span class="text-[10px] font-bold accent-text uppercase">${escapeHTML(c.track)}</span>
+                            <h4 class="font-bold text-sm text-white">${escapeHTML(c.title)}</h4>
+                        </div>
+                        <button onclick="launchOfflineClassroom('${c.id}', '${escapeJS(c.title)}', '${escapeJS(c.track)}')" class="px-4 py-2 rounded-xl accent-bg text-white text-xs font-bold flex items-center gap-1.5 hover:opacity-90 transition">
+                            <i class="fa-solid fa-video"></i> Join Meet
+                        </button>
+                    `;
+                    studentContainer.appendChild(card);
+                });
+            }
+
+            if (teacherContainer) {
+                teacherContainer.innerHTML = '';
+                classSessions.forEach((c, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'glass-panel p-4 rounded-2xl flex items-center justify-between border border-slate-800';
+                    card.innerHTML = `
+                        <div>
+                            <span class="text-[10px] font-bold text-amber-400 uppercase">${escapeHTML(c.track)}</span>
+                            <h4 class="font-bold text-sm text-white">${escapeHTML(c.title)}</h4>
+                            <span class="text-[10px] text-slate-400 font-mono">ID: ${c.id}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="launchOfflineClassroom('${c.id}', '${escapeJS(c.title)}', '${escapeJS(c.track)}')" class="px-3.5 py-2 rounded-xl accent-bg text-white text-xs font-bold flex items-center gap-1.5 hover:opacity-90 transition">
+                                <i class="fa-solid fa-play"></i> Launch
+                            </button>
+                            <button onclick="deleteClassroom('${c.id}')" class="px-2.5 py-2 rounded-xl bg-slate-800 hover:bg-red-600/30 text-slate-400 hover:text-red-400 text-xs font-bold transition">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    teacherContainer.appendChild(card);
+                });
+            }
+        }
+
+        function deleteClassroom(id) {
+            if (confirm('Delete this classroom session?')) {
+                classSessions = classSessions.filter(c => c.id !== id);
+                saveClassSessions();
+                broadcastEvent('CLASS_LIST_UPDATED', classSessions);
+                renderClasses();
+                showToast('Classroom removed.');
+            }
+        }
+
+        function handleCreateClassroom(e) {
+            e.preventDefault();
+            const title = document.getElementById('newClassTitle').value.trim();
+            const track = document.getElementById('newClassTrack').value;
+            const roomId = 'gtrend-' + Math.random().toString(36).substring(2, 8);
+
+            if (!title) return;
+            const newClass = { id: roomId, title: title, track: track };
+            classSessions.unshift(newClass);
+            saveClassSessions();
+            document.getElementById('newClassTitle').value = '';
+
+            broadcastEvent('CLASS_LIST_UPDATED', classSessions);
+            renderClasses();
+            showToast('New class session created!');
+            launchOfflineClassroom(roomId, title, track);
+        }
+
+        // OFFLINE INTERACTIVE VIRTUAL CLASSROOM STUDIO ENGINE
+        function launchOfflineClassroom(roomId, roomTitle, roomTrack) {
+            currentRoomId = roomId;
+            currentRoomTitle = roomTitle;
+
+            const stage = document.getElementById('gmeetStage');
+            document.getElementById('meetStageTitle').textContent = roomTitle;
+            document.getElementById('meetStageRoomCode').textContent = roomId;
+            document.getElementById('stagePresenterName').textContent = currentRole === 'teacher' ? currentUser + ' (Host)' : 'Sarah Jenkins (Instructor)';
+            document.getElementById('stagePresenterTrack').textContent = roomTrack || 'Tech Hub Interactive Session';
+            document.getElementById('meetRoleBadge').textContent = currentRole === 'teacher' ? 'Role: Instructor Host' : 'Role: Trainee Participant';
+            document.getElementById('rosterUserName').textContent = currentUser + (currentRole === 'teacher' ? ' (Host)' : '');
+
+            stage.classList.remove('hidden');
+            stage.scrollIntoView({ behavior: 'smooth' });
+
+            // Start elapsed call timer
+            sessionSeconds = 0;
+            if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+            sessionTimerInterval = setInterval(() => {
+                sessionSeconds++;
+                const mins = String(Math.floor(sessionSeconds / 60)).padStart(2, '0');
+                const secs = String(sessionSeconds % 60).padStart(2, '0');
+                const timerEl = document.getElementById('sessionTimer');
+                if (timerEl) timerEl.textContent = `${mins}:${secs}`;
+            }, 1000);
+
+            // Request real local camera/mic media if supported
+            initOfflineMedia();
+
+            // Load persisted shared notes
+            const notes = localStorage.getItem('gtrend_class_notes_' + currentRoomId) || '';
+            const notesArea = document.getElementById('classroomNotesArea');
+            if (notesArea) notesArea.value = notes;
+
+            showToast('Connected to room ' + roomId);
+        }
+
+        async function initOfflineMedia() {
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                try {
+                    localMediaStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                    const camVideo = document.getElementById('localCamVideo');
+                    if (camVideo) {
+                        camVideo.srcObject = localMediaStream;
+                        camVideo.classList.remove('hidden');
+                        document.getElementById('simulatedStageBackdrop').classList.add('hidden');
+                    }
+                    isAudioMuted = false;
+                    isVideoMuted = false;
+                    updateMediaButtonUI();
+                } catch (err) {
+                    console.log('Using simulated offline studio feed (webcam not active or permission dismissed):', err.message);
+                    document.getElementById('simulatedStageBackdrop').classList.remove('hidden');
+                    document.getElementById('localCamVideo').classList.add('hidden');
+                }
+            }
+        }
+
+        function leaveClassroom() {
+            // Stop camera tracks
+            if (localMediaStream) {
+                localMediaStream.getTracks().forEach(t => t.stop());
+                localMediaStream = null;
+            }
+            // Stop screen share tracks
+            if (screenShareStream) {
+                screenShareStream.getTracks().forEach(t => t.stop());
+                screenShareStream = null;
+            }
+            if (sessionTimerInterval) {
+                clearInterval(sessionTimerInterval);
+                sessionTimerInterval = null;
+            }
+
+            isScreenSharing = false;
+            isHandRaised = false;
+            document.getElementById('screenShareVideo').classList.add('hidden');
+            document.getElementById('screenShareBadge').classList.add('hidden');
+            document.getElementById('handRaisedAlert').classList.add('hidden');
+            document.getElementById('userTileHand').classList.add('hidden');
+            document.getElementById('gmeetStage').classList.add('hidden');
+            showToast('You left the virtual classroom');
+        }
+
+        // Toolbar Action Triggers: Audio, Video, Screen Share, Hand Raise, Chat
+        function toggleOfflineAudio() {
+            isAudioMuted = !isAudioMuted;
+            if (localMediaStream) {
+                localMediaStream.getAudioTracks().forEach(track => { track.enabled = !isAudioMuted; });
+            }
+            updateMediaButtonUI();
+            broadcastEvent('PEER_AUDIO_TOGGLED', { user: currentUser, muted: isAudioMuted });
+            showToast(isAudioMuted ? 'Microphone muted' : 'Microphone unmuted');
+        }
+
+        function toggleOfflineVideo() {
+            isVideoMuted = !isVideoMuted;
+            if (localMediaStream) {
+                localMediaStream.getVideoTracks().forEach(track => { track.enabled = !isVideoMuted; });
+            }
+            const camVideo = document.getElementById('localCamVideo');
+            const backdrop = document.getElementById('simulatedStageBackdrop');
+            if (isVideoMuted) {
+                if (camVideo) camVideo.classList.add('hidden');
+                if (backdrop && !isScreenSharing) backdrop.classList.remove('hidden');
+            } else {
+                if (camVideo && localMediaStream) {
+                    camVideo.classList.remove('hidden');
+                    if (backdrop) backdrop.classList.add('hidden');
+                }
+            }
+            updateMediaButtonUI();
+            showToast(isVideoMuted ? 'Camera disabled' : 'Camera enabled');
+        }
+
+        function updateMediaButtonUI() {
+            const btnAudio = document.getElementById('btnAudio');
+            const btnVideo = document.getElementById('btnVideo');
+            const tileMicIcon = document.getElementById('userTileMicIcon');
+
+            if (btnAudio) {
+                btnAudio.classList.toggle('gmeet-btn-danger', isAudioMuted);
+                btnAudio.innerHTML = isAudioMuted ? '<i class="fa-solid fa-microphone-slash"></i>' : '<i class="fa-solid fa-microphone"></i>';
+            }
+            if (tileMicIcon) {
+                tileMicIcon.innerHTML = isAudioMuted ? '<i class="fa-solid fa-microphone-slash text-zinc-500"></i>' : '<i class="fa-solid fa-microphone text-emerald-400"></i>';
+            }
+            if (btnVideo) {
+                btnVideo.classList.toggle('gmeet-btn-danger', isVideoMuted);
+                btnVideo.innerHTML = isVideoMuted ? '<i class="fa-solid fa-video-slash"></i>' : '<i class="fa-solid fa-video"></i>';
+            }
+        }
+
+        async function toggleOfflineScreenShare() {
+            const screenVideo = document.getElementById('screenShareVideo');
+            const badge = document.getElementById('screenShareBadge');
+            const btn = document.getElementById('btnScreenShare');
+
+            if (isScreenSharing) {
+                if (screenShareStream) {
+                    screenShareStream.getTracks().forEach(t => t.stop());
+                    screenShareStream = null;
+                }
+                isScreenSharing = false;
+                if (screenVideo) screenVideo.classList.add('hidden');
+                if (badge) badge.classList.add('hidden');
+                if (btn) btn.classList.remove('gmeet-btn-active');
+                if (localMediaStream && !isVideoMuted) {
+                    document.getElementById('localCamVideo').classList.remove('hidden');
+                } else {
+                    document.getElementById('simulatedStageBackdrop').classList.remove('hidden');
+                }
+                showToast('Screen sharing ended');
+                return;
+            }
+
+            if (navigator.mediaDevices && navigator.mediaDevices.getDisplayMedia) {
+                try {
+                    screenShareStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+                    isScreenSharing = true;
+                    if (screenVideo) {
+                        screenVideo.srcObject = screenShareStream;
+                        screenVideo.classList.remove('hidden');
+                    }
+                    if (badge) badge.classList.remove('hidden');
+                    if (btn) btn.classList.add('gmeet-btn-active');
+                    document.getElementById('localCamVideo').classList.add('hidden');
+                    document.getElementById('simulatedStageBackdrop').classList.add('hidden');
+
+                    screenShareStream.getVideoTracks()[0].onended = () => {
+                        toggleOfflineScreenShare();
+                    };
+                    showToast('Sharing screen to classroom');
+                } catch (e) {
+                    console.log('Screen sharing dismissed or not permitted:', e);
+                }
+            } else {
+                alert('Screen sharing is not supported by your current browser.');
+            }
+        }
+
+        function raiseOfflineHand() {
+            isHandRaised = !isHandRaised;
+            const btn = document.getElementById('btnRaiseHand');
+            const alertBox = document.getElementById('handRaisedAlert');
+            const alertText = document.getElementById('handRaisedText');
+            const tileHand = document.getElementById('userTileHand');
+
+            if (btn) btn.classList.toggle('gmeet-btn-active', isHandRaised);
+            if (tileHand) tileHand.classList.toggle('hidden', !isHandRaised);
+
+            if (isHandRaised) {
+                if (alertBox && alertText) {
+                    alertText.textContent = currentUser + ' raised their hand';
+                    alertBox.classList.remove('hidden');
+                    setTimeout(() => alertBox.classList.add('hidden'), 4000);
+                }
+                broadcastEvent('HAND_RAISE', { user: currentUser });
+                showToast('✋ You raised your hand');
+            } else {
+                if (alertBox) alertBox.classList.add('hidden');
+            }
+        }
+
+        function toggleClassroomDrawer(tabName) {
+            const drawer = document.getElementById('classroomSideDrawer');
+            if (!drawer) return;
+
+            if (drawer.classList.contains('hidden')) {
+                drawer.classList.remove('hidden');
+                if (tabName) setDrawerTab(tabName);
+                const unreadDot = document.getElementById('unreadChatDot');
+                if (unreadDot) unreadDot.classList.add('hidden');
+            } else {
+                drawer.classList.add('hidden');
+            }
+        }
+
+        function setDrawerTab(tabName) {
+            const tabs = ['chat', 'roster', 'notes'];
+            tabs.forEach(t => {
+                const pane = document.getElementById('drawerPane' + capitalize(t));
+                const btn = document.getElementById('drawerTab' + capitalize(t));
+                if (pane) pane.classList.add('hidden');
+                if (btn) {
+                    btn.classList.remove('border-amber-500', 'text-white');
+                    btn.classList.add('border-transparent', 'text-zinc-400');
+                }
+            });
+
+            const activePane = document.getElementById('drawerPane' + capitalize(tabName));
+            const activeBtn = document.getElementById('drawerTab' + capitalize(tabName));
+            if (activePane) activePane.classList.remove('hidden');
+            if (activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-zinc-400');
+                activeBtn.classList.add('border-amber-500', 'text-white');
+            }
+        }
+
+        function handleSendClassroomMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('chatInputText');
+            const text = input.value.trim();
+            if (!text) return;
+
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            const messageObj = {
+                user: currentUser,
+                role: currentRole === 'teacher' ? 'Instructor Host' : 'Student',
+                text: text,
+                time: time
+            };
+
+            appendChatMessage(messageObj);
+            broadcastEvent('CHAT_MESSAGE', messageObj);
+            input.value = '';
+        }
+
+        function appendChatMessage(msg) {
+            const feed = document.getElementById('classroomChatMessages');
+            if (!feed) return;
+
+            const div = document.createElement('div');
+            const isMe = msg.user === currentUser;
+            div.className = isMe ? 'bg-amber-500/10 p-2.5 rounded-xl border border-amber-500/30' : 'bg-zinc-800/90 p-2.5 rounded-xl border border-zinc-700';
+
+            div.innerHTML = `
+                <div class="flex items-center justify-between font-bold text-[10px] mb-1">
+                    <span class="${isMe ? 'text-amber-400' : 'text-blue-400'}">${escapeHTML(msg.user)} <span class="text-zinc-500 font-normal">(${escapeHTML(msg.role)})</span></span>
+                    <span class="text-zinc-500 font-mono">${escapeHTML(msg.time)}</span>
+                </div>
+                <p class="text-zinc-200 leading-relaxed">${escapeHTML(msg.text)}</p>
+            `;
+            feed.appendChild(div);
+            feed.scrollTop = feed.scrollHeight;
+
+            const drawer = document.getElementById('classroomSideDrawer');
+            if (drawer && drawer.classList.contains('hidden')) {
+                const unreadDot = document.getElementById('unreadChatDot');
+                if (unreadDot) unreadDot.classList.remove('hidden');
+            }
+        }
+
+        function handleNotesInput() {
+            if (!currentRoomId) return;
+            const text = document.getElementById('classroomNotesArea').value;
+            localStorage.setItem('gtrend_class_notes_' + currentRoomId, text);
+            broadcastEvent('WHITEBOARD_NOTES_UPDATED', { roomId: currentRoomId, text: text });
+        }
+
+        function copyClassroomNotes() {
+            const text = document.getElementById('classroomNotesArea').value;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text);
+                showToast('Notes copied to clipboard!');
+            } else {
+                alert('Notes copied!');
+            }
+        }
+
+        function instructorMuteAll() {
+            if (currentRole !== 'teacher') return;
+            broadcastEvent('INSTRUCTOR_MUTE_ALL', { host: currentUser });
+            showToast('Host Command Executed: Muted all participants.');
+            alert('Host command executed: Sent mute signal to all connected student tabs.');
+        }
+
+        // Cross-tab Synchronization Helpers
+        function broadcastEvent(type, payload) {
+            const data = { type, payload, timestamp: Date.now() };
+            if (hubBroadcastChannel) {
+                try { hubBroadcastChannel.postMessage(data); } catch (e) { }
+            }
+            try {
+                localStorage.setItem('gtrend_sync_packet', JSON.stringify(data));
+            } catch (e) { }
+        }
+
+        function handleBroadcastMessage(event) {
+            if (!event || !event.data) return;
+            processSyncPacket(event.data);
+        }
+
+        function handleStorageSync(event) {
+            if (event.key === 'gtrend_sync_packet' && event.newValue) {
+                try {
+                    const data = JSON.parse(event.newValue);
+                    processSyncPacket(data);
+                } catch (e) { }
+            }
+        }
+
+        function processSyncPacket(packet) {
+            if (!packet || !packet.type) return;
+
+            switch (packet.type) {
+                case 'CLASS_LIST_UPDATED':
+                    classSessions = packet.payload;
+                    renderClasses();
+                    break;
+                case 'ATTENDANCE_RECORDED':
+                    renderAttendanceLogs();
+                    break;
+                case 'NEW_REGISTRATION':
+                    renderRegistrationsTable();
+                    break;
+                case 'NEW_INQUIRY':
+                    renderInquiriesList();
+                    break;
+                case 'CHAT_MESSAGE':
+                    if (packet.payload.user !== currentUser) {
+                        appendChatMessage(packet.payload);
+                        showToast(`${packet.payload.user}: ${packet.payload.text.slice(0, 35)}...`);
+                    }
+                    break;
+                case 'HAND_RAISE':
+                    if (packet.payload.user !== currentUser) {
+                        const alertBox = document.getElementById('handRaisedAlert');
+                        const alertText = document.getElementById('handRaisedText');
+                        if (alertBox && alertText) {
+                            alertText.textContent = packet.payload.user + ' raised their hand';
+                            alertBox.classList.remove('hidden');
+                            setTimeout(() => alertBox.classList.add('hidden'), 4000);
+                        }
+                        showToast('✋ ' + packet.payload.user + ' raised their hand');
+                    }
+                    break;
+                case 'INSTRUCTOR_MUTE_ALL':
+                    if (currentRole === 'student' && !isAudioMuted) {
+                        toggleOfflineAudio();
+                        showToast('Instructor Host has muted all participants');
+                    }
+                    break;
+                case 'WHITEBOARD_NOTES_UPDATED':
+                    if (packet.payload.roomId === currentRoomId) {
+                        const notesArea = document.getElementById('classroomNotesArea');
+                        if (notesArea && document.activeElement !== notesArea) {
+                            notesArea.value = packet.payload.text;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        // Lightweight Toast UI Notification
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            if (!container) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'toast-notification glass-panel px-4 py-2.5 rounded-2xl text-xs font-bold text-white shadow-2xl border border-amber-500/40 flex items-center gap-2 pointer-events-auto bg-slate-900/95';
+            toast.innerHTML = `<i class="fa-solid fa-circle-info accent-text"></i> ${escapeHTML(message)}`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(10px)';
+                setTimeout(() => toast.remove(), 400);
+            }, 3200);
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function escapeJS(str) {
+            if (!str) return '';
+            return String(str).replace(/'/g, "\\'");
+        }
+
+        // Initialize UI State
+        renderClasses();
+        renderAttendanceLogs();
+        renderRegistrationsTable();
+        renderInquiriesList();
+        if (typeof loadHomePreviews === 'function') {
+            loadHomePreviews();
+        }
+    </script>
+    <!-- Gtrend Live Chat & Support Chatbot Widget -->
+    <script src="./assets/js/chat-widget.js"></script>
+</body>
+
+</html>

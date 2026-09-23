@@ -1,0 +1,47 @@
+[
+  {
+    "id": "news-1",
+    "title": "Gtrend Hub Launches AI & Full-Stack Summer Bootcamp 2026",
+    "category": "Events",
+    "date": "September 18, 2026",
+    "author": "Engr. Victor Clifford",
+    "image": "./assets/images/course-web-dev.jpg",
+    "summary": "Join over 150 emerging software developers and AI innovators in an intensive 12-week hands-on tech accelerator.",
+    "content": "Gtrend Tech Hub has officially launched admission for the 2026 Full-Stack and AI Engineering Cohort. Trainees gain direct mentorship in building production apps, React/Node architectures, and automated intelligence pipelines.",
+    "tags": [
+      "Bootcamp",
+      "FullStack",
+      "AI"
+    ]
+  },
+  {
+    "id": "news-2",
+    "title": "Enterprise Starlink & Low-Latency Mesh Satellite Deployments",
+    "category": "Projects",
+    "date": "September 12, 2026",
+    "author": "Engr. Benedict Anthony",
+    "image": "./assets/images/starlink-network.jpg",
+    "summary": "Providing uninterrupted high-speed internet to remote corporate facilities, research hubs, and offshore locations.",
+    "content": "Our specialized connectivity division completed 45 high-speed Starlink deployments across the South-South region with 99.98% uptime SLA.",
+    "tags": [
+      "Starlink",
+      "Connectivity",
+      "ICT"
+    ]
+  },
+  {
+    "id": "news-3",
+    "title": "Next-Gen Cybersecurity & Cloud Defense Masterclass",
+    "category": "Updates",
+    "date": "September 05, 2026",
+    "author": "Security Operations Team",
+    "image": "./assets/images/cybersecurity.jpg",
+    "summary": "Zero-trust security blueprints and proactive threat mitigation strategies for enterprise organizations.",
+    "content": "A comprehensive briefing and interactive workshop for enterprise IT directors on defending cloud perimeters against modern attack vectors.",
+    "tags": [
+      "Cybersecurity",
+      "Cloud",
+      "Workshops"
+    ]
+  }
+]

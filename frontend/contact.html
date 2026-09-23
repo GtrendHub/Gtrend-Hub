@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark-gold">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact &amp; Studio Campus | Gtrend Tech Hub</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="./assets/js/tailwind.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <!-- Clean Light Mode Custom Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/theme-light.css">
+    <style>
+        /* Modern Themes Variables */
+        :root,
+        :root[data-theme="dark-gold"] {
+            --bg-main: #080c14;
+            --bg-card: rgba(19, 27, 46, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(8, 12, 20, 0.9);
+        }
+
+        :root[data-theme="cyber-neon"] {
+            --bg-main: #050515;
+            --bg-card: rgba(15, 20, 45, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --brand-accent: #3664c7;
+            --border-color: rgba(17, 28, 185, 0.342);
+            --header-bg: rgba(5, 5, 21, 0.9);
+        }
+
+        :root[data-theme="clean-light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-accent: #d97706;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        :root[data-theme="emerald-matrix"] {
+            --bg-main: #02120b;
+            --bg-card: rgba(6, 32, 20, 0.85);
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --brand-accent: #10b981;
+            --border-color: rgba(16, 185, 129, 0.2);
+            --header-bg: rgba(2, 18, 11, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text {
+            color: var(--brand-accent);
+        }
+
+        .accent-bg {
+            background-color: var(--brand-accent);
+        }
+
+        .glow-hover:hover {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 25px rgba(230, 144, 10, 0.2);
+        }
+    </style>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Global Header Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800/80 transition-all duration-300"
+        style="background: var(--header-bg); backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Left: Brand Logo & Title -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div
+                        class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-md sm:text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                class="accent-text"> Tech Hub</span></span>
+                        <span class="text-[8px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The Future
+                            of Tech Solutions</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center: Navigation Links -->
+            <nav id="publicNav"
+                class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <a href="index.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Home</a>
+                <a href="about.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">About</a>
+                <a href="services.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Services</a>
+                <a href="courses.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Courses</a>
+                <a href="news.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">News &amp;
+                    Events</a>
+                <a href="gallery.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Gallery</a>
+                <a href="contact.html"
+                    class="px-2.5 py-2 rounded-lg text-amber-400 bg-amber-500/10 border border-amber-500/30 font-bold transition">Contact</a>
+            </nav>
+
+            <!-- Right: Login, Theme & Mobile -->
+            <div class="flex items-center gap-2">
+                <a href="login.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+
+                <!-- Theme Switcher Pill -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeMenu()"
+                        class="h-10 px-3 rounded-xl glass-panel text-xs font-bold flex items-center gap-1.5 hover:border-amber-500 transition text-slate-200 border border-slate-700/80">
+                        <i class="fa-solid fa-palette accent-text text-sm"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                    </button>
+                    <div id="themeDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel shadow-2xl py-2 z-50 border border-slate-700">
+                        <button onclick="setTheme('dark-gold')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm"></span> Dark Gold
+                            (Default)
+                        </button>
+                        <button onclick="setTheme('cyber-neon')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-sm"></span> Cyber Neon
+                        </button>
+                        <button onclick="setTheme('clean-light')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-600 inline-block shadow-sm"></span> Clean Light
+                        </button>
+                        <button onclick="setTheme('emerald-matrix')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-sm"></span> Emerald
+                            Matrix
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileNav()"
+                    class="lg:hidden h-10 w-10 rounded-xl glass-panel border border-slate-700/80 text-slate-200 hover:text-white flex items-center justify-center transition">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Responsive Dropdown Menu -->
+        <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slate-800 px-4 py-4 space-y-2 glass-panel"
+            style="background: var(--header-bg);">
+            <a href="index.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Home</a>
+            <a href="about.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">About</a>
+            <a href="services.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Services</a>
+            <a href="courses.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Courses
+                Catalog</a>
+            <a href="news.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">News
+                &amp; Events</a>
+            <a href="gallery.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Gallery</a>
+            <a href="contact.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 font-bold transition">Contact</a>
+            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800">
+                <a href="login.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 text-white border border-slate-700">Login</a>
+                <a href="register.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider accent-bg text-white">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 pt-24 pb-20">
+
+        <!-- 1. Contact Hero -->
+        <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div
+                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-headset"></i> We're Here to Help
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white mb-4">
+                    Get in Touch with <span class="accent-text">Gtrend Tech Hub</span>
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    Have questions about our cohort bootcamps, enterprise software contracts, Starlink deployments, or
+                    visiting our physical innovation lab? Reach out to our technical advisors today.
+                </p>
+            </div>
+
+            <!-- Contact Channels Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                <!-- Channel 1: Physical Studio -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 glow-hover transition duration-300">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <h4 class="text-base font-black text-white mb-1">Physical Innovation Studio</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">Port Harcourt Tech District, Rivers State,
+                        Nigeria.</p>
+                    <span class="text-[11px] font-bold accent-text">Open for Studio Visits</span>
+                </div>
+
+                <!-- Channel 2: WhatsApp & Direct Call -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 glow-hover transition duration-300">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <h4 class="text-base font-black text-white mb-1">Phone &amp; WhatsApp</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">+234 706 697 6885<br>+234 900 000 0000</p>
+                    <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                        rel="noopener noreferrer" target="_blank"
+                        class="text-[11px] font-bold text-emerald-400 hover:underline flex items-center gap-1">
+                        Chat on WhatsApp &rarr;
+                    </a>
+                </div>
+
+                <!-- Channel 3: Email Inquiries -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 glow-hover transition duration-300">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-blue-500/15 text-blue-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <h4 class="text-base font-black text-white mb-1">Official Emails</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">
+                        admissions@gtrendhub.com<br>solutions@gtrendhub.com</p>
+                    <span class="text-[11px] font-bold text-blue-400">Response within 4 hours</span>
+                </div>
+
+                <!-- Channel 4: Operating Hours -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 glow-hover transition duration-300">
+                    <div
+                        class="w-12 h-12 rounded-2xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-xl mb-4">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <h4 class="text-base font-black text-white mb-1">Operating Hours</h4>
+                    <p class="text-xs text-slate-400 leading-relaxed mb-3">Mon - Fri: 8:00 AM - 6:00 PM<br>Sat: 10:00 AM
+                        - 4:00 PM</p>
+                    <span class="text-[11px] font-bold text-purple-400">24/7 Virtual Portal</span>
+                </div>
+            </div>
+
+            <!-- Interactive Message Form & Campus Showcase -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+                <!-- Left: Send Message Form -->
+                <div class="lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl border border-amber-500/30 shadow-2xl">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-black text-white">Send Direct Message</h3>
+                        <p class="text-slate-400 text-xs mt-1">Fill in the message form and we will connect you with the
+                            appropriate academy coordinator or technical lead.</p>
+                    </div>
+
+                    <form onsubmit="handleContactSubmit(event)" class="space-y-4 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold uppercase text-slate-300 mb-1">Full Name *</label>
+                                <input type="text" id="contactName" required placeholder="e.g. Samuel Alex"
+                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-300 mb-1">Email Address *</label>
+                                <input type="email" id="contactEmail" required placeholder="e.g. samuel@gmail.com"
+                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold uppercase text-slate-300 mb-1">Phone Number (WhatsApp
+                                    Preferred)</label>
+                                <input type="tel" id="contactPhone" placeholder="+234 706 697 6885"
+                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-300 mb-1">Subject / Reason for
+                                    Inquiry *</label>
+                                <select id="contactSubject" required
+                                    class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="">-- Choose Category --</option>
+                                    <option value="Course Enrolment & Admissions">Course Enrolment &amp; Admissions
+                                    </option>
+                                    <option value="Enterprise Software Project">Enterprise Software Project</option>
+                                    <option value="Starlink & Network Installation">Starlink &amp; Network Installation
+                                    </option>
+                                    <option value="Physical Campus Tour">Physical Campus Tour</option>
+                                    <option value="Partnership & Sponsorship">Partnership &amp; Sponsorship</option>
+                                    <option value="General Support">General Support</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1">Message Content *</label>
+                            <textarea id="contactMessage" required rows="4"
+                                placeholder="How can we assist you today? Let us know the details..."
+                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-amber-500"></textarea>
+                        </div>
+
+                        <button type="submit" id="btnContactSubmit"
+                            class="w-full py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition flex items-center justify-center gap-2 shadow-xl">
+                            <i class="fa-solid fa-paper-plane"></i> Send Official Message
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Campus Experience & Map Preview -->
+                <div class="lg:col-span-5 space-y-6">
+                    <!-- Campus Card with Image -->
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800 glow-hover shadow-xl">
+                        <div class="h-44 rounded-2xl overflow-hidden mb-4 relative">
+                            <img src="./assets/images/about-workspace.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                                alt="Gtrend Studio Campus" class="w-full h-full object-cover">
+                            <div
+                                class="absolute bottom-2 left-2 px-3 py-1 rounded-xl bg-black/80 backdrop-blur-md text-[10px] font-bold text-amber-400">
+                                <i class="fa-solid fa-wifi mr-1"></i> Starlink 24/7 Superfast Wi-Fi
+                            </div>
+                        </div>
+                        <h4 class="text-lg font-black text-white mb-1">Visit Our Academy Campus</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                            Experience our state-of-the-art coding studio, hands-on iMac hardware pods, and collaborate
+                            with like-minded developers and mentors in person.
+                        </p>
+                        <div class="space-y-2 border-t border-slate-800/80 pt-3 text-[11px] text-slate-300">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-car text-amber-400"></i> Free
+                                Secured Onsite Parking</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-bolt text-amber-400"></i> 100%
+                                Uninterrupted Solar &amp; Inverter Power</div>
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-mug-hot text-amber-400"></i>
+                                Developer Lounge &amp; Coffee Bar</div>
+                        </div>
+                    </div>
+
+                    <!-- Instant Chat Assistance -->
+                    <div class="glass-panel p-6 rounded-3xl border border-emerald-500/30 bg-emerald-500/5">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-robot"></i>
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-black text-white">Need Instant Answers?</h5>
+                                <p class="text-[10px] text-slate-400">Use our AI Support Chatbot widget at the bottom
+                                    right.</p>
+                            </div>
+                        </div>
+                        <button
+                            onclick="if(window.GtrendChat) { window.GtrendChat.toggle(); } else { alert('Chat widget loading...'); }"
+                            class="w-full py-2.5 rounded-xl border border-emerald-500/40 text-emerald-400 hover:bg-emerald-500 hover:text-white font-bold text-xs transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-comments"></i> Open AI Live Assistant
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Universal Footer -->
+    <!-- Global Universal Footer -->
+    <!-- GLOBAL UNIFIED FOOTER -->
+    <footer class="pt-16 pb-12 border-t border-slate-800/80 mt-auto"
+        style="background: var(--bg-card); backdrop-filter: blur(14px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+
+                <!-- Col 1: Brand & Bio -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20">
+                            <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                    fill="white" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                    class="accent-text"> Tech Hub</span></span>
+                            <span class="text-[9px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                                Future of Tech Solutions</span>
+                        </div>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Premier digital technology academy &amp; software engineering enterprise. Empowering
+                        next-generation engineers, founders, and businesses with world-class tech skills and custom
+                        digital solutions.
+                    </p>
+                    <div class="flex items-center gap-3 text-slate-400 text-sm pt-2">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/50 transition"
+                            title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="Twitter/X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/50 transition"
+                            title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                        <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Courses Catalog</a></li>
+                        <li><a href="news.html" class="hover:text-white transition">News &amp; Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-white transition">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Academy Tracks -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academy Tracks</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="courses.html" class="hover:text-white transition">Full-Stack Web Dev</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">AI &amp; Automation</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">UI/UX Product Design</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Cybersecurity Defense</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Starlink &amp; Networking</a>
+                        </li>
+                        <li><a href="courses.html" class="hover:text-white transition">Kids Coding &amp; STEM</a></li>
+                        <li><a href="register.html" class="accent-text font-bold hover:underline">Apply for Admission
+                                &rarr;</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus & Support -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Studio Campus</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot accent-text mt-0.5 text-[11px]"></i>
+                            <span>Port Harcourt Tech District, Rivers State, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-[11px]"></i>
+                            <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">+234
+                                706 697 6885</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-blue-400 text-[11px]"></i>
+                            <a href="mailto:admissions@gtrendhub.com"
+                                class="hover:text-white transition">admissions@gtrendhub.com</a>
+                        </li>
+                        <li class="pt-2">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 24/7
+                                Starlink Hub Online
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Row: Copyright & Links -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 Gtrend Tech Hub. All rights reserved. Driving Africa's Digital Revolution.</p>
+                <div class="flex items-center gap-6">
+                    <a href="about.html#team" class="hover:text-slate-300 transition">Our Team</a>
+                    <a href="services.html" class="hover:text-slate-300 transition">Our Services</a>
+                    <a href="login.html" class="hover:text-slate-300 transition">Portal Login</a>
+                    <a href="admin/login.html" class="accent-text font-bold hover:underline">Admin Gateway</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./assets/js/api.js"></script>
+    <script src="./assets/js/chat-widget.js"></script>
+    <script>
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value.trim();
+            const email = document.getElementById('contactEmail').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const subject = document.getElementById('contactSubject').value;
+            const message = document.getElementById('contactMessage').value.trim();
+
+            const inquiryObj = {
+                id: 'MSG-' + Date.now(),
+                name: name,
+                email: email,
+                phone: phone,
+                service: subject,
+                details: message,
+                status: 'General Inquiry',
+                submittedAt: new Date().toISOString()
+            };
+
+            try {
+                const existing = JSON.parse(localStorage.getItem('gtrend_inquiries') || '[]');
+                existing.unshift(inquiryObj);
+                localStorage.setItem('gtrend_inquiries', JSON.stringify(existing));
+            } catch (err) { }
+
+            alert('Thank you, ' + name + '! Your message has been sent successfully. A Gtrend representative will respond shortly.');
+            e.target.reset();
+        }
+
+        // Universal Theme & Navbar Controller
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('gtrend_active_theme', theme);
+            localStorage.setItem('gtrend_theme', theme);
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+        function toggleThemeMenu() {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function (e) {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.parentElement.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        function toggleMobileNav() {
+            var menu = document.getElementById('mobileNavMenu');
+            var icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-base' : 'fa-solid fa-xmark text-base';
+                }
+            }
+        }
+        // Apply saved theme on page load
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "usr-admin-1",
+    "email": "admin@gtrend.com",
+    "name": "Administrator",
+    "role": "admin",
+    "password": "ca758eddede96042e1663591d55c77872dbf281217cdf071769b28feff29043c",
+    "createdAt": "2026-09-23T14:13:30.238Z"
+  },
+  {
+    "id": "usr-student-1",
+    "email": "student@gtrend.com",
+    "name": "Alex Samuel",
+    "role": "student",
+    "course": "Full-Stack Web Engineering",
+    "password": "d9e33bae751db33940cd8cfe456f10fc3ed89473a3d524f05fc15e32b679b2e4",
+    "createdAt": "2026-09-23T14:13:30.239Z"
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "gal-1",
+    "title": "Main Development Studio & Academy Floor",
+    "category": "Campus",
+    "type": "image",
+    "url": "./assets/images/hero-tech-bg.jpg",
+    "description": "State-of-the-art tech workspace equipped with ultra-fast mesh fiber connectivity."
+  },
+  {
+    "id": "gal-2",
+    "title": "Full-Stack Software Lab in Action",
+    "category": "Training",
+    "type": "image",
+    "url": "./assets/images/course-web-dev.jpg",
+    "description": "Hands-on practical session building scalable Node.js and React web applications."
+  },
+  {
+    "id": "gal-3",
+    "title": "AI & Data Engineering Workstations",
+    "category": "Projects",
+    "type": "image",
+    "url": "./assets/images/ai-automation.jpg",
+    "description": "Students designing automated intelligent workflows and machine learning models."
+  },
+  {
+    "id": "gal-4",
+    "title": "Enterprise Satellite & Network Testing Lab",
+    "category": "Lab",
+    "type": "image",
+    "url": "./assets/images/starlink-network.jpg",
+    "description": "Engineers configuring failover routing and Starlink satellite arrays."
+  },
+  {
+    "id": "gal-5",
+    "title": "Cyber Threat Defense Operations Center",
+    "category": "Lab",
+    "type": "image",
+    "url": "./assets/images/cybersecurity.jpg",
+    "description": "Live threat monitoring and vulnerability auditing simulation room."
+  }
+]

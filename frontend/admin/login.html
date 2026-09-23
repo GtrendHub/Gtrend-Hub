@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal Login | Gtrend Tech Hub</title>
+    <script src="../assets/js/tailwind.js"></script>
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <style>
+        :root {
+            --bg-main: #070a12;
+            --bg-card: rgba(15, 22, 38, 0.9);
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+        }
+        body { background-color: var(--bg-main); color: #f1f5f9; }
+        .glass-panel { background: var(--bg-card); backdrop-filter: blur(14px); border: 1px solid var(--border-color); }
+        .accent-text { color: var(--brand-accent); }
+        .accent-bg { background-color: var(--brand-accent); }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex items-center justify-center p-4">
+    <div class="glass-panel p-8 sm:p-10 rounded-3xl border border-amber-500/40 shadow-2xl max-w-md w-full text-center">
+        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center text-2xl mx-auto mb-4 border border-amber-500/40">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+        <h1 class="text-2xl font-black text-white">Gtrend Admin Gateway</h1>
+        <p class="text-xs text-slate-400 mt-1 mb-6">Restricted administrative access for staff & support agents.</p>
+
+        <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-xs text-left">
+            <div>
+                <label class="block font-bold uppercase text-slate-400 mb-1">Admin Email *</label>
+                <input type="email" id="adminEmail" required value="admin@gtrendhub.com"
+                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block font-bold uppercase text-slate-400 mb-1">Password *</label>
+                <input type="password" id="adminPassword" required placeholder="admin123" value="admin123"
+                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+
+            <div id="adminErr" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs"></div>
+
+            <button type="submit" id="btnAdminLogin"
+                class="w-full py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition shadow-xl flex items-center justify-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i> Enter Admin Dashboard
+            </button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-slate-800 text-[11px] text-slate-500">
+            <a href="../index.html" class="hover:text-amber-400 transition">&larr; Return to Public Website</a>
+        </div>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script>
+        async function handleAdminLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            const btn = document.getElementById('btnAdminLogin');
+            const err = document.getElementById('adminErr');
+
+            err.classList.add('hidden');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Checking credentials...';
+
+            try {
+                const res = await GtrendAPI.login({ email, password });
+                if (res && res.success) {
+                    localStorage.setItem('gtrend_token', res.data.token);
+                    localStorage.setItem('gtrend_user', JSON.stringify(res.data.user));
+                    window.location.href = 'index.html';
+                } else {
+                    err.textContent = (res && res.message) || 'Unauthorized credentials';
+                    err.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Enter Admin Dashboard';
+                }
+            } catch (e) {
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

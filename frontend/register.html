@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark-gold">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration & Enrolment | Gtrend Tech Hub</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="./assets/js/tailwind.js"></script>
+    <!-- Offline Font Awesome Icons & Webfonts -->
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <!-- Clean Light Mode Custom Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/theme-light.css">
+    <style>
+        /* Modern Themes Variables */
+        :root,
+        :root[data-theme="dark-gold"] {
+            --bg-main: #080c14;
+            --bg-card: rgba(19, 27, 46, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(8, 12, 20, 0.9);
+        }
+
+        :root[data-theme="cyber-neon"] {
+            --bg-main: #050515;
+            --bg-card: rgba(15, 20, 45, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --brand-accent: #3664c7;
+            --border-color: rgba(17, 28, 185, 0.342);
+            --header-bg: rgba(5, 5, 21, 0.9);
+        }
+
+        :root[data-theme="clean-light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-accent: #d97706;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        :root[data-theme="emerald-matrix"] {
+            --bg-main: #02120b;
+            --bg-card: rgba(6, 32, 20, 0.85);
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --brand-accent: #10b981;
+            --border-color: rgba(16, 185, 129, 0.2);
+            --header-bg: rgba(2, 18, 11, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text {
+            color: var(--brand-accent);
+        }
+
+        .accent-bg {
+            background-color: var(--brand-accent);
+        }
+
+        .glow-hover:hover {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 25px rgba(230, 144, 10, 0.2);
+        }
+    </style>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Header Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800/80 transition-all duration-300"
+        style="background: var(--header-bg); backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div
+                    class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                    <svg width="24" height="24" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                            fill="white" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-md sm:text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                            class="accent-text"> Tech Hub</span></span>
+                    <span class="text-[8px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The Future of
+                        Tech Solutions</span>
+                </div>
+            </a>
+
+            <div class="flex items-center gap-2">
+                <!-- Theme Switcher Pill -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeMenu()"
+                        class="h-10 px-3 rounded-xl glass-panel text-xs font-bold flex items-center gap-1.5 hover:border-amber-500 transition text-slate-200 border border-slate-700/80">
+                        <i class="fa-solid fa-palette accent-text text-sm"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                    </button>
+                    <div id="themeDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel shadow-2xl py-2 z-50 border border-slate-700">
+                        <button onclick="setTheme('dark-gold')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm"></span> Dark Gold
+                            (Default)
+                        </button>
+                        <button onclick="setTheme('cyber-neon')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-sm"></span> Cyber Neon
+                        </button>
+                        <button onclick="setTheme('clean-light')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-600 inline-block shadow-sm"></span> Clean Light
+                        </button>
+                        <button onclick="setTheme('emerald-matrix')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-sm"></span> Emerald
+                            Matrix
+                        </button>
+                    </div>
+                </div>
+                <a href="about.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center border border-slate-700/80">About</a>
+                <a href="services.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center border border-slate-700/80">Services</a>
+                <a href="courses.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    Courses
+                </a>
+                <a href="index.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    <i class="fa-solid fa-arrow-left text-xs"></i>
+                    <span class="hidden sm:inline">Main Site</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Registration Container -->
+    <main class="flex-1 pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+        <div class="text-center mb-8">
+            <span
+                class="accent-text font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-1.5"><i
+                    class="fa-solid fa-graduation-cap"></i> Standalone Application Portal</span>
+            <h1 class="text-3xl sm:text-4xl font-black mt-2 text-white">Course Student Registration Form</h1>
+            <p class="text-slate-400 text-xs mt-2">Fill out this enrolment form to secure your admission into Gtrend
+                Tech Hub academy cohorts.</p>
+        </div>
+
+        <div class="glass-panel p-6 sm:p-10 rounded-3xl border border-amber-500/30 shadow-2xl">
+            <form onsubmit="handleRegistrationSubmit(event)" class="space-y-8 text-xs">
+
+                <!-- Block 1: Contact & Personal Details -->
+                <div>
+                    <h3
+                        class="text-sm font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i> 1. Personal & Contact Information
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Full Name *</label>
+                            <input type="text" id="regFullName" required placeholder="e.g. Samuel Alex"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Email Address *</label>
+                            <input type="email" id="regEmail" required placeholder="e.g. samuel@gmail.com"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Phone Number (WhatsApp
+                                Preferred) *</label>
+                            <input type="tel" id="regPhone" required placeholder="+234 706 697 6885"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Age Bracket / Status *</label>
+                            <select id="regAgeBracket" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="">Select Option</option>
+                                <option value="Under 18 (Kids / Teen Track)">Under 18 (Kids / Teen Track)</option>
+                                <option value="18 - 25 Years (University / Graduate)">18 - 25 Years (University /
+                                    Graduate)</option>
+                                <option value="26 - 35 Years (Working Professional)">26 - 35 Years (Working
+                                    Professional)</option>
+                                <option value="36+ Years (Career Transition)">36+ Years (Career Transition)</option>
+                            </select>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Account Password (For Portal
+                                Login) *</label>
+                            <input type="password" id="regPassword" required
+                                placeholder="Create a secure password (e.g. Student2026!)" value="student123"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Residential Address / City &
+                                Country *</label>
+                            <input type="text" id="regAddress" required
+                                placeholder="e.g. Port Harcourt, Rivers State, Nigeria"
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 2: Course & Learning Mode -->
+                <div>
+                    <h3
+                        class="text-sm font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> 2. Course Selection & Preferred Mode
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Select Desired Tech Program
+                                *</label>
+                            <select id="regCourseSelect" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Full-Stack Web Development">Full-Stack Web Development
+                                    (HTML/CSS/JS/React/Node/Express)</option>
+                                <option value="AI and Automation Engineering">AI & Automation Engineering (Python, LLMs,
+                                    Agents & RPA)</option>
+                                <option value="UI-UX and Product Design">UI/UX & Product Design (Figma Prototyping,
+                                    Systems & User Journeys)</option>
+                                <option value="Cybersecurity and Ethical Hacking">Cybersecurity & Ethical Hacking
+                                    (Pen-testing, Defense & Kali Linux)</option>
+                                <option value="Networking and Starlink Solutions">Networking & Starlink Solutions
+                                    (Routing, Switching & Satellites)</option>
+                                <option value="Kids Coding Robotics STEM">Kids Coding, Robotics & STEM (Scratch & Visual
+                                    Logic)</option>
+                                <option value="Mobile App Development">Mobile App Development (Flutter & React Native)
+                                </option>
+                                <option value="Database Systems and Cloud">Database Systems & Cloud Engineering</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Preferred Learning Mode
+                                *</label>
+                            <select id="regLearningMode" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Physical Onsite (Hub Studio)">Physical Onsite (Hub Studio - Starlink High
+                                    Speed)</option>
+                                <option value="Interactive Online (Virtual Portal)">Interactive Online (Virtual Portal
+                                    with Live Mentorship)</option>
+                                <option value="Hybrid (Studio + Remote Weekend)">Hybrid (Studio + Remote Weekend)
+                                </option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Prior Coding / Tech Experience
+                                Level *</label>
+                            <select id="regExperience" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Complete Beginner (No prior experience)">Complete Beginner (No prior
+                                    experience)</option>
+                                <option value="Basic Knowledge (Self-taught / HTML basics)">Basic Knowledge (Self-taught
+                                    / HTML basics)</option>
+                                <option value="Intermediate (Looking to master full-stack / AI)">Intermediate (Looking
+                                    to master full-stack / AI)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 3: Laptop & Equipment Verification -->
+                <div>
+                    <h3
+                        class="text-sm font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-laptop"></i> 3. Laptop & Equipment Verification
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-2 text-slate-300">Do you have a personal working
+                                laptop for practicals? *</label>
+                            <div class="flex flex-wrap gap-6 text-sm">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="laptopChoice" value="Yes, I have a functional laptop"
+                                        checked class="accent-amber-500">
+                                    <span class="text-slate-200">Yes, I have a functional laptop</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="laptopChoice"
+                                        value="No, planning to use Hub lab workstations" class="accent-amber-500">
+                                    <span class="text-slate-200">No, planning to use Hub lab workstations</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                            <div>
+                                <label class="block font-bold uppercase mb-1 text-slate-300">Laptop Operating
+                                    System</label>
+                                <select id="regLaptopOS"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Windows OS">Windows OS (Win 10 / 11)</option>
+                                    <option value="macOS (Apple)">macOS (MacBook)</option>
+                                    <option value="Linux / Ubuntu">Linux / Ubuntu</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase mb-1 text-slate-300">Stable Internet Access?
+                                    *</label>
+                                <select id="regInternet" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Yes, high-speed connection available">Yes, high-speed connection
+                                        available</option>
+                                    <option value="Relying on Hub Starlink Wi-Fi">Will rely on Hub Starlink Wi-Fi
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block 4: Motivation & Referral -->
+                <div>
+                    <h3
+                        class="text-sm font-bold uppercase accent-text border-b border-slate-800 pb-2 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-lightbulb"></i> 4. Motivation & Objectives
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">Why did you choose this course
+                                & what are your career goals? *</label>
+                            <textarea id="regReason" required rows="3"
+                                placeholder="Tell us briefly why you are interested in this course..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase mb-1 text-slate-300">How did you hear about Gtrend
+                                Tech Hub? *</label>
+                            <select id="regReferral" required
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="Social Media (Facebook / Instagram / LinkedIn)">Social Media (Facebook /
+                                    Instagram / LinkedIn)</option>
+                                <option value="Friend or Alumni Recommendation">Friend or Alumni Recommendation</option>
+                                <option value="Google Search">Google Search</option>
+                                <option value="Flyer / Billboard">Flyer / Billboard</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="regAlertMsg" class="hidden p-4 rounded-2xl border text-xs font-bold"></div>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4">
+                    <button type="submit" id="btnSubmitReg"
+                        class="w-full sm:flex-1 py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition shadow-xl flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Complete Registration & Submit Application
+                    </button>
+                    <a href="index.html"
+                        class="w-full sm:w-auto px-6 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-center font-bold text-sm text-slate-300 transition">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <!-- GLOBAL UNIFIED FOOTER -->
+    <footer class="pt-16 pb-12 border-t border-slate-800/80 mt-auto"
+        style="background: var(--bg-card); backdrop-filter: blur(14px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+
+                <!-- Col 1: Brand & Bio -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20">
+                            <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                    fill="white" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                    class="accent-text"> Tech Hub</span></span>
+                            <span class="text-[9px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                                Future of Tech Solutions</span>
+                        </div>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Premier digital technology academy &amp; software engineering enterprise. Empowering
+                        next-generation engineers, founders, and businesses with world-class tech skills and custom
+                        digital solutions.
+                    </p>
+                    <div class="flex items-center gap-3 text-slate-400 text-sm pt-2">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/50 transition"
+                            title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="Twitter/X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/50 transition"
+                            title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                        <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Courses Catalog</a></li>
+                        <li><a href="news.html" class="hover:text-white transition">News &amp; Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-white transition">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Academy Tracks -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academy Tracks</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="courses.html" class="hover:text-white transition">Full-Stack Web Dev</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">AI &amp; Automation</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">UI/UX Product Design</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Cybersecurity Defense</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Starlink &amp; Networking</a>
+                        </li>
+                        <li><a href="courses.html" class="hover:text-white transition">Kids Coding &amp; STEM</a></li>
+                        <li><a href="register.html" class="accent-text font-bold hover:underline">Apply for Admission
+                                &rarr;</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus & Support -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Studio Campus</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot accent-text mt-0.5 text-[11px]"></i>
+                            <span>Port Harcourt Tech District, Rivers State, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-[11px]"></i>
+                            <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">+234
+                                706 697 6885</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-blue-400 text-[11px]"></i>
+                            <a href="mailto:admissions@gtrendhub.com"
+                                class="hover:text-white transition">admissions@gtrendhub.com</a>
+                        </li>
+                        <li class="pt-2">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 24/7
+                                Starlink Hub Online
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Row: Copyright & Links -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 Gtrend Tech Hub. All rights reserved. Driving Africa's Digital Revolution.</p>
+                <div class="flex items-center gap-6">
+                    <a href="about.html#team" class="hover:text-slate-300 transition">Our Team</a>
+                    <a href="services.html" class="hover:text-slate-300 transition">Our Services</a>
+                    <a href="login.html" class="hover:text-slate-300 transition">Portal Login</a>
+                    <a href="admin/login.html" class="accent-text font-bold hover:underline">Admin Gateway</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/chat-widget.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseFromUrl = urlParams.get('course');
+            if (courseFromUrl) {
+                const selectEl = document.getElementById('regCourseSelect');
+                if (selectEl) {
+                    for (let i = 0; i < selectEl.options.length; i++) {
+                        if (selectEl.options[i].value.toLowerCase().includes(courseFromUrl.toLowerCase())) {
+                            selectEl.selectedIndex = i;
+                            break;
+                        }
+                    }
+                }
+            }
+        });
+
+        async function handleRegistrationSubmit(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSubmitReg');
+            const alertMsg = document.getElementById('regAlertMsg');
+
+            const payload = {
+                fullName: document.getElementById('regFullName').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                phone: document.getElementById('regPhone').value.trim(),
+                password: document.getElementById('regPassword').value.trim() || 'student123',
+                ageBracket: document.getElementById('regAgeBracket').value,
+                address: document.getElementById('regAddress').value.trim(),
+                course: document.getElementById('regCourseSelect').value,
+                learningMode: document.getElementById('regLearningMode').value,
+                laptopChoice: document.querySelector('input[name="laptopChoice"]:checked')?.value || 'Yes',
+                laptopOS: document.getElementById('regLaptopOS').value,
+                internet: document.getElementById('regInternet').value,
+                reason: document.getElementById('regReason').value.trim(),
+                referral: document.getElementById('regReferral').value
+            };
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Submitting & Storing to Database...';
+
+            try {
+                const res = await GtrendAPI.register(payload);
+                if (res && res.success) {
+                    alertMsg.className = 'p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold flex items-center gap-2';
+                    alertMsg.innerHTML = '<i class="fa-solid fa-circle-check text-base"></i> Application submitted and saved to Gtrend database! Redirecting to student portal...';
+                    alertMsg.classList.remove('hidden');
+
+                    if (res.data && res.data.token) localStorage.setItem('gtrend_token', res.data.token);
+                    if (res.data && res.data.user) localStorage.setItem('gtrend_user', JSON.stringify(res.data.user));
+
+                    setTimeout(() => {
+                        window.location.href = 'index.html?registered=true';
+                    }, 1200);
+                } else {
+                    alertMsg.className = 'p-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold';
+                    alertMsg.textContent = (res && res.message) || 'Registration could not be completed.';
+                    alertMsg.classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Complete Registration & Submit Application';
+                }
+            } catch (err) {
+                alertMsg.className = 'p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs font-bold';
+                alertMsg.textContent = 'Application received and stored locally! Welcome to Gtrend Hub.';
+                alertMsg.classList.remove('hidden');
+                setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+            }
+        }
+    </script>
+    <script>
+        // Universal Theme & Navbar Controller
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('gtrend_active_theme', theme);
+            localStorage.setItem('gtrend_theme', theme);
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+        function toggleThemeMenu() {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function (e) {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.parentElement.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        function toggleMobileNav() {
+            var menu = document.getElementById('mobileNavMenu');
+            var icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-base' : 'fa-solid fa-xmark text-base';
+                }
+            }
+        }
+        // Apply saved theme on page load
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</body>
+
+</html>

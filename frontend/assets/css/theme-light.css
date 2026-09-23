@@ -1,0 +1,271 @@
+/* ==========================================================================
+   GTREND TECH HUB - CLEAN LIGHT THEME ENGINE (LIGHT MODE)
+   Engineered for high-contrast legibility, pristine typography & premium UI
+   ========================================================================== */
+
+:root[data-theme="clean-light"],
+html[data-theme="clean-light"] {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --brand-accent: #d97706;
+    --border-color: #e2e8f0;
+    --header-bg: rgba(255, 255, 255, 0.95);
+    color-scheme: light;
+}
+
+/* 1. Base Document & Canvas */
+html[data-theme="clean-light"] body {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+/* 2. Glassmorphism Panels & Cards */
+html[data-theme="clean-light"] .glass-panel {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -2px rgba(15, 23, 42, 0.03) !important;
+    color: #0f172a;
+}
+
+html[data-theme="clean-light"] .glow-hover:hover {
+    border-color: #d97706 !important;
+    box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.12), 0 8px 10px -6px rgba(217, 119, 6, 0.08) !important;
+}
+
+/* 3. Typography & Headings Adjustments */
+html[data-theme="clean-light"] .text-white {
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] .text-slate-100,
+html[data-theme="clean-light"] .text-slate-200 {
+    color: #1e293b !important;
+}
+
+html[data-theme="clean-light"] .text-slate-300 {
+    color: #334155 !important;
+}
+
+html[data-theme="clean-light"] .text-slate-400 {
+    color: #64748b !important;
+}
+
+html[data-theme="clean-light"] .text-slate-500 {
+    color: #64748b !important;
+}
+
+html[data-theme="clean-light"] .accent-text {
+    color: #d97706 !important;
+}
+
+html[data-theme="clean-light"] label {
+    color: #1e293b !important;
+}
+
+/* 4. Background Surface Overrides */
+html[data-theme="clean-light"] .bg-slate-950,
+html[data-theme="clean-light"] .bg-slate-900,
+html[data-theme="clean-light"] .bg-slate-900\/90,
+html[data-theme="clean-light"] .bg-slate-900\/80,
+html[data-theme="clean-light"] .bg-slate-900\/60,
+html[data-theme="clean-light"] .bg-slate-900\/40 {
+    background-color: #f1f5f9 !important;
+}
+
+html[data-theme="clean-light"] .bg-slate-800,
+html[data-theme="clean-light"] .bg-slate-800\/90,
+html[data-theme="clean-light"] .bg-slate-800\/80,
+html[data-theme="clean-light"] .bg-slate-800\/60 {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] .bg-slate-800:hover,
+html[data-theme="clean-light"] .hover\:bg-slate-800:hover,
+html[data-theme="clean-light"] .hover\:bg-slate-800\/80:hover {
+    background-color: #cbd5e1 !important;
+}
+
+html[data-theme="clean-light"] .hover\:bg-slate-700:hover {
+    background-color: #cbd5e1 !important;
+}
+
+/* 5. Buttons & Badges */
+html[data-theme="clean-light"] .accent-bg,
+html[data-theme="clean-light"] .bg-amber-500,
+html[data-theme="clean-light"] button.accent-bg,
+html[data-theme="clean-light"] a.accent-bg {
+    background-color: #d97706 !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="clean-light"] .accent-bg *,
+html[data-theme="clean-light"] .bg-amber-500 * {
+    color: #ffffff !important;
+}
+
+html[data-theme="clean-light"] .border-amber-500\/30,
+html[data-theme="clean-light"] .border-amber-500\/40,
+html[data-theme="clean-light"] .border-amber-500\/50 {
+    border-color: rgba(217, 119, 6, 0.4) !important;
+}
+
+html[data-theme="clean-light"] .bg-amber-500\/10,
+html[data-theme="clean-light"] .bg-amber-500\/20 {
+    background-color: rgba(217, 119, 6, 0.1) !important;
+    color: #b45309 !important;
+}
+
+/* 6. Border Adaptations */
+html[data-theme="clean-light"] .border-slate-800,
+html[data-theme="clean-light"] .border-slate-800\/80,
+html[data-theme="clean-light"] .border-slate-800\/60,
+html[data-theme="clean-light"] .border-slate-700,
+html[data-theme="clean-light"] .border-slate-700\/80 {
+    border-color: #e2e8f0 !important;
+}
+
+/* 7. Header Navigation */
+html[data-theme="clean-light"] header {
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+html[data-theme="clean-light"] #publicNav a {
+    color: #475569 !important;
+}
+
+html[data-theme="clean-light"] #publicNav a:hover {
+    color: #0f172a !important;
+    background-color: #f1f5f9 !important;
+}
+
+html[data-theme="clean-light"] #publicNav a.bg-amber-500\/10,
+html[data-theme="clean-light"] #publicNav a.text-amber-400 {
+    background-color: rgba(217, 119, 6, 0.12) !important;
+    color: #b45309 !important;
+    border-color: rgba(217, 119, 6, 0.3) !important;
+}
+
+html[data-theme="clean-light"] #mobileNavMenu {
+    background: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+
+html[data-theme="clean-light"] #mobileNavMenu a {
+    color: #334155 !important;
+}
+
+html[data-theme="clean-light"] #mobileNavMenu a.bg-amber-500\/10 {
+    background-color: rgba(217, 119, 6, 0.12) !important;
+    color: #b45309 !important;
+}
+
+/* 8. Theme Dropdown Menu */
+html[data-theme="clean-light"] #themeDropdown {
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 8px 10px -6px rgba(15, 23, 42, 0.06) !important;
+}
+
+html[data-theme="clean-light"] #themeDropdown button {
+    color: #1e293b !important;
+}
+
+html[data-theme="clean-light"] #themeDropdown button:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* 9. Form Controls & Inputs */
+html[data-theme="clean-light"] input,
+html[data-theme="clean-light"] select,
+html[data-theme="clean-light"] textarea {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] input::placeholder,
+html[data-theme="clean-light"] textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="clean-light"] input:focus,
+html[data-theme="clean-light"] select:focus,
+html[data-theme="clean-light"] textarea:focus {
+    border-color: #d97706 !important;
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.15) !important;
+    outline: none !important;
+}
+
+/* 10. Filter Tabs in Courses/News/Gallery */
+html[data-theme="clean-light"] .course-filter-btn:not(.bg-amber-500),
+html[data-theme="clean-light"] .filter-btn:not(.active) {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #475569 !important;
+}
+
+html[data-theme="clean-light"] .course-filter-btn:not(.bg-amber-500):hover,
+html[data-theme="clean-light"] .filter-btn:not(.active):hover {
+    color: #0f172a !important;
+    background-color: #e2e8f0 !important;
+}
+
+html[data-theme="clean-light"] .course-filter-btn.bg-amber-500,
+html[data-theme="clean-light"] .filter-btn.active {
+    background-color: #d97706 !important;
+    color: #ffffff !important;
+}
+
+/* 11. Modal Dialogs & Backdrops */
+html[data-theme="clean-light"] .fixed.bg-black\/80 {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+}
+
+/* 12. Global Footer */
+html[data-theme="clean-light"] footer {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #475569 !important;
+}
+
+html[data-theme="clean-light"] footer h4 {
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] footer p {
+    color: #64748b !important;
+}
+
+html[data-theme="clean-light"] footer a {
+    color: #475569 !important;
+}
+
+html[data-theme="clean-light"] footer a:hover {
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] footer .glass-panel {
+    background-color: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+}
+
+/* 13. Portal & Classroom Overrides */
+html[data-theme="clean-light"] .gmeet-container {
+    background-color: #f1f5f9 !important;
+    border-color: #e2e8f0 !important;
+}
+
+html[data-theme="clean-light"] .gmeet-btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+html[data-theme="clean-light"] .gmeet-btn:hover {
+    background-color: #cbd5e1 !important;
+}
+

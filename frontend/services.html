@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="dark-gold">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Services &amp; Digital Solutions | Gtrend Tech Hub</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="./assets/js/tailwind.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="./assets/css/fontawesome.min.css">
+    <!-- Clean Light Mode Custom Stylesheet -->
+    <link rel="stylesheet" href="./assets/css/theme-light.css">
+    <style>
+        /* Modern Themes Variables */
+        :root,
+        :root[data-theme="dark-gold"] {
+            --bg-main: #080c14;
+            --bg-card: rgba(19, 27, 46, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --header-bg: rgba(8, 12, 20, 0.9);
+        }
+
+        :root[data-theme="cyber-neon"] {
+            --bg-main: #050515;
+            --bg-card: rgba(15, 20, 45, 0.85);
+            --text-main: #ffffff;
+            --text-muted: #a5b4fc;
+            --brand-accent: #3664c7;
+            --border-color: rgba(17, 28, 185, 0.342);
+            --header-bg: rgba(5, 5, 21, 0.9);
+        }
+
+        :root[data-theme="clean-light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --brand-accent: #d97706;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --header-bg: rgba(248, 250, 252, 0.9);
+        }
+
+        :root[data-theme="emerald-matrix"] {
+            --bg-main: #02120b;
+            --bg-card: rgba(6, 32, 20, 0.85);
+            --text-main: #ecfdf5;
+            --text-muted: #6ee7b7;
+            --brand-accent: #10b981;
+            --border-color: rgba(16, 185, 129, 0.2);
+            --header-bg: rgba(2, 18, 11, 0.9);
+        }
+
+        body {
+            background-color: var(--bg-main) !important;
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text {
+            color: var(--brand-accent);
+        }
+
+        .accent-bg {
+            background-color: var(--brand-accent);
+        }
+
+        .glow-hover:hover {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 25px rgba(230, 144, 10, 0.2);
+        }
+    </style>
+    <script>
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white min-h-screen flex flex-col">
+
+    <!-- Global Header Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-40 glass-panel border-b border-slate-800/80 transition-all duration-300"
+        style="background: var(--header-bg); backdrop-filter: blur(16px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+
+            <!-- Left: Brand Logo & Title -->
+            <div class="flex items-center gap-3">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <div
+                        class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+                        <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-md sm:text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                class="accent-text"> Tech Hub</span></span>
+                        <span class="text-[8px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The Future
+                            of Tech Solutions</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Center: Navigation Links -->
+            <nav id="publicNav"
+                class="hidden lg:flex items-center gap-1 xl:gap-2 text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <a href="index.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Home</a>
+                <a href="about.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">About</a>
+                <a href="services.html"
+                    class="px-2.5 py-2 rounded-lg text-amber-400 bg-amber-500/10 border border-amber-500/30 font-bold transition">Services</a>
+                <a href="courses.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Courses</a>
+                <a href="news.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">News &amp;
+                    Events</a>
+                <a href="gallery.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Gallery</a>
+                <a href="contact.html"
+                    class="px-2.5 py-2 rounded-lg hover:text-white hover:bg-slate-800/60 transition">Contact</a>
+            </nav>
+
+            <!-- Right: Login, Theme & Mobile -->
+            <div class="flex items-center gap-2">
+                <a href="login.html"
+                    class="h-10 px-3.5 rounded-xl bg-slate-800/90 hover:bg-slate-700 text-xs font-bold text-white transition flex items-center gap-1.5 border border-slate-700/80">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+
+                <!-- Theme Switcher Pill -->
+                <div class="relative inline-block text-left">
+                    <button onclick="toggleThemeMenu()"
+                        class="h-10 px-3 rounded-xl glass-panel text-xs font-bold flex items-center gap-1.5 hover:border-amber-500 transition text-slate-200 border border-slate-700/80">
+                        <i class="fa-solid fa-palette accent-text text-sm"></i>
+                        <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                    </button>
+                    <div id="themeDropdown"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-2xl glass-panel shadow-2xl py-2 z-50 border border-slate-700">
+                        <button onclick="setTheme('dark-gold')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-500 inline-block shadow-sm"></span> Dark Gold
+                            (Default)
+                        </button>
+                        <button onclick="setTheme('cyber-neon')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 inline-block shadow-sm"></span> Cyber Neon
+                        </button>
+                        <button onclick="setTheme('clean-light')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-amber-600 inline-block shadow-sm"></span> Clean Light
+                        </button>
+                        <button onclick="setTheme('emerald-matrix')"
+                            class="w-full text-left px-4 py-2.5 text-xs font-bold hover:bg-slate-800/60 flex items-center gap-2.5 text-slate-200">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 inline-block shadow-sm"></span> Emerald
+                            Matrix
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" onclick="toggleMobileNav()"
+                    class="lg:hidden h-10 w-10 rounded-xl glass-panel border border-slate-700/80 text-slate-200 hover:text-white flex items-center justify-center transition">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Responsive Dropdown Menu -->
+        <div id="mobileNavMenu" class="hidden lg:hidden border-t border-slate-800 px-4 py-4 space-y-2 glass-panel"
+            style="background: var(--header-bg);">
+            <a href="index.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Home</a>
+            <a href="about.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">About</a>
+            <a href="services.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-amber-400 bg-amber-500/10 font-bold transition">Services</a>
+            <a href="courses.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Courses
+                Catalog</a>
+            <a href="news.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">News
+                &amp; Events</a>
+            <a href="gallery.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Gallery</a>
+            <a href="contact.html"
+                class="block px-3 py-2.5 rounded-xl font-semibold text-xs uppercase tracking-wider text-slate-200 hover:bg-slate-800/80 transition">Contact</a>
+            <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-800">
+                <a href="login.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-slate-800 text-white border border-slate-700">Login</a>
+                <a href="register.html"
+                    class="text-center py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider accent-bg text-white">Register</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 pt-24 pb-20">
+
+        <!-- 1. Services Hero Section -->
+        <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div
+                    class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-500 text-xs font-bold uppercase tracking-wider mb-4">
+                    <i class="fa-solid fa-briefcase"></i> Enterprise Engineering &amp; Client Solutions
+                </div>
+                <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white mb-4">
+                    High-Impact <span class="accent-text">Tech Solutions</span> Tailored to Scale
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    From custom full-stack enterprise web platforms and autonomous AI pipelines to resilient Starlink
+                    satellite installations and cybersecurity defenses, we engineer technology that drives business
+                    success.
+                </p>
+                <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
+                    <a href="#quote-section"
+                        class="px-6 py-3.5 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-paper-plane"></i> Request Project Proposal
+                    </a>
+                    <a href="contact.html"
+                        class="px-6 py-3.5 rounded-xl glass-panel text-white font-bold text-xs hover:bg-slate-800 transition flex items-center gap-2 border border-slate-700">
+                        <i class="fa-solid fa-phone"></i> Book Free Consultation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Comprehensive Service Cards Grid with Rich Imagery -->
+        <section class="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Service 1: Web & Software Engineering -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/service-software.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                                alt="Web and Software Development"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-blue-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                Full-Stack
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-laptop-code"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">Custom Software &amp; Web Systems</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Scalable SaaS applications, ERP systems, high-converting portals, and API microservices
+                                built with React, Node.js, Next.js, and PostgreSQL.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Responsive Single-Page
+                                    Apps (SPA)</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Cloud-Native Backend
+                                    Microservices</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Secure Payment Gateway
+                                    Integrations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20Custom%20Software%20%26%20Web%20Systems."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2: AI & Business Automation -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/ai-automation.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/course-datascience.jpg';"
+                                alt="AI Automation"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-purple-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                Next-Gen AI
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">AI &amp; Automation Pipelines</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Integrate autonomous AI agents, customer service bots, intelligent document processors,
+                                and automated workflow orchestrations for maximum efficiency.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Custom GPT &amp; LLM
+                                    Fine-Tuning</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> WhatsApp &amp; Web
+                                    Chatbot Bots</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Business Process
+                                    Automation (RPA)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20AI%20%26%20Automation%20Pipelines."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3: UI/UX & Brand Identity -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/course-uiux.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                                alt="Brand and UI UX Design"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-pink-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                Creative
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-pink-500/15 text-pink-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-palette"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">UI/UX &amp; Product Design</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Premium user interface prototypes, user research, wireframing, high-converting mobile
+                                design systems, and corporate visual branding.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Interactive Figma
+                                    Clickable Prototypes</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Complete Corporate
+                                    Identity &amp; Logo</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Usability Audits &amp;
+                                    Conversion Optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20UI/UX%20%26%20Product%20Design."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 4: Starlink & Enterprise Networking -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/starlink-network.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/cybersecurity.jpg';"
+                                alt="Starlink Installation and Network Setup"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-cyan-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                Satellite &amp; Mesh
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-satellite-dish"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">Starlink &amp; Network Infrastructure</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Turnkey Starlink satellite internet deployment, mesh WiFi routing, corporate LAN/VLAN
+                                cabling, and multi-branch network synchronization.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Enterprise Starlink
+                                    Mounts &amp; Cabling</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Long-Range Wi-Fi Mesh
+                                    Systems</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Failover &amp; Dual-WAN
+                                    Redundancy</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20Starlink%20%26%20Network%20Infrastructure."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 5: Cybersecurity & Defense Audits -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/cybersecurity.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/service-software.jpg';"
+                                alt="Cybersecurity"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                Defense
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">Cybersecurity &amp; System Audits</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Proactive vulnerability testing, network penetration audits, malware prevention,
+                                firewall lockdown, and employee security compliance training.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Full Web &amp; API
+                                    Penetration Testing</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Ransomware &amp;
+                                    Zero-Day Defense</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Cloud Security
+                                    Architecture Audits</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20Cybersecurity%20%26%20System%20Audits."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 6: Mobile Apps & Cloud DevOps -->
+                <div
+                    class="glass-panel rounded-3xl border border-slate-800 glow-hover overflow-hidden transition-all duration-300 flex flex-col justify-between group shadow-xl">
+                    <div>
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="./assets/images/course-mobile.jpg"
+                                onerror="this.onerror=null; this.src='./assets/images/hero.jpg';"
+                                alt="Mobile App and Cloud"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-amber-500/80 text-white text-[10px] font-bold uppercase backdrop-blur-md">
+                                iOS &amp; Android
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div
+                                class="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-lg mb-3">
+                                <i class="fa-solid fa-mobile-screen-button"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2">Mobile Apps &amp; Cloud DevOps</h3>
+                            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+                                Cross-platform Flutter and React Native mobile applications backed by automated CI/CD
+                                deployment pipelines on AWS, GCP, and DigitalOcean.
+                            </p>
+                            <ul class="text-[11px] text-slate-300 space-y-1.5 border-t border-slate-800/80 pt-3">
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Native-Speed iOS &amp;
+                                    Android Apps</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> Automated GitHub Actions
+                                    CI/CD</li>
+                                <li class="flex items-center gap-2"><i
+                                        class="fa-solid fa-check text-emerald-400 text-xs"></i> 99.9% Uptime Server
+                                    Monitoring</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20want%20to%20inquire%20about%20Mobile%20Apps%20%26%20Cloud%20DevOps."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-full py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center justify-center gap-1.5">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-300"></i> Inquire via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. Our 4-Step Engineering Lifecycle -->
+        <section class="py-16 bg-slate-900/40 border-y border-slate-800 my-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span
+                        class="accent-text font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-diagram-project"></i> How We Deliver
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-white">Our 4-Step Engineering Lifecycle</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-3">From ideation to continuous deployment, our proven
+                        agile methodology guarantees precision, security, and velocity.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800 relative">
+                        <div class="text-4xl font-black text-slate-700/60 mb-2 font-mono">01</div>
+                        <h4 class="text-base font-bold text-white mb-2">Discovery &amp; Scoping</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">We analyze your business workflow, technical
+                            specifications, user personas, and KPIs to architect the roadmap.</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800 relative">
+                        <div class="text-4xl font-black text-amber-500/60 mb-2 font-mono">02</div>
+                        <h4 class="text-base font-bold text-white mb-2">UI/UX &amp; Prototyping</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">We design high-fidelity clickable mockups,
+                            database schemas, and API contracts for client review and signoff.</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800 relative">
+                        <div class="text-4xl font-black text-blue-500/60 mb-2 font-mono">03</div>
+                        <h4 class="text-base font-bold text-white mb-2">Agile Development</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Our senior engineers write clean, tested code
+                            in two-week sprints with transparent milestone reviews.</p>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-3xl border border-slate-800 relative">
+                        <div class="text-4xl font-black text-emerald-500/60 mb-2 font-mono">04</div>
+                        <h4 class="text-base font-bold text-white mb-2">Launch &amp; 24/7 SLA</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">Production cloud deployment, penetration
+                            audit, staff training, and continuous maintenance SLAs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Quick Quote / Inquiry Form Section -->
+        <section id="quote-section" class="py-12 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-amber-500/30 shadow-2xl">
+                <div class="text-center mb-8">
+                    <span
+                        class="accent-text font-bold uppercase tracking-widest text-xs flex items-center justify-center gap-1.5 mb-2">
+                        <i class="fa-solid fa-handshake"></i> Start Your Project
+                    </span>
+                    <h3 class="text-2xl sm:text-3xl font-black text-white">Request a Tailored Solutions Proposal</h3>
+                    <p class="text-slate-400 text-xs mt-2">Provide brief details below and our lead technical architect
+                        will contact you within 24 hours.</p>
+                </div>
+
+                <form onsubmit="handleServiceInquiry(event)" class="space-y-4 text-xs">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1">Your Full Name / Company
+                                *</label>
+                            <input type="text" id="svcName" required placeholder="e.g. Samuel Alex"
+                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1">Email Address *</label>
+                            <input type="email" id="svcEmail" required placeholder="e.g. samuel@business.com"
+                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1">Phone / WhatsApp Number
+                                *</label>
+                            <input type="tel" id="svcPhone" required placeholder="+234 706 697 6885"
+                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block font-bold uppercase text-slate-300 mb-1">Select Service Required
+                                *</label>
+                            <select id="svcCategory" required
+                                class="w-full bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500">
+                                <option value="">-- Choose Solution --</option>
+                                <option value="Custom Software & Web Engineering">Custom Software & Web Engineering
+                                </option>
+                                <option value="AI & Business Automation Solutions">AI & Business Automation Solutions
+                                </option>
+                                <option value="UI/UX & Creative Product Design">UI/UX & Creative Product Design</option>
+                                <option value="Starlink & Network Infrastructure">Starlink & Network Infrastructure
+                                </option>
+                                <option value="Cybersecurity & Defense Audits">Cybersecurity & Defense Audits</option>
+                                <option value="Mobile App & Cloud DevOps">Mobile App & Cloud DevOps</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold uppercase text-slate-300 mb-1">Project Overview &amp; Goals
+                            *</label>
+                        <textarea id="svcDetails" required rows="4"
+                            placeholder="Briefly describe what you are looking to build, your timeline, and any specific requirements..."
+                            class="w-full bg-slate-900/90 border border-slate-700 rounded-xl p-4 text-white focus:outline-none focus:border-amber-500"></textarea>
+                    </div>
+
+                    <button type="submit" id="btnSubmitSvc"
+                        class="w-full py-4 rounded-xl accent-bg text-white font-bold text-sm hover:opacity-90 transition flex items-center justify-center gap-2 shadow-xl">
+                        <i class="fa-solid fa-paper-plane"></i> Submit Request &amp; Schedule Call
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Universal Footer -->
+    <!-- Global Universal Footer -->
+    <!-- GLOBAL UNIFIED FOOTER -->
+    <footer class="pt-16 pb-12 border-t border-slate-800/80 mt-auto"
+        style="background: var(--bg-card); backdrop-filter: blur(14px);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 pb-12 border-b border-slate-800/80">
+
+                <!-- Col 1: Brand & Bio -->
+                <div class="lg:col-span-2 space-y-4">
+                    <a href="index.html" class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center shadow-lg shadow-amber-500/20">
+                            <svg width="24" height="24" viewBox="0 0 200 200" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M124.8 51.2C102.2 38.2 73.1 45.9 60.1 68.5C47.1 91.1 54.8 120.2 77.4 133.2C92.2 141.7 110.5 141.5 125.1 133.8L106.8 123.2C98.4 127.1 88.2 126.3 80.2 121.7C66.8 114 62.2 96.8 69.9 83.4C77.6 70 94.8 65.4 108.2 73.1C115.1 77.1 119.5 83.8 120.8 91.3L89.4 109.4L156.2 148C156.4 147.7 156.5 147.3 156.7 147C174.7 115.7 163.9 73.8 132.6 55.8L124.8 51.2Z"
+                                    fill="white" />
+                            </svg>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-lg font-black tracking-tight leading-none text-white">Gtrend<span
+                                    class="accent-text"> Tech Hub</span></span>
+                            <span class="text-[9px] text-slate-400 font-semibold tracking-wider uppercase mt-0.5">The
+                                Future of Tech Solutions</span>
+                        </div>
+                    </a>
+                    <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                        Premier digital technology academy &amp; software engineering enterprise. Empowering
+                        next-generation engineers, founders, and businesses with world-class tech skills and custom
+                        digital solutions.
+                    </p>
+                    <div class="flex items-center gap-3 text-slate-400 text-sm pt-2">
+                        <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                            target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-emerald-400 hover:border-emerald-500/50 transition"
+                            title="WhatsApp">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="Twitter/X">
+                            <i class="fa-brands fa-x-twitter"></i>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-blue-400 hover:border-blue-500/50 transition"
+                            title="LinkedIn">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer"
+                            class="w-8 h-8 rounded-xl glass-panel border border-slate-700/80 flex items-center justify-center hover:text-white hover:border-slate-500 transition"
+                            title="GitHub">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Col 2: Navigation -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Navigation</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="index.html" class="hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="hover:text-white transition">About</a></li>
+                        <li><a href="services.html" class="hover:text-white transition">Services</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Courses Catalog</a></li>
+                        <li><a href="news.html" class="hover:text-white transition">News &amp; Events</a></li>
+                        <li><a href="gallery.html" class="hover:text-white transition">Gallery</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Academy Tracks -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Academy Tracks</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="courses.html" class="hover:text-white transition">Full-Stack Web Dev</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">AI &amp; Automation</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">UI/UX Product Design</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Cybersecurity Defense</a></li>
+                        <li><a href="courses.html" class="hover:text-white transition">Starlink &amp; Networking</a>
+                        </li>
+                        <li><a href="courses.html" class="hover:text-white transition">Kids Coding &amp; STEM</a></li>
+                        <li><a href="register.html" class="accent-text font-bold hover:underline">Apply for Admission
+                                &rarr;</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Campus & Support -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-white mb-4">Studio Campus</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li class="flex items-start gap-2">
+                            <i class="fa-solid fa-location-dot accent-text mt-0.5 text-[11px]"></i>
+                            <span>Port Harcourt Tech District, Rivers State, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-[11px]"></i>
+                            <a href="https://wa.me/2347066976885?text=Hello%20Gtrend%20Tech%20Hub,%20I%20would%20like%20to%20make%20an%20inquiry."
+                                target="_blank" rel="noopener noreferrer" class="hover:text-emerald-400 transition">+234
+                                706 697 6885</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-blue-400 text-[11px]"></i>
+                            <a href="mailto:admissions@gtrendhub.com"
+                                class="hover:text-white transition">admissions@gtrendhub.com</a>
+                        </li>
+                        <li class="pt-2">
+                            <span
+                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> 24/7
+                                Starlink Hub Online
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Bottom Row: Copyright & Links -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 Gtrend Tech Hub. All rights reserved. Driving Africa's Digital Revolution.</p>
+                <div class="flex items-center gap-6">
+                    <a href="about.html#team" class="hover:text-slate-300 transition">Our Team</a>
+                    <a href="services.html" class="hover:text-slate-300 transition">Our Services</a>
+                    <a href="login.html" class="hover:text-slate-300 transition">Portal Login</a>
+                    <a href="admin/login.html" class="accent-text font-bold hover:underline">Admin Gateway</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./assets/js/api.js"></script>
+    <script src="./assets/js/chat-widget.js"></script>
+    <script>
+        // Handle Service Inquiry Form
+        function handleServiceInquiry(e) {
+            e.preventDefault();
+            const name = document.getElementById('svcName').value.trim();
+            const email = document.getElementById('svcEmail').value.trim();
+            const phone = document.getElementById('svcPhone').value.trim();
+            const service = document.getElementById('svcCategory').value;
+            const details = document.getElementById('svcDetails').value.trim();
+
+            const inquiryObj = {
+                id: 'INQ-' + Date.now(),
+                name: name,
+                email: email,
+                phone: phone,
+                service: service,
+                details: details,
+                status: 'New Lead',
+                submittedAt: new Date().toISOString()
+            };
+
+            // Save to localStorage inquiries
+            try {
+                const existing = JSON.parse(localStorage.getItem('gtrend_inquiries') || '[]');
+                existing.unshift(inquiryObj);
+                localStorage.setItem('gtrend_inquiries', JSON.stringify(existing));
+            } catch (err) { }
+
+            alert('Thank you, ' + name + '! Your service inquiry has been received. Our technical team will reach out via WhatsApp/email within 24 hours.');
+            e.target.reset();
+        }
+
+        // Universal Theme & Navbar Controller
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('gtrend_active_theme', theme);
+            localStorage.setItem('gtrend_theme', theme);
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.add('hidden');
+        }
+        function toggleThemeMenu() {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown) dropdown.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function (e) {
+            var dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.parentElement.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        function toggleMobileNav() {
+            var menu = document.getElementById('mobileNavMenu');
+            var icon = document.getElementById('mobileMenuIcon');
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (icon) {
+                    icon.className = menu.classList.contains('hidden') ? 'fa-solid fa-bars text-base' : 'fa-solid fa-xmark text-base';
+                }
+            }
+        }
+        // Apply saved theme on page load
+        (function () {
+            var saved = localStorage.getItem('gtrend_active_theme') || localStorage.getItem('gtrend_theme') || 'dark-gold';
+            document.documentElement.setAttribute('data-theme', saved);
+        })();
+    </script>
+</body>
+
+</html>

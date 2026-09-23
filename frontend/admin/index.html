@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gtrend Admin Suite & Live Agent Console</title>
+    <!-- Offline Tailwind CSS Runtime Engine -->
+    <script src="../assets/js/tailwind.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="../assets/css/fontawesome.min.css">
+    <style>
+        :root {
+            --bg-main: #070a12;
+            --bg-card: rgba(15, 22, 38, 0.85);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --brand-accent: #e6900a;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --sidebar-bg: #090e18;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+        }
+
+        .glass-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border-color);
+        }
+
+        .accent-text { color: var(--brand-accent); }
+        .accent-bg { background-color: var(--brand-accent); }
+
+        .tab-btn.active {
+            background-color: rgba(230, 144, 10, 0.15);
+            color: #f59e0b;
+            border-left: 3px solid #f59e0b;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-white flex h-screen overflow-hidden">
+
+    <!-- Left Admin Sidebar -->
+    <aside class="w-64 bg-[#090e18] border-r border-slate-800/80 flex flex-col justify-between p-4 flex-shrink-0">
+        <div>
+            <!-- Brand -->
+            <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-800 mb-6">
+                <div class="w-10 h-10 rounded-xl accent-bg flex items-center justify-center text-white font-black text-lg shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h2 class="font-black text-sm text-white tracking-tight leading-none">Gtrend <span class="accent-text">Admin</span></h2>
+                    <span class="text-[10px] text-slate-400 font-mono uppercase">Control Center</span>
+                </div>
+            </div>
+
+            <!-- Navigation Menu -->
+            <nav class="space-y-1 text-xs font-semibold">
+                <button onclick="switchAdminTab('overview')" id="tab-overview" class="tab-btn active w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-chart-pie w-4 text-center"></i>
+                    <span>Dashboard Overview</span>
+                </button>
+                <button onclick="switchAdminTab('students')" id="tab-students" class="tab-btn w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-user-graduate w-4 text-center"></i>
+                        <span>Student Registrations</span>
+                    </div>
+                    <span id="badgePendingStudents" class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold hidden">0</span>
+                </button>
+                <button onclick="switchAdminTab('news')" id="tab-news" class="tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-newspaper w-4 text-center"></i>
+                    <span>News & Posts</span>
+                </button>
+                <button onclick="switchAdminTab('gallery')" id="tab-gallery" class="tab-btn w-full flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-photo-film w-4 text-center"></i>
+                    <span>Media Gallery</span>
+                </button>
+                <button onclick="switchAdminTab('chat')" id="tab-chat" class="tab-btn w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-headset w-4 text-center"></i>
+                        <span>Live Agent Chat</span>
+                    </div>
+                    <span id="badgeActiveChats" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold">Live</span>
+                </button>
+                <button onclick="switchAdminTab('inquiries')" id="tab-inquiries" class="tab-btn w-full flex items-center justify-between px-3 py-3 rounded-xl hover:bg-slate-800/60 text-slate-300 hover:text-white transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-envelope w-4 text-center"></i>
+                        <span>Contact Inquiries</span>
+                    </div>
+                    <span id="badgeInquiries" class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400 text-[10px] font-bold hidden">0</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Sidebar Footer -->
+        <div class="pt-4 border-t border-slate-800 space-y-2">
+            <a href="../index.html" target="_blank" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs transition border border-slate-800">
+                <i class="fa-solid fa-arrow-up-right-from-square text-[11px]"></i> View Public Website
+            </a>
+            <button onclick="logoutAdmin()" class="w-full flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-red-500/10 text-slate-400 hover:text-red-400 text-xs transition">
+                <i class="fa-solid fa-arrow-right-from-bracket text-[11px]"></i> Log Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        
+        <!-- Top Admin Header -->
+        <header class="h-16 border-b border-slate-800 bg-[#090e18]/80 px-6 flex items-center justify-between flex-shrink-0">
+            <div class="flex items-center gap-3">
+                <h1 id="pageHeading" class="text-base font-black text-white">Dashboard Overview</h1>
+            </div>
+
+            <!-- Agent Status Toggle Switcher in Header -->
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold">Agent Status:</span>
+                    <select id="agentStatusSelect" onchange="handleAgentStatusChange(this.value)"
+                        class="bg-transparent font-bold text-white focus:outline-none cursor-pointer">
+                        <option value="online" class="bg-slate-900 text-emerald-400">🟢 Online (Accepting Chats)</option>
+                        <option value="busy" class="bg-slate-900 text-amber-400">🟡 Busy</option>
+                        <option value="offline" class="bg-slate-900 text-red-400">🔴 Offline</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2.5 pl-3 border-l border-slate-800">
+                    <div class="w-8 h-8 rounded-full accent-bg text-white flex items-center justify-center font-bold text-xs">
+                        A
+                    </div>
+                    <span class="text-xs font-bold text-white hidden sm:inline">Admin Sarah</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Body Panes -->
+        <main class="flex-1 overflow-y-auto p-6 space-y-6">
+
+            <!-- 1. OVERVIEW TAB PANE -->
+            <section id="pane-overview" class="admin-pane space-y-6">
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between text-slate-400 text-xs mb-3">
+                            <span class="font-bold uppercase tracking-wider">Total Students</span>
+                            <div class="w-8 h-8 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center"><i class="fa-solid fa-user-graduate"></i></div>
+                        </div>
+                        <h3 id="kpiTotalStudents" class="text-2xl font-black text-white">0</h3>
+                        <p class="text-[11px] text-emerald-400 mt-1"><i class="fa-solid fa-arrow-trend-up mr-1"></i> Active cohorts</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between text-slate-400 text-xs mb-3">
+                            <span class="font-bold uppercase tracking-wider">Pending Applications</span>
+                            <div class="w-8 h-8 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center"><i class="fa-solid fa-clock"></i></div>
+                        </div>
+                        <h3 id="kpiPendingStudents" class="text-2xl font-black text-amber-400">0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Requires review & approval</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between text-slate-400 text-xs mb-3">
+                            <span class="font-bold uppercase tracking-wider">Active Chat Sessions</span>
+                            <div class="w-8 h-8 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center"><i class="fa-solid fa-comments"></i></div>
+                        </div>
+                        <h3 id="kpiActiveChats" class="text-2xl font-black text-emerald-400">0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Real-time visitor inquiries</p>
+                    </div>
+
+                    <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+                        <div class="flex items-center justify-between text-slate-400 text-xs mb-3">
+                            <span class="font-bold uppercase tracking-wider">News & Media</span>
+                            <div class="w-8 h-8 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center"><i class="fa-solid fa-layer-group"></i></div>
+                        </div>
+                        <h3 id="kpiNewsCount" class="text-2xl font-black text-white">0</h3>
+                        <p class="text-[11px] text-slate-400 mt-1">Published posts & showcases</p>
+                    </div>
+                </div>
+
+                <!-- Recent Registrations Preview -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-sm text-white">Recent Student Applications</h3>
+                        <button onclick="switchAdminTab('students')" class="text-xs accent-text font-bold hover:underline">View All &rarr;</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-slate-400 uppercase text-[10px] border-b border-slate-800">
+                                <tr>
+                                    <th class="py-3 px-3">Student Name</th>
+                                    <th class="py-3 px-3">Course / Track</th>
+                                    <th class="py-3 px-3">Mode</th>
+                                    <th class="py-3 px-3">Status</th>
+                                    <th class="py-3 px-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overviewStudentsTable" class="divide-y divide-slate-800/60">
+                                <tr><td colspan="5" class="py-4 text-center text-slate-500">Loading student records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. STUDENT REGISTRATIONS TAB PANE -->
+            <section id="pane-students" class="admin-pane hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="w-full sm:w-72 relative">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-xs"></i>
+                            <input type="text" id="studentSearchInput" oninput="renderStudentsTable()" placeholder="Search by name, email, course..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl pl-9 pr-4 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <select id="studentStatusFilter" onchange="renderStudentsTable()"
+                                class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-white text-xs focus:outline-none focus:border-amber-500">
+                                <option value="">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="approved">Approved</option>
+                                <option value="enrolled">Enrolled</option>
+                                <option value="rejected">Rejected</option>
+                            </select>
+                            <button onclick="exportStudentsCSV()" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold transition flex items-center gap-1.5 border border-slate-700">
+                                <i class="fa-solid fa-file-csv"></i> Export CSV
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead class="text-slate-400 uppercase text-[10px] border-b border-slate-800">
+                                <tr>
+                                    <th class="py-3 px-3">Student & Contact</th>
+                                    <th class="py-3 px-3">Enrolled Course</th>
+                                    <th class="py-3 px-3">Learning Mode</th>
+                                    <th class="py-3 px-3">Date Applied</th>
+                                    <th class="py-3 px-3">Status</th>
+                                    <th class="py-3 px-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allStudentsTable" class="divide-y divide-slate-800/60">
+                                <tr><td colspan="6" class="py-6 text-center text-slate-500">Loading registrations...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. NEWS & POSTS MANAGER TAB PANE -->
+            <section id="pane-news" class="admin-pane hidden space-y-6">
+                <!-- Create News Box -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-black text-sm text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle accent-text"></i> Publish New Announcement or Project Update
+                    </h3>
+                    <form onsubmit="handleCreateNews(event)" class="space-y-4 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Article Title *</label>
+                                <input type="text" id="newsTitle" required placeholder="e.g. Starlink Installation Project for Logistics Corp"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Category *</label>
+                                <select id="newsCategory" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="News">News</option>
+                                    <option value="Events">Events</option>
+                                    <option value="Updates">Hub Updates</option>
+                                    <option value="Projects">Enterprise Projects</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-400 mb-1">Brief Summary / Headline *</label>
+                            <input type="text" id="newsSummary" required placeholder="One sentence summary of the news..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-400 mb-1">Full Content / Story *</label>
+                            <textarea id="newsContent" required rows="4" placeholder="Detailed story, key takeaways, dates, or specifications..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Featured Image URL</label>
+                                <input type="text" id="newsImage" placeholder="assets/images/hero.jpg or https://..."
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Tags (Comma-separated)</label>
+                                <input type="text" id="newsTags" placeholder="Starlink, Networking, ICT"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="px-6 py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-paper-plane"></i> Publish to Website
+                        </button>
+                    </form>
+                </div>
+
+                <!-- News Articles List -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-black text-sm text-white mb-4">Published Articles</h3>
+                    <div id="adminNewsList" class="space-y-3">
+                        <div class="p-6 text-center text-slate-500 text-xs">Loading articles...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. GALLERY MANAGER TAB PANE -->
+            <section id="pane-gallery" class="admin-pane hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-black text-sm text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-upload accent-text"></i> Add Photo or Video Showcase
+                    </h3>
+                    <form onsubmit="handleCreateGallery(event)" class="space-y-4 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Title *</label>
+                                <input type="text" id="galTitle" required placeholder="e.g. Server Rack Setup"
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Category *</label>
+                                <select id="galCategory" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="Projects">Projects & Deployments</option>
+                                    <option value="Hub Life">Hub Studio Life</option>
+                                    <option value="Workshops">Workshops & Hackathons</option>
+                                    <option value="Videos">Videos</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold uppercase text-slate-400 mb-1">Media Type *</label>
+                                <select id="galType" required
+                                    class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                                    <option value="image">Image Photo</option>
+                                    <option value="video">Video Embed / URL</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-400 mb-1">Media Source URL * (Image Path or YouTube/Vimeo embed)</label>
+                            <input type="text" id="galSrc" required placeholder="assets/images/hero.jpg or https://www.youtube.com/embed/..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+
+                        <div>
+                            <label class="block font-bold uppercase text-slate-400 mb-1">Brief Description</label>
+                            <input type="text" id="galDesc" placeholder="Brief caption describing the project or photo..."
+                                class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-amber-500">
+                        </div>
+
+                        <button type="submit" class="px-6 py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition shadow-lg flex items-center gap-2">
+                            <i class="fa-solid fa-plus"></i> Add to Gallery
+                        </button>
+                    </form>
+                </div>
+
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-black text-sm text-white mb-4">Gallery Showcase Items</h3>
+                    <div id="adminGalleryGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-6 text-center text-slate-500 text-xs col-span-3">Loading gallery...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. LIVE AGENT CHAT CONSOLE TAB PANE -->
+            <section id="pane-chat" class="admin-pane hidden h-[calc(100vh-140px)]">
+                <div class="grid grid-cols-12 gap-6 h-full">
+                    
+                    <!-- Left: Customer Conversations Queue -->
+                    <div class="col-span-12 lg:col-span-4 glass-panel rounded-3xl border border-slate-800 flex flex-col h-full overflow-hidden">
+                        <div class="p-4 border-b border-slate-800 bg-slate-900/60 flex items-center justify-between">
+                            <h3 class="font-black text-sm text-white flex items-center gap-2">
+                                <i class="fa-solid fa-inbox text-amber-400"></i> Customer Queues
+                            </h3>
+                            <button onclick="loadAdminChatSessions()" class="text-xs text-slate-400 hover:text-white"><i class="fa-solid fa-arrows-rotate"></i></button>
+                        </div>
+                        <div id="adminChatSessionsList" class="flex-1 overflow-y-auto divide-y divide-slate-800/60 p-2 space-y-1">
+                            <div class="p-6 text-center text-slate-500 text-xs">Loading conversations...</div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Live Interactive Two-Way Chat Window -->
+                    <div class="col-span-12 lg:col-span-8 glass-panel rounded-3xl border border-slate-800 flex flex-col h-full overflow-hidden bg-slate-950/70">
+                        
+                        <!-- Chat Conversation Header -->
+                        <div id="chatActiveHeader" class="p-4 border-b border-slate-800 bg-slate-900/80 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-sm border border-amber-500/40">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div>
+                                    <h4 id="activeCustomerName" class="font-black text-sm text-white leading-tight">Select a conversation</h4>
+                                    <p id="activeCustomerStatus" class="text-[10px] text-slate-400 font-mono">Waiting for selection</p>
+                                </div>
+                            </div>
+                            <div id="chatActiveActions" class="flex items-center gap-2 hidden">
+                                <button onclick="resolveCurrentChat()" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500 text-emerald-400 hover:text-white border border-emerald-500/40 text-xs font-bold transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-check"></i> Resolve & Close
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Messages Feed -->
+                        <div id="adminChatFeed" class="flex-1 p-4 overflow-y-auto space-y-3">
+                            <div class="h-full flex flex-col items-center justify-center text-center text-slate-500 text-xs p-8">
+                                <i class="fa-solid fa-comments text-4xl text-slate-700 mb-3"></i>
+                                <p>Select a customer conversation from the queue on the left to start live messaging.</p>
+                            </div>
+                        </div>
+
+                        <!-- Canned Quick Replies -->
+                        <div class="px-4 py-2 bg-slate-900/50 border-t border-slate-800 flex items-center gap-2 overflow-x-auto text-[11px]">
+                            <span class="text-slate-500 font-bold uppercase text-[9px] flex-shrink-0">Quick Answers:</span>
+                            <button onclick="insertCannedReply('Hello! Welcome to Gtrend Tech Hub. How can I help you today?')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex-shrink-0 transition">Greeting</button>
+                            <button onclick="insertCannedReply('Our next bootcamp cohort starts on the 1st of next month with both physical and virtual tracks available.')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex-shrink-0 transition">Cohort Start</button>
+                            <button onclick="insertCannedReply('Our Starlink enterprise installation packages include mounting, mesh Wi-Fi tuning, and 12-month support warranty.')" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 flex-shrink-0 transition">Starlink Info</button>
+                        </div>
+
+                        <!-- Message Input Footer -->
+                        <div class="p-3 bg-slate-900 border-t border-slate-800">
+                            <form onsubmit="handleAdminSendMessage(event)" class="flex items-center gap-2">
+                                <input type="text" id="adminChatMessageInput" placeholder="Type your response to the customer..." autocomplete="off"
+                                    class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-amber-500">
+                                <button type="submit" class="px-5 py-3 rounded-xl accent-bg text-white font-bold text-xs hover:opacity-90 transition flex items-center gap-1.5 shadow-lg flex-shrink-0">
+                                    <i class="fa-solid fa-paper-plane"></i> Send
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. CONTACT INQUIRIES TAB PANE -->
+            <section id="pane-inquiries" class="admin-pane hidden space-y-6">
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800">
+                    <h3 class="font-black text-sm text-white mb-4">Customer Inquiries & Messages</h3>
+                    <div id="adminInquiriesList" class="space-y-3">
+                        <div class="p-6 text-center text-slate-500 text-xs">Loading inquiries...</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Student Application Details Modal -->
+    <div id="studentModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden" onclick="closeStudentModal()">
+        <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-amber-500/40 shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative text-left" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-6">
+                <div>
+                    <h3 id="modalStudentName" class="text-xl font-bold text-white">Student Name</h3>
+                    <p id="modalStudentID" class="text-xs text-amber-400 font-mono">ID: USR-001</p>
+                </div>
+                <button onclick="closeStudentModal()" class="w-8 h-8 rounded-full bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="modalStudentDetails" class="space-y-4 text-xs text-slate-300">
+                <!-- Details injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/api.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
