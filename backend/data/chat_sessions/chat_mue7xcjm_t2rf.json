@@ -1,0 +1,33 @@
+{
+  "sessionId": "chat_mue7xcjm_t2rf",
+  "customerName": "Alex Visitor",
+  "customerEmail": "alex@example.com",
+  "track": "General Inquiry",
+  "status": "waiting_for_agent",
+  "assignedAgent": null,
+  "createdAt": "2026-09-23T14:48:39.874Z",
+  "updatedAt": "2026-09-23T14:48:39.882Z",
+  "messages": [
+    {
+      "id": "msg-1",
+      "sender": "bot",
+      "senderName": "Gtrend Assistant",
+      "text": "Welcome to Gtrend Tech Hub! I have queued your conversation for our live support desk.",
+      "timestamp": "15:48"
+    },
+    {
+      "id": "msg-2",
+      "sender": "customer",
+      "senderName": "Alex Visitor",
+      "text": "I would like to inquire about the AI engineering track.",
+      "timestamp": "15:48"
+    },
+    {
+      "id": "msg_mue7xcju",
+      "sender": "customer",
+      "senderName": "Visitor",
+      "text": "What are the prerequisites?",
+      "timestamp": "15:48"
+    }
+  ]
+}

@@ -534,8 +534,15 @@
     <script src="./assets/js/api.js"></script>
     <script src="./assets/js/chat-widget.js"></script>
     <script>
-        function handleContactSubmit(e) {
+        async function handleContactSubmit(e) {
             e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const origText = submitBtn ? submitBtn.innerHTML : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending message...';
+            }
+
             const name = document.getElementById('contactName').value.trim();
             const email = document.getElementById('contactEmail').value.trim();
             const phone = document.getElementById('contactPhone').value.trim();
@@ -543,24 +550,28 @@
             const message = document.getElementById('contactMessage').value.trim();
 
             const inquiryObj = {
-                id: 'MSG-' + Date.now(),
                 name: name,
                 email: email,
                 phone: phone,
                 service: subject,
                 details: message,
-                status: 'General Inquiry',
-                submittedAt: new Date().toISOString()
+                status: 'Unread'
             };
 
             try {
-                const existing = JSON.parse(localStorage.getItem('gtrend_inquiries') || '[]');
-                existing.unshift(inquiryObj);
-                localStorage.setItem('gtrend_inquiries', JSON.stringify(existing));
-            } catch (err) { }
+                if (window.GtrendAPI && typeof window.GtrendAPI.sendInquiry === 'function') {
+                    await window.GtrendAPI.sendInquiry(inquiryObj);
+                }
+            } catch (err) {
+                console.warn('Live API send error:', err);
+            }
 
             alert('Thank you, ' + name + '! Your message has been sent successfully. A Gtrend representative will respond shortly.');
             e.target.reset();
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origText;
+            }
         }
 
         // Universal Theme & Navbar Controller

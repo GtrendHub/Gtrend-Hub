@@ -1,17 +1,68 @@
 /**
- * Gtrend Tech Hub - JSON Database Storage Layer
+ * Gtrend Tech Hub - Database Layer & MongoDB Connection Manager
  */
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose');
 const config = require('../config');
+
+// Import Mongoose Models
+const User = require('./schemas/User');
+const Registration = require('./schemas/Registration');
+const News = require('./schemas/News');
+const Gallery = require('./schemas/Gallery');
+const Inquiry = require('./schemas/Inquiry');
+const ChatSession = require('./schemas/ChatSession');
+const Payment = require('./schemas/Payment');
 
 const DATA_DIR = path.join(__dirname, '..', 'data');
 const CHAT_DIR = path.join(DATA_DIR, 'chat_sessions');
 
-// Ensure directories exist
+// Ensure directories exist for local JSON caching/fallback
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
 if (!fs.existsSync(CHAT_DIR)) fs.mkdirSync(CHAT_DIR, { recursive: true });
 
+let isMongoConnected = false;
+
+/**
+ * Connect to MongoDB instance (Local or Atlas)
+ */
+async function connectDB() {
+    if (!config.MONGODB_URI) {
+        console.log('ℹ️ [Database] No MONGODB_URI provided. Utilizing local JSON document database engine.');
+        return false;
+    }
+
+    try {
+        mongoose.set('strictQuery', false);
+        await mongoose.connect(config.MONGODB_URI, {
+            serverSelectionTimeoutMS: 5000
+        });
+        isMongoConnected = true;
+        console.log(`✅ [Database] MongoDB successfully connected: ${mongoose.connection.host}/${mongoose.connection.name}`);
+        return true;
+    } catch (err) {
+        isMongoConnected = false;
+        console.warn(`⚠️ [Database] MongoDB connection error (${err.message}). Gracefully using local JSON storage engine.`);
+        return false;
+    }
+}
+
+mongoose.connection.on('disconnected', () => {
+    isMongoConnected = false;
+    console.warn('⚠️ [Database] MongoDB disconnected.');
+});
+
+mongoose.connection.on('reconnected', () => {
+    isMongoConnected = true;
+    console.log('✅ [Database] MongoDB reconnected.');
+});
+
+function isConnected() {
+    return isMongoConnected && mongoose.connection.readyState === 1;
+}
+
+// Local JSON Document Helper Functions
 function getFilePath(collection) {
     return path.join(DATA_DIR, `${collection}.json`);
 }
@@ -146,7 +197,8 @@ function seedDefaults() {
         });
     }
 
-    // 4. Seed Payments
+    // 4. Seed other collections
+    readCollection('users', []);
     readCollection('payments', []);
     readCollection('registrations', []);
     readCollection('inquiries', []);
@@ -155,6 +207,30 @@ function seedDefaults() {
 seedDefaults();
 
 module.exports = {
+    // Mongo Connection
+    connectDB,
+    isConnected,
+    mongoose,
+
+    // Mongoose Models
+    User,
+    Registration,
+    News,
+    Gallery,
+    Inquiry,
+    ChatSession,
+    Payment,
+    models: {
+        User,
+        Registration,
+        News,
+        Gallery,
+        Inquiry,
+        ChatSession,
+        Payment
+    },
+
+    // JSON Document Storage
     readCollection,
     writeCollection,
     readChatSession,

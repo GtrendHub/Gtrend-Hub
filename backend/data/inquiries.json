@@ -1,1 +1,36 @@
-[]
+[
+  {
+    "id": "INQ-MUE8B3Z1",
+    "name": "Test Client",
+    "email": "client@example.com",
+    "phone": "08012345678",
+    "service": "Starlink Enterprise",
+    "message": "Testing inquiry submission",
+    "details": "Testing inquiry submission",
+    "time": "23/09/2026, 15:59:21",
+    "status": "Unread",
+    "createdAt": "2026-09-23T14:59:22.065Z"
+  },
+  {
+    "id": "INQ-STARLINK-01",
+    "name": "Chevron Offshore Logistics",
+    "email": "procurement@chevron-contractor.ng",
+    "phone": "+234 802 000 1122",
+    "service": "Starlink & Internet Solutions",
+    "message": "Requesting quotation for 3 dual-dish high-performance Starlink arrays with automatic LTE failover in Warri base.",
+    "details": "Requesting quotation for 3 dual-dish high-performance Starlink arrays with automatic LTE failover in Warri base.",
+    "time": "9/22/2026, 11:15 AM",
+    "status": "Unread"
+  },
+  {
+    "id": "INQ-TRAINING-02",
+    "name": "Kome Benson",
+    "email": "kome.benson@gmail.com",
+    "phone": "+234 815 443 3221",
+    "service": "Tech Training (Bootcamps)",
+    "message": "Inquiring about weekend cohort options for Mobile App Development with Flutter.",
+    "details": "Inquiring about weekend cohort options for Mobile App Development with Flutter.",
+    "time": "9/23/2026, 09:45 AM",
+    "status": "Contacted"
+  }
+]

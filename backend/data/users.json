@@ -1,19 +1,39 @@
 [
   {
-    "id": "usr-admin-1",
+    "id": "usr-admin-01",
     "email": "admin@gtrend.com",
-    "name": "Administrator",
+    "name": "Gtrend Super Administrator",
     "role": "admin",
-    "password": "ca758eddede96042e1663591d55c77872dbf281217cdf071769b28feff29043c",
-    "createdAt": "2026-09-23T14:13:30.238Z"
+    "phone": "+234 706 697 6885",
+    "course": "Executive Board",
+    "password": "ca758eddede96042e1663591d55c77872dbf281217cdf071769b28feff29043c"
   },
   {
-    "id": "usr-student-1",
+    "id": "usr-student-01",
     "email": "student@gtrend.com",
-    "name": "Alex Samuel",
+    "name": "David Okon",
+    "role": "student",
+    "phone": "+234 812 345 6789",
+    "course": "Full-Stack Web Engineering",
+    "password": "d9e33bae751db33940cd8cfe456f10fc3ed89473a3d524f05fc15e32b679b2e4"
+  },
+  {
+    "id": "usr-student-02",
+    "email": "esther.chidi@example.com",
+    "name": "Esther Chidi",
+    "role": "student",
+    "phone": "+234 803 987 6543",
+    "course": "AI & Data Engineering",
+    "password": "d9e33bae751db33940cd8cfe456f10fc3ed89473a3d524f05fc15e32b679b2e4"
+  },
+  {
+    "id": "usr-mue8b42m",
+    "name": "Test Student",
+    "email": "test_std_1790175562073@example.com",
+    "phone": "",
     "role": "student",
     "course": "Full-Stack Web Engineering",
-    "password": "d9e33bae751db33940cd8cfe456f10fc3ed89473a3d524f05fc15e32b679b2e4",
-    "createdAt": "2026-09-23T14:13:30.239Z"
+    "password": "1a655e8355237839b1b8501cc3bd4e26d5e50ad1a75dcdd691cfe7b895b5b890",
+    "createdAt": "2026-09-23T14:59:22.079Z"
   }
 ]

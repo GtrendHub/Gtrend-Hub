@@ -9,9 +9,10 @@ exports.getAllInquiries = (req, res) => {
 };
 
 exports.createInquiry = (req, res) => {
-    const { name, email, service, message, phone } = req.body;
-    if (!name || !email || !message) {
-        return res.status(400).json({ success: false, message: 'Name, email, and message are required' });
+    const { name, email, service, message, details, phone } = req.body;
+    const inquiryText = message || details;
+    if (!name || !email || !inquiryText) {
+        return res.status(400).json({ success: false, message: 'Name, email, and message details are required' });
     }
 
     const inquiries = db.readCollection('inquiries', []);
@@ -21,7 +22,8 @@ exports.createInquiry = (req, res) => {
         email,
         phone: phone || '',
         service: service || 'General Consultation',
-        message,
+        message: inquiryText,
+        details: inquiryText,
         time: new Date().toLocaleString(),
         status: 'Unread',
         createdAt: new Date().toISOString()

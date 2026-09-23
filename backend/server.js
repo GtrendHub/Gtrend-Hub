@@ -5,6 +5,10 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const config = require('./config');
+const { connectDB, isConnected } = require('./models/db');
+
+// Initialize database connection
+connectDB();
 
 const app = express();
 const FRONTEND_DIR = path.join(__dirname, '..', 'frontend');
@@ -41,6 +45,7 @@ app.get('/api/health', (req, res) => {
         success: true,
         service: 'Gtrend Tech Hub API',
         version: '2.0.0',
+        database: isConnected() ? 'MongoDB (Connected)' : 'JSON Document Engine (Active)',
         timestamp: new Date().toISOString()
     });
 });

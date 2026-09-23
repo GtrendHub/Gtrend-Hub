@@ -61,8 +61,8 @@
 
 ## 💻 Tech Stack
 
-- **Backend**: Node.js, Express.js, JWT, BcryptJS, Multer
-- **Database**: Local JSON Document Storage (`backend/models/db.js`)
+- **Backend**: Node.js, Express.js, JWT, BcryptJS, Multer, Dotenv
+- **Database**: MongoDB (via Mongoose) with Graceful JSON Document Failover (`backend/config/db.js`, `backend/models/schemas/`)
 - **Frontend**: HTML5, Vanilla JavaScript (ES6+), Tailwind CSS Engine, FontAwesome Icons
 
 ---
@@ -75,7 +75,12 @@ cd backend
 npm install
 ```
 
-### 2. Start the Server
+### 2. Seed Initial Database Records (MongoDB & Local Storage)
+```bash
+npm run seed
+```
+
+### 3. Start the Server
 ```bash
 npm start
 ```
@@ -84,7 +89,7 @@ npm start
 npm run dev
 ```
 
-### 3. Open in Browser
+### 4. Open in Browser
 - **Main Website**: [http://localhost:3000](http://localhost:3000)
 - **About Us**: [http://localhost:3000/about.html](http://localhost:3000/about.html)
 - **Services**: [http://localhost:3000/services.html](http://localhost:3000/services.html)
