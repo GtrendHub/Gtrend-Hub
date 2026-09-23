@@ -12,7 +12,18 @@ ehthumbs.db
 *.swp
 *.swo
 
-# Build & cache
+# Dependencies
+node_modules/
+
+# Vite build output
 dist/
+.vite/
+
+# Environment — never commit secrets
+.env
+.env.local
+.env.*.local
+
+# Cache
 tmp/
 .cache/

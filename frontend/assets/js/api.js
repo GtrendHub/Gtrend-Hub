@@ -1,18 +1,17 @@
 /**
  * Gtrend Tech Hub - Universal Frontend API Client
- * Seamlessly interfaces with Node.js/Express backend & MongoDB with graceful offline fallback
+ * ES module — consumed via Vite (import.meta.env) in dev/build,
+ * and also assigned to window.GtrendAPI for any page-level inline scripts.
  */
 
 const GtrendAPI = (function () {
-    // Dynamic Base URL detection
-    let BASE_URL = '';
-    if (typeof window !== 'undefined') {
-        if (window.API_BASE_URL) {
-            BASE_URL = window.API_BASE_URL;
-        } else if (window.location.protocol === 'file:' || (window.location.port && window.location.port !== '3000')) {
-            BASE_URL = 'http://localhost:3000';
-        }
-    }
+    // ── Base URL ────────────────────────────────────────────────────────────
+    // In Vite dev mode the proxy handles /api/* → localhost:3000, so BASE_URL
+    // can be empty string ('').  In production set VITE_API_BASE_URL in .env.
+    const BASE_URL =
+        (import.meta && import.meta.env)
+            ? (import.meta.env.VITE_API_BASE_URL || "")
+            : "";
 
     // Offline / LocalStorage seed data helpers
     function getLocal(key, defaultVal = []) {
@@ -27,7 +26,7 @@ const GtrendAPI = (function () {
     function setLocal(key, data) {
         try {
             localStorage.setItem('gtrend_' + key, JSON.stringify(data));
-        } catch (e) {}
+        } catch (e) { }
     }
 
     async function request(endpoint, options = {}) {
@@ -63,7 +62,7 @@ const GtrendAPI = (function () {
         const method = (options.method || 'GET').toUpperCase();
         let body = {};
         if (options.body) {
-            try { body = typeof options.body === 'string' ? JSON.parse(options.body) : options.body; } catch (e) {}
+            try { body = typeof options.body === 'string' ? JSON.parse(options.body) : options.body; } catch (e) { }
         }
 
         // 1. Auth & Register
@@ -301,7 +300,7 @@ const GtrendAPI = (function () {
     // Built-in intelligent auto-responder
     async function autoRespond(query) {
         const q = (query || '').toLowerCase();
-        
+
         let reply = '';
         let action = null;
 
@@ -341,7 +340,17 @@ const GtrendAPI = (function () {
     // Paystack Inline Payment Integration Helper
     function payWithPaystack({ email, amount, fullName, phone, purpose, course, onSuccess, onCancel }) {
         const amountInKobo = Math.round(Number(amount) * 100);
-        const publicKey = 'pk_test_sample_gtrend_paystack_public_key';
+        // Key from VITE_PAYSTACK_PUBLIC_KEY in .env (injected by Vite)
+        let publicKey = 'pk_test_sample_gtrend_paystack_public_key';
+        try {
+            if (import.meta.env && import.meta.env.VITE_PAYSTACK_PUBLIC_KEY) {
+                publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+            }
+        } catch (_) {
+            if (typeof window !== 'undefined' && window.PAYSTACK_PUBLIC_KEY) {
+                publicKey = window.PAYSTACK_PUBLIC_KEY;
+            }
+        }
 
         if (typeof window.PaystackPop !== 'undefined') {
             const handler = window.PaystackPop.setup({
@@ -470,6 +479,10 @@ const GtrendAPI = (function () {
     };
 })();
 
+// Assign to window so page-level inline <script> blocks can still use GtrendAPI
 if (typeof window !== 'undefined') {
     window.GtrendAPI = GtrendAPI;
 }
+
+// ES module default export — used by Vite module imports
+export default GtrendAPI;
